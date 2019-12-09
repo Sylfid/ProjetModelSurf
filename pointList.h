@@ -12,6 +12,7 @@ class pointList{
         pointList(pointList const& taille2);
         pointList(std::string file);
         ~pointList();
+        void display(std::ostream& str);
 };
 
 

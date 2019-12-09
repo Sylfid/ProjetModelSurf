@@ -33,55 +33,103 @@ pointList::pointList(pointList const& copie){
     }
 }
 
-    
 pointList::pointList(std::string file){
     std::ifstream fluxPoint(file.c_str());
     if(fluxPoint){
         char a;
-        composante = NULL;
-        int b(0);
-        int compteur(0);
-        double* newComposante(NULL);
-        int i(0);
-        while(fluxVector.get(a)){
-            if(a>47 && a<58){
-                b=10*b+(a-48);
+        bool firstLine(true), flag(true), lecNb(false);
+        double valeur(0.);
+        int composante(0), compteurDec(1), compteurPoint(0), negativite(1);
+        bool decimal(false);
+
+        while(firstLine && flag){
+            fluxPoint.get(a);
+            if(a == 10){
+                firstLine = false;
             }
-            else if(a==32){
-                compteur++;
-                newComposante=composante;
-                composante = (double*)malloc(compteur*sizeof(double));
-                for(i=0;i<compteur-1;i++){
-                    composante[i]=newComposante[i];
-                }
-                composante[compteur-1]=b;
-                free(newComposante);
-                b=0;
+            else if(a>47 && a<58){
+                taille = taille * 10 + (a-48);
             }
             else{
-                compteur++;
-                newComposante=composante;
-                composante = (double*)malloc(compteur*sizeof(double));
-                for(i=0;i<compteur-1;i++){
-                    composante[i]=newComposante[i];
-                }
-                composante[compteur-1]=b;
-                free(newComposante);
-                b=0;
+                std::cout << "Le fichier du nuage de points n'est pas au bon format\n";
+                taille = 0;
+                points = NULL;
+                return ;
             }
         }
-        taille=compteur;
+        points = new Point[taille];
+        while(fluxPoint.get(a) && flag){
+            if(a>47 && a<58){
+                lecNb = true;
+                if(decimal){
+                    compteurDec = compteurDec*10;
+                }
+                valeur = valeur*10 + (a-48);
+            }
+            else if(a == 32){
+                if(lecNb){
+                    if(composante == 0){
+                        points[compteurPoint].setX(negativite * valeur/compteurDec);
+                    }
+                    else if(composante == 1){
+                        points[compteurPoint].setY(negativite * valeur/compteurDec);
+                    }
+                    else{
+                        std::cout << "Il y a trop d'argument sur la ligne " << compteurPoint << "\n";
+                        return ;
+                    }
+                    composante = (composante + 1);
+                    decimal = false;
+                    compteurDec = 1;
+                    valeur = 0.;
+                    negativite = 1;
+                }
+                lecNb = false;
+            }
+            else if(a == 10){
+                points[compteurPoint].setZ(negativite * valeur/compteurDec);
+                composante = 0;
+                valeur = 0.;
+                decimal = false;
+                compteurDec = 1;
+                compteurPoint ++;
+                negativite = 1;
+                lecNb = false;
+                if(compteurPoint >= taille){
+                    if(fluxPoint.get(a)){
+                        std::cout << "Le fichier est mal calibre\n";
+                    }
+                    flag = false;
+                }
+            }
+            else if(a == 46){
+                decimal = true;
+            }
+            else if(a == 45){
+                negativite = -1;
+            }
+            else{
+                std::cout << "Un caractere du fichier est illisible" << a << "\n";
+            }
+        }
+        if(compteurPoint != taille){
+            std::cout << "Le fichier est mal calibre\n";
+        }
     }
     else{
-        std::cout << "Impossible de créer une liste de Point a partir de " << file;
+        std::cout << "Impossible de créer une liste de Point a partir de " << file << "\n";
         taille = 0;
         points = NULL;
     }
 }
 
-
 pointList::~pointList(){
     free(points);
 }
 
-
+void pointList::display(std::ostream& str){
+    int i;
+    for(i=0; i<taille; i++){
+        points[i].display(str);
+    }
+}
