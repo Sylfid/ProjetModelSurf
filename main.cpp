@@ -7,9 +7,9 @@
 using namespace std;
 
 int main(){
-    pointList test("happy");
+    pointList test("test");
     Point test2(2.,3.1,4.6);
-    //test2.display(std::cout);
+    test2.display(std::cout);
     test.display(std::cout);
 
     return 0;

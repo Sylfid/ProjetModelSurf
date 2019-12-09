@@ -39,7 +39,7 @@ pointList::pointList(std::string file){
         char a;
         bool firstLine(true), flag(true), lecNb(false);
         double valeur(0.);
-        int composante(0), compteurDec(1), compteurPoint(0), negativite(1);
+        int composante(0), compteurDec(1), compteurPoint(0), negativite(1), tailleList(0);
         bool decimal(false);
 
         while(firstLine && flag){
@@ -48,7 +48,7 @@ pointList::pointList(std::string file){
                 firstLine = false;
             }
             else if(a>47 && a<58){
-                taille = taille * 10 + (a-48);
+                tailleList = tailleList * 10 + (a-48);
             }
             else{
                 std::cout << "Le fichier du nuage de points n'est pas au bon format\n";
@@ -57,7 +57,8 @@ pointList::pointList(std::string file){
                 return ;
             }
         }
-        points = new Point[taille];
+        points = new Point[tailleList];
+        taille = tailleList;
         while(fluxPoint.get(a) && flag){
             if(a>47 && a<58){
                 lecNb = true;
