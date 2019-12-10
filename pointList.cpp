@@ -14,7 +14,7 @@ pointList::pointList(){
 
 pointList::pointList(int taille2){
     if(taille2 < 0){
-        std::cout << "Impossible de créer une liste de point de longueur negative\n";
+        std::cout << "Impossible de créer une listes de point de longueur negative\n";
         return;
     }
     else if(taille2==0){
