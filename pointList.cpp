@@ -4,6 +4,7 @@
 #include "pointList.h"
 #include <cstdlib>
 #include <fstream>
+#include <math.h>
 
 
 pointList::pointList(){ 
@@ -39,7 +40,7 @@ pointList::pointList(std::string file){
         char a;
         bool firstLine(true), flag(true), lecNb(false);
         double valeur(0.);
-        int composante(0), compteurDec(1), compteurPoint(0), negativite(1), tailleList(0);
+        int composante(0), compteurDec(0), compteurPoint(0), negativite(1), tailleList(0);
         bool decimal(false);
 
         while(firstLine && flag){
@@ -63,17 +64,22 @@ pointList::pointList(std::string file){
             if(a>47 && a<58){
                 lecNb = true;
                 if(decimal){
-                    compteurDec = compteurDec*10;
+                    compteurDec = compteurDec+1;
                 }
-                valeur = valeur*10 + (a-48);
+                if(compteurDec == 0){
+                    valeur = valeur*10 + (a-48);
+                }
+                else{
+                    valeur = valeur + pow(10,-compteurDec)*(a-48);
+                }
             }
             else if(a == 32){
                 if(lecNb){
                     if(composante == 0){
-                        points[compteurPoint].setX(negativite * valeur/compteurDec);
+                        points[compteurPoint].setX(negativite * valeur);
                     }
                     else if(composante == 1){
-                        points[compteurPoint].setY(negativite * valeur/compteurDec);
+                        points[compteurPoint].setY(negativite * valeur);
                     }
                     else{
                         std::cout << "Il y a trop d'argument sur la ligne " << compteurPoint << "\n";
@@ -81,18 +87,18 @@ pointList::pointList(std::string file){
                     }
                     composante = (composante + 1);
                     decimal = false;
-                    compteurDec = 1;
+                    compteurDec = 0;
                     valeur = 0.;
                     negativite = 1;
                 }
                 lecNb = false;
             }
             else if(a == 10){
-                points[compteurPoint].setZ(negativite * valeur/compteurDec);
+                points[compteurPoint].setZ(negativite * valeur);
                 composante = 0;
                 valeur = 0.;
                 decimal = false;
-                compteurDec = 1;
+                compteurDec = 0;
                 compteurPoint ++;
                 negativite = 1;
                 lecNb = false;
