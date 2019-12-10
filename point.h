@@ -14,6 +14,13 @@ class Point{
         void setX(double X);
         void setY(double Y);
         void setZ(double Z);
+        double getX() const;
+        double getY() const;
+        double getZ() const;
+        double getNorm();
+        double getDistance(Point point2);
 };
+        Point operator-(Point const& a, Point const& b);
+        Point operator+(Point const& a, Point const& b);
 
 

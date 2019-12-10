@@ -13,6 +13,9 @@ class pointList{
         pointList(std::string file);
         ~pointList();
         void display(std::ostream& str);
+        pointList getNbhd(int nbNb);
+        Point getPoint(int i);
+        void setPoint(Point point2, int i);
 };
 
 

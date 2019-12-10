@@ -23,6 +23,9 @@ pointList::pointList(int taille2){
     else{
         points = new Point[taille2];
     }
+    for(int i(0); i<taille2; i++){
+        points[i].set(0.,0.,0.);
+    }
     taille = taille2;
 }
 
@@ -131,7 +134,7 @@ pointList::pointList(std::string file){
 }
 
 pointList::~pointList(){
-    free(points);
+    delete points;
 }
 
 void pointList::display(std::ostream& str){
@@ -140,3 +143,30 @@ void pointList::display(std::ostream& str){
         points[i].display(str);
     }
 }
+
+pointList pointList::getNbhd(int nbNb){
+    pointList neighboors(nbNb);
+    
+    return neighboors;
+}
+
+Point pointList::getPoint(int i){
+    return points[i];
+}
+
+void pointList::setPoint(Point point2, int i){
+    points[i].setX(point2.getX());
+    points[i].setY(point2.getY());
+    points[i].setZ(point2.getZ());
+}
+
+
+//Insère un point à la position i et décale tous les autres points (le dernier sort de la liste)
+/*void pointList::putPoint(Point addPoint, int i){
+    if(i>=taille || i<0){
+        std::cout << "L'indexe du point a ajouter n'es pas conforme";
+    }
+    else{
+        int j(taille);
+        for(j = taille-1; j>i-1 ; j--){
+*/

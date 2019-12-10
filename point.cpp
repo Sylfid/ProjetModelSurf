@@ -4,6 +4,7 @@
 #include "point.h"
 #include <cstdlib>
 #include <fstream>
+#include <math.h>
 
 
 Point::Point(){
@@ -38,4 +39,42 @@ void Point::setY(double Y){
 
 void Point::setZ(double Z){
     z= Z;
+}
+
+double Point::getX() const{
+    return x;
+}
+
+double Point::getY() const{
+    return y;
+}
+
+double Point::getZ() const{
+    return z;
+}
+
+Point operator-(Point const& a, Point const& b){
+
+    Point resultat(a.getX() - b.getX(), a.getY() - b.getY(), a.getZ() - b.getZ());
+    return resultat;
+
+} 
+
+Point operator+(Point const& a, Point const& b){
+
+    Point resultat(a.getX() + b.getX(), a.getY() + b.getY(), a.getZ() + b.getZ());
+    return resultat;
+
+} 
+
+
+double Point::getNorm(){
+    return sqrt(x*x+y*y+z*z);
+}
+
+double Point::getDistance(Point point2){
+    Point soustraction;
+    soustraction = *this - point2;
+    double resultat(soustraction.getNorm());
+    return resultat;
 }
