@@ -1,0 +1,38 @@
+# CMake generated Testfile for 
+# Source directory: /user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf
+# Build directory: /user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/build
+# 
+# This file includes the relevant testing commands required for 
+# testing this directory and lists subdirectories to be tested as well.
+ADD_TEST(Test_affichage "tests/Point_tests/test_affichage")
+ADD_TEST(valgrindTest_affichage "valgrind" "tests/Point_tests/test_affichage")
+ADD_TEST(Test_constructeur1 "tests/Point_tests/test_constructeur1")
+ADD_TEST(valgrindTest_constructeur1 "valgrind" "tests/Point_tests/test_constructeur1")
+ADD_TEST(Test_constructeur2 "tests/Point_tests/test_constructeur2")
+ADD_TEST(valgrindTest_constructeur2 "valgrind" "tests/Point_tests/test_constructeur2")
+ADD_TEST(Test_constructeur3 "tests/Point_tests/test_constructeur3")
+ADD_TEST(valgrindTest_constructeur3 "valgrind" "tests/Point_tests/test_constructeur3")
+ADD_TEST(Test_operateur_affectation "tests/Point_tests/test_operateur_affectation")
+ADD_TEST(valgrindTest_operateur_affectation "valgrind" "tests/Point_tests/test_operateur_affectation")
+ADD_TEST(Test_operateur_divDouble "tests/Point_tests/test_operateur_divDouble")
+ADD_TEST(valgrindTest_operateur_divDouble "valgrind" "tests/Point_tests/test_operateur_divDouble")
+ADD_TEST(Test_operateur_divEq "tests/Point_tests/test_operateur_divEq")
+ADD_TEST(valgrindTest_operateur_divEq "valgrind" "tests/Point_tests/test_operateur_divEq")
+ADD_TEST(Test_operateur_minus "tests/Point_tests/test_operateur_minus")
+ADD_TEST(valgrindTest_operateur_minus "valgrind" "tests/Point_tests/test_operateur_minus")
+ADD_TEST(Test_operateur_minusEq "tests/Point_tests/test_operateur_minusEq")
+ADD_TEST(valgrindTest_operateur_minusEq "valgrind" "tests/Point_tests/test_operateur_minusEq")
+ADD_TEST(Test_operateur_minusUnaire "tests/Point_tests/test_operateur_minusUnaire")
+ADD_TEST(valgrindTest_operateur_minusUnaire "valgrind" "tests/Point_tests/test_operateur_minusUnaire")
+ADD_TEST(Test_operateur_multDouble "tests/Point_tests/test_operateur_multDouble")
+ADD_TEST(valgrindTest_operateur_multDouble "valgrind" "tests/Point_tests/test_operateur_multDouble")
+ADD_TEST(Test_operateur_multEq "tests/Point_tests/test_operateur_multEq")
+ADD_TEST(valgrindTest_operateur_multEq "valgrind" "tests/Point_tests/test_operateur_multEq")
+ADD_TEST(Test_operateur_oflux "tests/Point_tests/test_operateur_oflux")
+ADD_TEST(valgrindTest_operateur_oflux "valgrind" "tests/Point_tests/test_operateur_oflux")
+ADD_TEST(Test_operateur_plus "tests/Point_tests/test_operateur_plus")
+ADD_TEST(valgrindTest_operateur_plus "valgrind" "tests/Point_tests/test_operateur_plus")
+ADD_TEST(Test_operateur_plusEq "tests/Point_tests/test_operateur_plusEq")
+ADD_TEST(valgrindTest_operateur_plusEq "valgrind" "tests/Point_tests/test_operateur_plusEq")
+SUBDIRS(src)
+SUBDIRS(tests)

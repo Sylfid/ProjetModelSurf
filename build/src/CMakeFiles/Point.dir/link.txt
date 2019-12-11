@@ -1,0 +1,1 @@
+/opt/rh/devtoolset-8/root/usr/bin/c++  -fPIC -g -Wextra -Wall -pg -std=c++11   -shared -Wl,-soname,libPoint.so -o libPoint.so CMakeFiles/Point.dir/point.cpp.o 

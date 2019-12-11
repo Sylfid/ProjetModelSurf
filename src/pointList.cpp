@@ -7,12 +7,12 @@
 #include <math.h>
 
 
-pointList::pointList(){ 
+PointList::PointList(){
     points = NULL;
     taille = 0;
 }
 
-pointList::pointList(int taille2){
+PointList::PointList(int taille2){
     if(taille2 < 0){
         std::cout << "Impossible de créer une listes de point de longueur negative\n";
         return;
@@ -29,7 +29,7 @@ pointList::pointList(int taille2){
     taille = taille2;
 }
 
-pointList::pointList(pointList const& copie){
+PointList::PointList(PointList const& copie){
     taille = copie.taille;
     points = new Point[taille];
     for(int i=0; i<taille; i++){
@@ -37,7 +37,7 @@ pointList::pointList(pointList const& copie){
     }
 }
 
-pointList::pointList(std::string file){
+PointList::PointList(std::string file){
     std::ifstream fluxPoint(file.c_str());
     if(fluxPoint){
         char a;
@@ -133,28 +133,28 @@ pointList::pointList(std::string file){
     }
 }
 
-pointList::~pointList(){
+PointList::~PointList(){
     delete points;
 }
 
-void pointList::display(std::ostream& str){
+void PointList::display(std::ostream& str){
     int i;
     for(i=0; i<taille; i++){
         points[i].display(str);
     }
 }
 
-pointList pointList::getNbhd(int nbNb){
-    pointList neighboors(nbNb);
-    
+PointList PointList::getNbhd(int nbNb){
+    PointList neighboors(nbNb);
+
     return neighboors;
 }
 
-Point pointList::getPoint(int i){
+Point PointList::getPoint(int i){
     return points[i];
 }
 
-void pointList::setPoint(Point point2, int i){
+void PointList::setPoint(Point point2, int i){
     points[i].setX(point2.getX());
     points[i].setY(point2.getY());
     points[i].setZ(point2.getZ());
@@ -162,7 +162,7 @@ void pointList::setPoint(Point point2, int i){
 
 
 //Insère un point à la position i et décale tous les autres points (le dernier sort de la liste)
-/*void pointList::putPoint(Point addPoint, int i){
+/*void PointList::putPoint(Point addPoint, int i){
     if(i>=taille || i<0){
         std::cout << "L'indexe du point a ajouter n'es pas conforme";
     }

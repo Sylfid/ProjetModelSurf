@@ -2,20 +2,20 @@
 #include "point.h"
 
 
-class pointList{
+class PointList {
+  
     private:
         Point* points;
         int taille;
+
     public:
-        pointList();
-        pointList(int taille2);
-        pointList(pointList const& taille2);
-        pointList(std::string file);
-        ~pointList();
+        PointList();
+        PointList(int taille2);
+        PointList(PointList const& taille2);
+        PointList(std::string file);
+        ~PointList();
         void display(std::ostream& str);
-        pointList getNbhd(int nbNb);
+        PointList getNbhd(int nbNb);
         Point getPoint(int i);
         void setPoint(Point point2, int i);
 };
-
-

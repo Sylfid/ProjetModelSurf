@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/src/point.h
+string
+-
+iostream
+-
+
+/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/tests/Point_tests/test_affichage.cpp
+../../src/point.h
+/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/src/point.h
+stdio.h
+-
+assert.h
+-
+sstream
+-
+

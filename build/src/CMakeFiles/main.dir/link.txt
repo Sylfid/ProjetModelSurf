@@ -1,0 +1,1 @@
+/opt/rh/devtoolset-8/root/usr/bin/c++   -g -Wextra -Wall -pg -std=c++11    CMakeFiles/main.dir/main.cpp.o  -o main -rdynamic libPoint.so libPointList.so -Wl,-rpath,/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/build/src 

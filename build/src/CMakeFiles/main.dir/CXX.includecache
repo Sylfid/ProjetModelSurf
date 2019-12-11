@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/src/main.cpp
+assert.h
+-
+iostream
+-
+sstream
+-
+stdlib.h
+-
+pointList.h
+/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/src/pointList.h
+point.h
+/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/src/point.h
+
+/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/src/point.h
+string
+-
+iostream
+-
+
+/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/src/pointList.h
+string
+-
+point.h
+/user/6/vilayvos/Documents/3A/mod_surfacique/projet_mod_surf/ProjetModelSurf/src/point.h
+
