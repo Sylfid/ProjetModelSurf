@@ -65,14 +65,11 @@ Point& Point::operator=(const Point &P) {
 }
 
 Point operator-(Point const& a, Point const& b){
-
     Point P(a.getX() - b.getX(), a.getY() - b.getY(), a.getZ() - b.getZ());
     return P;
-
 }
 
 Point operator+(Point const& a, Point const& b){
-
     Point P(a.getX() + b.getX(), a.getY() + b.getY(), a.getZ() + b.getZ());
     return P;
 }
@@ -91,4 +88,9 @@ double Point::getDistance(const Point &P){
     soustraction = *this - P;
     double distance(soustraction.getNorm());
     return distance;
+}
+
+std::ostream& operator<<(std::ostream &str, const Point &P) {
+  str << P.getX() << "\t" << P.getY() << "\t" << P.getZ() << "\n";
+  return str;
 }
