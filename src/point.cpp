@@ -89,7 +89,6 @@ void Point::normalize() {
     z /= norm;
 }
 
-<<<<<<< HEAD
 // OPERATEURS
 
 Point& Point::operator+=(const double d) {
