@@ -14,31 +14,35 @@ Point::Point(){
 }
 
 Point::Point(double X, double Y, double Z){
-    x=X;
-    y=Y;
-    z=Z;
+    x = X;
+    y = Y;
+    z = Z;
+}
+
+Point::~Point() {
+  // rien à faire
 }
 
 void Point::display(std::ostream& str){
-    str << x << " " << y << " " << z << "\n";
+    str << x << "\t" << y << "\t" << z << "\n";
 }
 
 void Point::set(double X, double Y, double Z){
-    x= X;
-    y=Y;
-    z=Z;
+    x = X;
+    y = Y;
+    z = Z;
 }
 
 void Point::setX(double X){
-    x= X;
+    x = X;
 }
 
 void Point::setY(double Y){
-    y= Y;
+    y = Y;
 }
 
 void Point::setZ(double Z){
-    z= Z;
+    z = Z;
 }
 
 double Point::getX() const{
@@ -53,28 +57,38 @@ double Point::getZ() const{
     return z;
 }
 
+Point& Point::operator=(const Point &P) {
+  x = P.getX();
+  y = P.getY();
+  z = P.getZ();
+  return *this;
+}
+
 Point operator-(Point const& a, Point const& b){
 
-    Point resultat(a.getX() - b.getX(), a.getY() - b.getY(), a.getZ() - b.getZ());
-    return resultat;
+    Point P(a.getX() - b.getX(), a.getY() - b.getY(), a.getZ() - b.getZ());
+    return P;
 
-} 
+}
 
 Point operator+(Point const& a, Point const& b){
 
-    Point resultat(a.getX() + b.getX(), a.getY() + b.getY(), a.getZ() + b.getZ());
-    return resultat;
+    Point P(a.getX() + b.getX(), a.getY() + b.getY(), a.getZ() + b.getZ());
+    return P;
+}
 
-} 
-
+double Point::getScalarProduct(const Point &P) {
+  double scalarProduct = x*P.getX() + y*P.getY() + z*P.getZ();
+  return scalarProduct;
+}
 
 double Point::getNorm(){
     return sqrt(x*x+y*y+z*z);
 }
 
-double Point::getDistance(Point point2){
+double Point::getDistance(const Point &P){
     Point soustraction;
-    soustraction = *this - point2;
-    double resultat(soustraction.getNorm());
-    return resultat;
+    soustraction = *this - P;
+    double distance(soustraction.getNorm());
+    return distance;
 }
