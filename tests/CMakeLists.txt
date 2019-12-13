@@ -8,7 +8,7 @@ project(tests)
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wextra -Wall -std=c++11")
 
-add_subdirectory(Point_tests)
+add_subdirectory(Vector3d_tests)
 
 # On inclut la bibliothèque dans le processus de CMake
 include_directories(${PROJECT_SOURCE_DIR}/src/build)

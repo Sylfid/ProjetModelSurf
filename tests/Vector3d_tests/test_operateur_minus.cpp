@@ -1,4 +1,4 @@
-#include "../../src/point.h"
+#include "../../src/vector3d.h"
 #include <stdio.h>
 #include <assert.h>
 
@@ -8,9 +8,9 @@
 */
 int main() {
 
-    Point v = Point(1,5,2);
-    Point v1 = Point(1,5,5);
-    //Point v2 = v - v1;
+    Vector3d v = Vector3d(1,5,2);
+    Vector3d v1 = Vector3d(1,5,5);
+    //Vector3d v2 = v - v1;
 
     std::cout << v;
     std::cout << "\n";

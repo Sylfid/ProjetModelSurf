@@ -1,4 +1,4 @@
-#include "../../src/point.h"
+#include "../../src/vector3d.h"
 #include <stdio.h>
 #include <assert.h>
 
@@ -10,9 +10,9 @@ int main() {
 
     /* --------------------- double ----------------------- */
 
-    Point v = Point(5,1,5);
-    Point v1 = 2.*v;
-    Point v2 = 3.0*v;
+    Vector3d v = Vector3d(5,1,5);
+    Vector3d v1 = 2.*v;
+    Vector3d v2 = 3.0*v;
 
     assert(v1.getX() == 10.);
     assert(v1.getY() == 2.);

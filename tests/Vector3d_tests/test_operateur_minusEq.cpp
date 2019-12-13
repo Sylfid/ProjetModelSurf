@@ -1,4 +1,4 @@
-#include "../../src/point.h"
+#include "../../src/vector3d.h"
 #include <stdio.h>
 #include <sstream>
 #include <assert.h>
@@ -9,14 +9,14 @@
 */
 int main() {
 
-    Point v = Point(2.3,2.3,2.3);
+    Vector3d v = Vector3d(2.3,2.3,2.3);
     v -= 2.;
     std::stringstream str;
     v.display(str);
     assert(str.str() == "0.3\t0.3\t0.3\n");
 
-    Point v1 = Point(0.,0.,0.);
-    Point v2 = Point(1.,1.,1.);
+    Vector3d v1 = Vector3d(0.,0.,0.);
+    Vector3d v2 = Vector3d(1.,1.,1.);
     v1 -= v2;
     std::stringstream str1;
     v1.display(str1);

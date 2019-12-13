@@ -1,46 +1,46 @@
-#ifndef POINT_H
-#define POINT_H
+#ifndef VECTOR3D_H
+#define VECTOR3D_H
 
 #include <string>
 #include <iostream>
 
 /**
-  * \brief Classe représentant un point 3D de coordonées (x,y,z)
+  * \brief Classe représentant un vecteur 3D de coordonées (x,y,z)
 */
-class Point {
+class Vector3d {
 
   private:
-    double x; /*!< abscisse du point 3D */
-    double y; /*!< ordonnée du point 3D */
-    double z; /*!< côte du point 3D */
+    double x; /*!< abscisse du vecteur 3D */
+    double y; /*!< ordonnée du vecteur 3D */
+    double z; /*!< côte du vecteur 3D */
 
   public:
     /**
       * \brief Constructeur par défaut de la classe.
       * \details Ce Constructeur est appelé pour l'instanciation
-      *             d'un point 3D de coordonées (0,0,0)
+      *             d'un vecteur 3D de coordonées (0,0,0)
     */
-    Point();
+    Vector3d();
     /**
       * \brief Constructeur de la classe.
-      * \details Ce constructeur crée un point 3D
+      * \details Ce constructeur crée un vecteur 3D
       * \param x abscisse
       * \param y ordonnée
       * \param z côte
     */
-    Point(double x, double y, double z);
+    Vector3d(double x, double y, double z);
     /**
       * \brief Constructeur par recopie de la classe.
-      * \param P le point à recopier.
+      * \param P le vecteur à recopier.
     */
-    Point(const Point &P);
+    Vector3d(const Vector3d &P);
     /**
       * \brief Destructeur de la classe
     */
-    ~Point();
+    ~Vector3d();
     /**
-      * \brief Affiche les coordonnées du point 3D.
-      * \details La méthode affichera, sur le flux passé en paramètre, le point
+      * \brief Affiche les coordonnées du vecteur 3D.
+      * \details La méthode affichera, sur le flux passé en paramètre, le vecteur
       * \param str le flux sur lequel s'affichera le résultat
     */
     void display(std::ostream& str);
@@ -58,26 +58,26 @@ class Point {
     void normalize();
 
     /**
-      * \brief Renvoie le résultat du produit scalaire avec un autre point
-      * \param P le point avec lequel faire le produit scalaire
+      * \brief Renvoie le résultat du produit scalaire avec un autre vecteur
+      * \param P le vecteur avec lequel faire le produit scalaire
     */
-    double getScalarProduct(const Point &P);
+    double getScalarProduct(const Vector3d &P);
     /**
-      * \brief Renvoie le résultat du produit vectoriel avec un autre point
-      * \param P le point avec lequel faire le produit scalaire
+      * \brief Renvoie le résultat du produit vectoriel avec un autre vecteur
+      * \param P le vecteur avec lequel faire le produit scalaire
     */
-    Point crossProduct(const Point &P);
+    Vector3d crossProduct(const Vector3d &P);
     /**
-      * \brief Renvoie la norme 2 du point
+      * \brief Renvoie la norme 2 du vecteur
     */
     double getNorm();
     /**
       * \details Ce Constructeur est appelé pour l'instanciation
-      *             d'un objet Point. Créé un vecteur de taille 1 de valeur 0.
-      * \brief Renvoie la distance entre le point et celui donné en argument
-      * \param P lepoint par rapport auquel on calcule la distance
+      *             d'un objet Vector3d. Créé un vecteur de taille 1 de valeur 0.
+      * \brief Renvoie la distance entre le vecteur et celui donné en argument
+      * \param P levecteur par rapport auquel on calcule la distance
     */
-    double getDistanceTo(const Point &P);
+    double getDistanceTo(const Vector3d &P);
 
     // OPERATEURS
 
@@ -85,66 +85,66 @@ class Point {
       * \brief opérateur +=
       * \details L'opérateur += permet de réaliser l'opération suivante :
                     v += b qui est équivalente à : v(i) += b pour tout
-                    élément de v avec v un point, b un double
+                    élément de v avec v un vecteur, b un double
       * \param d le nombre b de l'opération
       * \return le résultat de l'opération v += d
     */
-    Point& operator+=(const double d);
+    Vector3d& operator+=(const double d);
     /**
     * \brief opérateur -=
     * \details L'opérateur -= permet de réaliser l'opération suivante :
                     v -= b qui est équivalente à : v(i) -= b pour tout
-                    élément de v avec v un Point, b un double
+                    élément de v avec v un Vector3d, b un double
     * \param d le nombre b de l'opération
     * \return le résultat de l'opération v -= d
     */
-    Point& operator-=(const double d);
+    Vector3d& operator-=(const double d);
     /**
     * \brief opérateur *=
     * \details L'opérateur *= permet de réaliser l'opération suivante :
                 v *= b qui est équivalente à : v(i) *= b pour tout
-                élément de v avec v un Point, b un double
+                élément de v avec v un Vector3d, b un double
     * \param d le nombre b de l'opération
     * \return le résultat de l'opération v *= d
     */
-    Point& operator*=(const double d);
+    Vector3d& operator*=(const double d);
     /**
     * \brief opérateur /=
     * \details L'opérateur /= permet de réaliser l'opération suivante :
                   v /= b qui est équivalente à : v(i) /= b pour tout
-                  élément de v avec v un Point, b un double
+                  élément de v avec v un Vector3d, b un double
     * \param d le nombre b de l'opération
     * \return le résultat de l'opération v /= d
     */
-    Point& operator/=(const double d);
+    Vector3d& operator/=(const double d);
     /**
       * \brief opérateur +=
       * \details L'opérateur += permet de réaliser l'opération suivante :
                     v1 += v2 qui est équivalente à : v1 = v1 + v2
-                    avec v1 et v2 des Point.
+                    avec v1 et v2 des Vector3d.
                     Cette opérateur réalise l'addition terme à terme.
-      * \param V l'objet Point v2
+      * \param V l'objet Vector3d v2
       * \return le résultat de l'opération v2 += V
     */
-    Point& operator+=(const Point &V);
+    Vector3d& operator+=(const Vector3d &V);
     /**
       * \brief opérateur -=
       * \details L'opérateur += permet de réaliser l'opération suivante :
                     v1 -= v2 qui est équivalente à : v1 = v1 - v2
-                    avec v1 et v2 des Point.
+                    avec v1 et v2 des Vector3d.
                     Cette opérateur réalise la soustraction terme à terme.
-      * \param V l'objet Point v2
+      * \param V l'objet Vector3d v2
       * \return le résultat de l'opération v1 += V
     */
-    Point& operator-=(const Point &V);
+    Vector3d& operator-=(const Vector3d &V);
 
     /**
       * \brief operateur d'affectation de la classe
       * \details L'opérateur = permet de réaliser l'opération suivante :
-                    Point v; v = Point(1,2,3);
-      * \param P l'objet Point qu'il faut affecté à l'objet Point
+                    Vector3d v; v = Vector3d(1,2,3);
+      * \param P l'objet Vector3d qu'il faut affecté à l'objet Vector3d
     */
-    Point& operator=(const Point &P);
+    Vector3d& operator=(const Vector3d &P);
 
 };
 /**
@@ -153,7 +153,7 @@ class Point {
                 du vecteur.
   * \return le résultat de l'opération -v
 */
-Point operator-(const Point &P);
+Vector3d operator-(const Vector3d &P);
 /**
   * \brief opérateur de soustraction entre deux vecteurs
   * \details L'opérateur réaliser l'addition binaire entre deux vecteurs.
@@ -161,7 +161,7 @@ Point operator-(const Point &P);
     \param V2 le veteur à droite de l'opérande -
   * \return le résultat de l'opération P1 - P2
 */
-Point operator-(const Point &P1, const Point &P2);
+Vector3d operator-(const Vector3d &P1, const Vector3d &P2);
 /**
   * \brief opérateur d'addition entre deux vecteurs
   * \details L'opérateur réaliser l'addition binaire entre deux vecteurs.
@@ -169,17 +169,17 @@ Point operator-(const Point &P1, const Point &P2);
     \param P2 le veteur à droite de l'opérande +
   * \return le résultat de l'opération P1 + P2
 */
-Point operator+(const Point &P1, const Point &P2);
+Vector3d operator+(const Vector3d &P1, const Vector3d &P2);
 /**
-  * \brief opérateur * qui multiplie un point et un scalaire
+  * \brief opérateur * qui multiplie un vecteur et un scalaire
   * \details L'opérateur réaliser l'addition suivante :
                 d.P
-                avec d le scalaire et P le point
-  * \param P le point p
+                avec d le scalaire et P le vecteur
+  * \param P le vecteur p
   * \param d le double d
   * \return le résultat de l'opération d.P;
 */
-Point operator*(const double d, const Point &P);
+Vector3d operator*(const double d, const Vector3d &P);
 
 /**
   * \brief opérateur de flux qui affiche le contenu du vecteur donné
@@ -188,6 +188,6 @@ Point operator*(const double d, const Point &P);
   * \param V le vecteur dont il faut affiche le contenu
   * \return affiche le contenu du vecteur sur le flux
 */
-std::ostream& operator<<(std::ostream &str, const Point &P);
+std::ostream& operator<<(std::ostream &str, const Vector3d &P);
 
-#endif // POINT_H
+#endif // VECTOR3D_H
