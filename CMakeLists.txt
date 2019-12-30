@@ -7,6 +7,12 @@ set(CMAKE_BUILD_TYPE Release)
 add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
 
+find_package(PCL 1.2 REQUIRED)
+
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
+
 ##
 # Programme de test
 ##
@@ -57,6 +63,15 @@ add_test(valgrindTest_operateur_plus valgrind tests/Vector3d_tests/test_operateu
 
 add_test(Test_operateur_plusEq tests/Vector3d_tests/test_operateur_plusEq)
 add_test(valgrindTest_operateur_plusEq valgrind tests/Vector3d_tests/test_operateur_plusEq)
+
+add_test(Test_kNbhd tests/test_kNbhd)
+add_test(valgrindTest_kNbhdvalgrind tests/test_kNbhd)
+
+add_test(Test_load_off_file tests/test_load_off_file)
+add_test(valgrindTest_load_off_file tests/test_load_off_file)
+
+add_test(Test tests/test)
+add_test(valgrindTestvalgrind tests/test)
 
 # version verbose de tous les tests
 add_custom_target(check ctest -V)

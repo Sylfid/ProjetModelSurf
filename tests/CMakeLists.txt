@@ -14,8 +14,23 @@ add_subdirectory(Vector3d_tests)
 include_directories(${PROJECT_SOURCE_DIR}/src/build)
 link_directories(${PROJECT_SOURCE_DIR}/src/build)
 
+find_package(PCL 1.2 REQUIRED)
+
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
+
 #######
 
 # ICI AJOUTER LES TESTS
+
+add_executable(test_kNbhd test_kNbhd.cpp)
+target_link_libraries(test_kNbhd Vector3d ${PCL_LIBRARIES})
+
+add_executable(test_load_off_file test_load_off_file.cpp)
+target_link_libraries(test_load_off_file Vector3d Load_off_file)
+
+add_executable(test test.cpp)
+target_link_libraries(test Vector3d)
 
 #######
