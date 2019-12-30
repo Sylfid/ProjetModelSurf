@@ -32,9 +32,23 @@ class Plane {
     */
     ~Plane();
 
+    /**
+      * \brief Met à jour la normale au plan tangent
+      * \param normal les nouvelles coordonées de la normale
+    */
     void setNormal(const Vector3d &normal);
+    /**
+      * \brief Met à jour le centre du plan tangent
+      * \param center les nouvelles coordonées du centre
+    */
     void setCenter(const Vector3d &center);
+    /**
+      * \brief Récupère la normale
+    */
     Vector3d getNormal() const;
+    /**
+      * \brief Récupère le centre
+    */
     Vector3d getCenter() const;
 
     /**
@@ -43,7 +57,6 @@ class Plane {
       * \param str le flux sur lequel s'affichera le résultat
     */
     void display(std::ostream& str);
-
 
 };
 

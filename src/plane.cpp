@@ -27,5 +27,5 @@ Vector3d Plane::getCenter() const {
 }
 
 void Plane::display(std::ostream& str) {
-  str << "center : " << center << ", normal : " << normal;
+  str << "center : " << center << ", normal : " << normal << std::endl;
 }
