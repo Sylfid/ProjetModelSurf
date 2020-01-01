@@ -9,7 +9,7 @@
 */
 class Vector3d {
 
-  private:
+private:
     double x; /*!< abscisse du vecteur 3D */
     double y; /*!< ordonnée du vecteur 3D */
     double z; /*!< côte du vecteur 3D */

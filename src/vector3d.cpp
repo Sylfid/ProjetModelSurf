@@ -5,6 +5,7 @@
 #include <fstream>
 #include <assert.h>
 #include <math.h>
+#include <limits>
 
 Vector3d::Vector3d(){
     x = 0.;
@@ -178,6 +179,7 @@ Vector3d operator/(const Vector3d &P, const double d) {
 }
 
 std::ostream& operator<<(std::ostream &str, const Vector3d &P) {
-  str << P.getX() << "\t" << P.getY() << "\t" << P.getZ() << "\n";
-  return str;
+    str.precision(std::numeric_limits<double>::digits10+1);
+    str << P.getX() << " " << P.getY() << " " << P.getZ() << std::endl;
+    return str;
 }
