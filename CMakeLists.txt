@@ -73,6 +73,9 @@ add_test(valgrindTest_load_off_file tests/test_load_off_file)
 add_test(Test tests/test)
 add_test(valgrindTestvalgrind tests/test)
 
+add_test(Test_eigenlib tests/test_eigenlib)
+add_test(valgrindTest_eigenlibvalgrind tests/test_eigenlib)
+
 # version verbose de tous les tests
 add_custom_target(check ctest -V)
 

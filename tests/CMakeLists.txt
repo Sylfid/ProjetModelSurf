@@ -20,6 +20,10 @@ include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
 add_definitions(${PCL_DEFINITIONS})
 
+include_directories(${EIGEN_INCLUDE_DIRS})
+link_directories(${EIGEN_LIBRARY_DIRS})
+add_definitions(${EIGEN_DEFINITIONS})
+
 #######
 
 # ICI AJOUTER LES TESTS
@@ -32,5 +36,14 @@ target_link_libraries(test_load_off_file Vector3d Load_off_file)
 
 add_executable(test test.cpp)
 target_link_libraries(test Vector3d)
+
+add_executable(test_eigenlib test_eigenlib.cpp)
+target_link_libraries(test_eigenlib Vector3d Plane ${EIGEN_LIBRARIES})
+
+add_executable(test_planes test_planes.cpp)
+target_link_libraries(test_planes Vector3d Plane)
+
+#add_executable(test_cloud test_cloud.cpp)
+#target_link_libraries(test_cloud Vector3d Cloud Plane)
 
 #######
