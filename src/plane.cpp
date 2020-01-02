@@ -57,6 +57,7 @@ Vector3d Plane::getV() const {
 }
 
 void Plane::display(std::ostream& str) {
+    str.precision(std::numeric_limits<double>::digits10+1);
   str << "center : " << center << "normal : " << normal << "u : " << u
         << "v : " << v << std::endl;
 }
