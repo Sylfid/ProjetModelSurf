@@ -1,6 +1,5 @@
 #include "load_off_file.h"
 #include <fstream>
-#include <iostream>
 #include <cassert>
 
 bool load_OFF_file(const std::string &filename, std::vector<Vector3d> &cloud) {
@@ -43,11 +42,9 @@ bool save_cloud_OFF_file(const std::string &filename, std::vector<Vector3d> &clo
     assert(file.is_open());
 
     file.precision(std::numeric_limits<double>::digits10+1);
-
     for (std::vector<Vector3d>::iterator it = cloud.begin() ; it != cloud.end() ; ++it) {
         file << it->getX() << " " << it->getY() << " " << it->getZ() << std::endl;
     }
-
     file.close();
 
     return true;

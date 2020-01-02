@@ -1,7 +1,6 @@
 #include "../src/plane.h"
-
-#include <iostream>
 #include "../src/vector3d.h"
+#include <iostream>
 #include <assert.h>
 
 /**

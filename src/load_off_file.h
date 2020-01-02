@@ -2,8 +2,6 @@
 #define LOAD_OFF_FILE_H
 
 #include "vector3d.h"
-#include <string>
-#include <limits>
 #include <vector>
 
 typedef std::numeric_limits< double > dbl;

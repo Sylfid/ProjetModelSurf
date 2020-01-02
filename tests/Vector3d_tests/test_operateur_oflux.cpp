@@ -12,10 +12,7 @@ int main() {
     Vector3d v = Vector3d(3.5,0,2.5);
     std::stringstream str;
     v.display(str);
-
-    std::stringstream str1;
-    str1 << v;
-    assert(str.str() == str1.str());
+    assert(str.str() == "3.5\t0\t2.5\n");
 
     return 0;
 }

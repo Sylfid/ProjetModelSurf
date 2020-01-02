@@ -1,11 +1,8 @@
-#include <string>
-#include <iostream>
 #include "vector3d.h"
 #include <cstdlib>
 #include <fstream>
 #include <assert.h>
 #include <math.h>
-#include <limits>
 
 Vector3d::Vector3d(){
     x = 0.;
