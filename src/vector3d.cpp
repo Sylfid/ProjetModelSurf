@@ -26,6 +26,7 @@ Vector3d::~Vector3d() {
 }
 
 void Vector3d::display(std::ostream& str){
+    str.precision(std::numeric_limits<double>::digits10+1);
     str << x << "\t" << y << "\t" << z << "\n";
 }
 

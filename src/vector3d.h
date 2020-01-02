@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <limits>
 
 /**
   * \brief Classe représentant un vecteur 3D de coordonées (x,y,z)
@@ -44,12 +45,39 @@ private:
       * \param str le flux sur lequel s'affichera le résultat
     */
     void display(std::ostream& str);
+    /**
+      * \brief Mets à jour les coordonnées du vecteur.
+      * \param x coordonée x
+      * \param y coordonée y
+      * \param z coorodnée z
+    */
     void set(double x, double y, double z);
+    /**
+      * \brief Mets à jour la coordonnée x du vecteur.
+      * \param x coordonée x
+    */
     void setX(double x);
+    /**
+      * \brief Mets à jour la coordonnée y du vecteur.
+      * \param y coordonée y
+    */
     void setY(double y);
+    /**
+      * \brief Mets à jour la coordonnée z du vecteur.
+      * \param z coorodnée z
+    */
     void setZ(double z);
+    /**
+      * \brief Recupére la cordonnée x du vecteur.
+    */
     double getX() const;
+    /**
+      * \brief Recupére la cordonnée y du vecteur.
+    */
     double getY() const;
+    /**
+      * \brief Recupére la cordonnée z du vecteur.
+    */
     double getZ() const;
 
     /**
