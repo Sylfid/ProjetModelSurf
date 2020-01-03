@@ -22,4 +22,7 @@ bool load_OFF_file(const std::string &filename, std::vector<Vector3d> &cloud);
 */
 bool save_cloud_OFF_file(const std::string &filename, std::vector<Vector3d> &cloud);
 
+// A COMPLETER
+bool save_faces_OFF_file();
+
 #endif // LOAD_OFF_FILE_H

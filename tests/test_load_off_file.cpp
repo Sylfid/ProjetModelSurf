@@ -1,7 +1,6 @@
 #include "../src/load_off_file.h"
-
-#include <iostream>
 #include <limits>
+#include <boost/filesystem.hpp>
 
 /**
   * \test
@@ -20,6 +19,9 @@ int main (int argc, char** argv) {
         name = "test.off";
     } else {
         filename = "../../models/buddha.off";
+        if (!(boost::filesystem::exists(filename))) {
+            filename = "../models/buddha.off";
+        }
         name = "test_buddha.off";
     }
 

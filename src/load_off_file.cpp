@@ -49,3 +49,7 @@ bool save_cloud_OFF_file(const std::string &filename, std::vector<Vector3d> &clo
 
     return true;
 }
+
+bool save_faces_OFF_file() {
+    return EXIT_FAILURE;
+}
