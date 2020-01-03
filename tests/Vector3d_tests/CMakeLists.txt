@@ -12,6 +12,9 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wextra -Wall -std=c++11")
 include_directories(${PROJECT_SOURCE_DIR}/src)
 link_directories(${PROJECT_SOURCE_DIR}/src)
 
+add_executable(test_accesseur test_accesseur.cpp)
+target_link_libraries(test_accesseur Vector3d)
+
 add_executable(test_affichage test_affichage.cpp)
 target_link_libraries(test_affichage Vector3d)
 
