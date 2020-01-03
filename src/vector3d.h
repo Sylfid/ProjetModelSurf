@@ -108,7 +108,20 @@ private:
     double getDistanceTo(const Vector3d &P);
 
     // OPERATEURS
-
+    /**
+          * \brief opérateur d'accès à un élément du vecteur à l'aide de []
+          * \param i un entier compris entre 0 et la taille du vecteur 2
+          * \return Renvoie une référence :
+                        le ieme élément du vecteur lorsque cela a un sens
+        */
+    double operator[](int i) const;
+    /**
+          * \brief opérateur d'accès à un élément du vecteur à l'aide de ()
+          * \param i un entier compris entre 0 et la taille du vecteur 2
+          * \return Renvoie une référence :
+                        le ieme élément du vecteur lorsque cela a un sens
+        */
+    double operator()(int i) const;
     /**
       * \brief opérateur +=
       * \details L'opérateur += permet de réaliser l'opération suivante :

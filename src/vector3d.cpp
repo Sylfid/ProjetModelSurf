@@ -90,6 +90,17 @@ void Vector3d::normalize() {
 
 // OPERATEURS
 
+double Vector3d::operator[](int i) const {
+    assert(i<3 && i>=0);
+    if (i==0) return x;
+    else if (i==1) return y;
+    else return z;
+}
+
+double Vector3d::operator()(int i) const {
+    return (*this)[i];
+}
+
 Vector3d& Vector3d::operator+=(const double d) {
     x += d;
     y += d;
