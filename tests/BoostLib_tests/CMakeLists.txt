@@ -13,8 +13,12 @@ include_directories(${PROJECT_SOURCE_DIR}/src)
 link_directories(${PROJECT_SOURCE_DIR}/src)
 
 find_package(Boost REQUIRED)
+find_package(PCL REQUIRED)
 
 add_executable(test_boost_example test_boost_example.cpp)
 add_executable(test_boost_example2 test_boost_example2.cpp)
 add_executable(test_boost_example3 test_boost_example3.cpp)
-#add_executable(test_construct_EMST test_construct_EMST.cpp)
+add_executable(test_construct_EMST test_construct_EMST.cpp)
+target_link_libraries(test_construct_EMST Load_off_file Vector3d Plane Cloud ${PCL_LIBRARIES})
+add_executable(test_boost_example3_multipleEdges test_boost_example3_multipleEdges.cpp)
+add_executable(test_boost_example3_singleEdge test_boost_example3_singleEdge.cpp)

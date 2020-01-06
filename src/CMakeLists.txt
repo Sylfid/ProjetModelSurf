@@ -14,10 +14,9 @@ add_definitions(${PCL_DEFINITIONS})
 
 add_library(Vector3d SHARED vector3d.cpp)
 add_library(Cloud SHARED cloud.cpp)
-
 add_library(Plane SHARED plane.cpp)
 add_library(Load_off_file SHARED load_off_file.cpp)
+add_library(Planes_orientation SHARED consistent_orientation.cpp)
 
-add_executable(main main.cpp)
-
-target_link_libraries(main Vector3d Plane)
+#add_executable(main main.cpp)
+#target_link_libraries(main Vector3d Plane Cloud Load_off_file Planes_orientation)

@@ -1,50 +1,7 @@
-#include <iostream>
+#include "consistent_orientation.h"
 #include <fstream>
-#include <boost/graph/adjacency_list.hpp>
-#include <boost/graph/kruskal_min_spanning_tree.hpp>
-#include <boost/filesystem.hpp>
-#include "../../src/cloud.h"
 
-typedef boost::property<boost::edge_weight_t, double> EdgeWeight;
-typedef boost::adjacency_list<boost::setS, boost::vecS, boost::undirectedS, boost::no_property, EdgeWeight> UndirectedGraph;
-typedef boost::graph_traits<UndirectedGraph>::edge_iterator edge_iterator;
-typedef boost::graph_traits <UndirectedGraph>::edge_descriptor Edge;
-
-/**
-  * \test test_construct_EMST.cpp
-  * \brief Programme qui teste la librairie Boost : construit un EMST pour un
-            nuage de points.
-            Pour afficher le .dot, dans le shell taper les commandes suivantes :
-            dot -Tjpg -oexample2.jpg example2.dot
-            (inspiré de : libs/graph/example/kruskal-example.cpp)
-*/
-
-void flip_normal(Plane &P) {
-    P.setNormal(-P.getNormal());
-}
-
-int main() {
-
-    std::string filename = "../../../models/tetrahedron.off";
-    if (!(boost::filesystem::exists(filename))) {
-        filename = "../models/tetrahedron.off";
-    }
-    Cloud cloud(filename);
-    std::cout << "Nuage de points : " << std::endl;
-    cloud.displayCloud(std::cout);
-    std::cout << "Test de displayPlanes :" << std::endl;
-    cloud.displayPlanes(std::cout);
-    std::cout << std::endl;
-
-    std::cout << "Construction des plans tangents :" << std::endl;
-    int K = 4;
-    cloud.construct_tangent_planes(K);
-    std::cout << "Plans tangents avec k = " << K-1 << ": " <<std::endl;
-    cloud.displayPlanes(std::cout);
-
-    int size = cloud.getSize();
-    std::vector<Plane> plans_t = cloud.getPlanes();
-
+void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const int K) {
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_float(new pcl::PointCloud<pcl::PointXYZ>);
 
     // initialise le pointcloud data
@@ -75,7 +32,6 @@ int main() {
             max_z = z;
         }
 
-        // std::cout << "The concerned point : " << cloud.getPlanes()[i].getCenter() << std::endl;
         pcl::PointXYZ searchPoint = cloud_float->points[i];
         // K nearest neighbor search
         std::vector<int> pointIdxNKNSearch(K);
@@ -87,7 +43,6 @@ int main() {
         //               << " (squared distance: " << pointNKNSquaredDistance[j]
         //               << ")" << std::endl;
 
-        // construct the Riemannian Graph
         int nb_nbhd = pointIdxNKNSearch.size();
         for (int k=1; k<nb_nbhd ;k++) {
             int index = pointIdxNKNSearch[k];
@@ -99,11 +54,10 @@ int main() {
 
     boost::property_map<UndirectedGraph, boost::edge_weight_t>::type EdgeWeightMap = get(boost::edge_weight_t(), g);
 
-    std::vector<Edge> spanning_tree;
+    std::vector < Edge > spanning_tree;
     boost::kruskal_minimum_spanning_tree(g, std::back_inserter(spanning_tree));
 
-    // save the graph on a .dot file
-    std::ofstream fout("emst.dot");
+    std::ofstream fout("montest.dot");
     fout  << "graph A {\n"
           << " rankdir=LR\n"
           << " size=\"3,3\"\n"
@@ -121,17 +75,23 @@ int main() {
              << "\"];\n";
     }
     fout << "}\n";
+    std::cout << "resultats dans : " << "montest.dot" << std::endl;
 
     std::cout << "max indice z = " << index_max_z
-                << " avec z = " << max_z << std::endl;
+            << "\tavec z = " << max_z << std::endl;
     plans_t[index_max_z].display(std::cout);
 
-    // flip the orientation of the normal with the largest z coordinate
     std::cout << "flip normal" << std::endl;
     flip_normal(plans_t[index_max_z]);
     plans_t[index_max_z].display(std::cout);
 
-    std::cout << "resultats dans : " << "emst.dot" << std::endl;
-
-    return EXIT_FAILURE;
 }
+
+void flip_normal(Plane &P) {
+    P.setNormal(-P.getNormal());
+}
+
+void propagate_orientation(std::vector<Edge> &spanning_tree,
+    std::vector<Plane> &plans_t, int current, int parent) {
+
+    }

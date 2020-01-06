@@ -9,10 +9,13 @@ typedef boost::graph_traits<UndirectedGraph>::edge_iterator edge_iterator;
 typedef boost::graph_traits <UndirectedGraph>::edge_descriptor Edge;
 
 /**
-  * \test test_boost_example3.cpp
-  * \brief Programme qui teste la librairie Boost : création d'un graphe,
-            algorithme de Kruskal pour la recherche d'un arbre couvrant minimal
-            et sauvegarde du résultat dans un fichier .dot
+  * \test test_boost_example3_multipleEdges.cpp
+  * \brief Programme qui teste la librairie Boost : création d'un graphe avec
+            arrêtes multiples autorisées, algorithme de Kruskal pour la
+            recherche d'un arbre couvrant minimal et sauvegarde du résultat dans
+            un fichier .dot + opérations sur les edges et vertex pour ajouter
+            ou non un egde entre deux vertexes.
+            opération : operation : boost::adjacency_list<boost::listS, boost::vecS, ... >
             Pour afficher le .dot, dans le shell taper les commandes suivantes :
             dot -Tjpg -oexample2.jpg example2.dot
             (inspiré de : libs/graph/example/kruskal-example.cpp)
@@ -20,22 +23,46 @@ typedef boost::graph_traits <UndirectedGraph>::edge_descriptor Edge;
 int main() {
     UndirectedGraph g;
 
+    // // cela ne marche pas car les sommets 0 et 1 n'existent pas
+    // if (!boost::edge(0, 1, g).second) boost::add_edge(0, 0, 0.1, g);
+    boost::add_edge(0, 1, 5, g);
+    if (!boost::edge(0, 0, g).second) {
+        boost::add_edge(0, 0, 0.1, g);
+    }
+    // arrête multiple
     boost::add_edge(0, 1, 5, g);
     boost::add_edge(4, 5, 7, g);
+    // pour ajouter une arrête entre deux points qui n'existe pas
+    // ici ne fait rien
+    if (boost::vertex(4, g) == g.null_vertex() && boost::vertex(5, g) == g.null_vertex()) {
+        boost::add_edge(4, 5, 7, g);
+    }
     boost::add_edge(0, 4, 2, g);
+    if (!boost::edge(0, 4, g).second) {
+        boost::add_edge(0, 4, 0.123456, g);
+    }
     boost::add_edge(1, 5, 2, g);
     boost::add_edge(0, 2, 1, g);
     boost::add_edge(2, 3, 6, g);
     boost::add_edge(1, 3, 4, g);
     boost::add_edge(2, 4, 2, g);
     boost::add_edge(3, 5, 1, g);
+    // pour ajouter une arrête entre deux sommets qui sont présents dans le graphe
+    // ici : ajoute l'arrête
+    if (boost::vertex(3, g) == g.null_vertex()) {
+        std::cout << "source vertex (" << 4 << ") not present" << std::endl;
+    } else if (boost::vertex(0, g) == g.null_vertex()) {
+        std::cout << "target vertex (" << 5 << ") not present" << std::endl;
+    } else {
+        boost::add_edge(3, 0, 0.7, g);
+    }
 
     boost::property_map<UndirectedGraph, boost::edge_weight_t>::type EdgeWeightMap = get(boost::edge_weight_t(), g);
 
     std::vector < Edge > spanning_tree;
     boost::kruskal_minimum_spanning_tree(g, std::back_inserter(spanning_tree));
 
-    std::ofstream fout("example3.dot");
+    std::ofstream fout("example3_multEdges.dot");
     fout  << "graph A {\n"
           << " rankdir=LR\n"
           << " size=\"3,3\"\n"
@@ -53,6 +80,8 @@ int main() {
              << "\"];\n";
     }
     fout << "}\n";
+
+    std::cout << "resultats dans : " << "example3_multEdges.dot" << std::endl;
 
     return EXIT_FAILURE;
 }

@@ -6,9 +6,8 @@ enable_testing()
 set(CMAKE_BUILD_TYPE Release)
 add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
-add_subdirectory(PCL VERSION 1.9.1.99)
 
-#find_package(PCL 1.2 REQUIRED)
+find_package(PCL 1.2 REQUIRED)
 
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})
