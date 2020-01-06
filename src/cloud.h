@@ -83,7 +83,7 @@ class Cloud {
           * \brief Calcule tous les plans tangents.
           * \param K le nombre de voisins pour le calcul des kNNbhd
         */
-        void construct_tangent_planes(int K);
+        void construct_tangent_planes(const int K);
 };
 
 /**

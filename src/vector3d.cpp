@@ -10,17 +10,11 @@ Vector3d::Vector3d(){
     z = 0.;
 }
 
-Vector3d::Vector3d(double x, double y, double z):x(x), y(y), z(z){
-  // rien à faire
-}
+Vector3d::Vector3d(double x, double y, double z):x(x), y(y), z(z){}
 
-Vector3d::Vector3d(const Vector3d &P):x(P.x), y(P.y), z(P.z) {
-  // rien à faire
-}
+Vector3d::Vector3d(const Vector3d &P):x(P.x), y(P.y), z(P.z) {}
 
-Vector3d::~Vector3d() {
-  // rien à faire
-}
+Vector3d::~Vector3d() {}
 
 void Vector3d::display(std::ostream& str){
     str.precision(std::numeric_limits<double>::digits10+1);

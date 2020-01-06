@@ -55,7 +55,7 @@ std::vector<Plane> Cloud::getPlanes() const {
     return planes;
 }
 
-void Cloud::construct_tangent_planes(int K) {
+void Cloud::construct_tangent_planes(const int K) {
     planes.resize(size);
     pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_float(new pcl::PointCloud<pcl::PointXYZ>);
 
@@ -80,13 +80,6 @@ void Cloud::construct_tangent_planes(int K) {
         std::vector<float> pointNKNSquaredDistance(K);
 
         kdtree.nearestKSearch(searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance);
-        //   for (std::size_t j = 0; j < pointIdxNKNSearch.size (); ++j)
-        //     std::cout << "    "  <<   cloud_float->points[ pointIdxNKNSearch[j] ].x
-        //               << " " << cloud_float->points[ pointIdxNKNSearch[j] ].y
-        //               << " " << cloud_float->points[ pointIdxNKNSearch[j] ].z
-        //               << " (squared distance: " << pointNKNSquaredDistance[j]
-        //               << ")" << std::endl;
-        // }
         // on recupere la liste des voisins à partir de la liste des indices
         // attention : cette liste contient le point searchPoint!
         // Comme les listes sont  ordonnée par distance croissante, l'indice de
