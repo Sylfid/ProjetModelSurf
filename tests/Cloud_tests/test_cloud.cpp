@@ -21,10 +21,10 @@ int main () {
     cloud.displayCloud(std::cout);
     std::cout << "Test de displayPlanes :" << std::endl;
     cloud.displayPlanes(std::cout);
+    std::cout << std::endl;
 
     // Test compute_normal
-    std::cout << "------- TEST -------" << std::endl;
-    std::cout << std::endl << "Test de compute_normal :" << std::endl;
+    std::cout << "------- TEST de compute_normal -------" << std::endl;
     Vector3d c(0,0,0);
     Vector3d n1(0,0,1);
     Vector3d n2(0,1,0);
@@ -43,21 +43,12 @@ int main () {
     assert(p_test.getNormal().getY() == 0);
     assert(p_test.getNormal().getZ() == 0);
 
-    assert(p_test.getU().getX() == 0);
-    assert(p_test.getU().getY() == 0);
-    assert(p_test.getU().getZ() == 1);
-
-    assert(p_test.getV().getX() == 0);
-    assert(p_test.getV().getY() == 1);
-    assert(p_test.getV().getZ() == 0);
-
     std::cout << "Ok" << std::endl;
 
     // Test compute centroid
     double eps = 0.00000000000000000001;
 
-    std::cout << "------- TEST -------" << std::endl;
-    std::cout << "Test de compute_centroid : " << std::endl;
+    std::cout << "------- TEST de compute_centroid -------" << std::endl;
     Plane Pp;
     Vector3d cc = compute_3d_centroid(nbhd);
     std::cout << "centroid : " << cc;

@@ -31,8 +31,6 @@ void Cloud::displayPlanes(std::ostream& str) const {
     for (std::size_t i=0 ; i<planes.size() ; i++) {
         str << "center : " << planes[i].getCenter()
             << "normal : " << planes[i].getNormal()
-            << "u : " << planes[i].getU()
-            << "v : " << planes[i].getV()
             << std::endl;
     }
 }
@@ -82,11 +80,11 @@ void Cloud::construct_tangent_planes(int K) {
         std::vector<float> pointNKNSquaredDistance(K);
 
         kdtree.nearestKSearch(searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance);
-        //   for (std::size_t i = 0; i < pointIdxNKNSearch.size (); ++i)
-        //     std::cout << "    "  <<   cloud_float->points[ pointIdxNKNSearch[i] ].x
-        //               << " " << cloud_float->points[ pointIdxNKNSearch[i] ].y
-        //               << " " << cloud_float->points[ pointIdxNKNSearch[i] ].z
-        //               << " (squared distance: " << pointNKNSquaredDistance[i]
+        //   for (std::size_t j = 0; j < pointIdxNKNSearch.size (); ++j)
+        //     std::cout << "    "  <<   cloud_float->points[ pointIdxNKNSearch[j] ].x
+        //               << " " << cloud_float->points[ pointIdxNKNSearch[j] ].y
+        //               << " " << cloud_float->points[ pointIdxNKNSearch[j] ].z
+        //               << " (squared distance: " << pointNKNSquaredDistance[j]
         //               << ")" << std::endl;
         // }
         // on recupere la liste des voisins à partir de la liste des indices
@@ -95,12 +93,10 @@ void Cloud::construct_tangent_planes(int K) {
         // searchPoint est 0 (ie : premier élément des listes)
         int nb_nbhd = pointIdxNKNSearch.size()-1;
         std::vector<Vector3d> nbhd(nb_nbhd);
-        // std::cout << "k-nbhd : " << std::endl;
-        for (int i=0 ; i<nb_nbhd ; i++) {
-            nbhd[i].set(cloud[pointIdxNKNSearch[i+1]].getX(),
-                        cloud[pointIdxNKNSearch[i+1]].getY(),
-                        cloud[pointIdxNKNSearch[i+1]].getZ());
-            // std::cout << nbhd[i];
+        for (int k=0 ; k<nb_nbhd ; k++) {
+            nbhd[k].set(cloud[pointIdxNKNSearch[k+1]].getX(),
+                        cloud[pointIdxNKNSearch[k+1]].getY(),
+                        cloud[pointIdxNKNSearch[k+1]].getZ());
         }
 
         // plans tangents
@@ -139,61 +135,26 @@ void compute_normal(std::vector<Vector3d> nbhd, Vector3d o, Plane &P) {
     cv(2,0) = cv(0,2);
     cv(2,1) = cv(1,2);
 
-    // std::cout << "Here is a CV matrix:" << std::endl << cv << std::endl << std::endl;
-
     // compute eigenvalues of the covariance matrix CV
     Eigen::EigenSolver<Eigen::MatrixXd> eigensolver(cv);
     // third eigen vector = the min
     int pos_min = 0;
-    int pos_max = 0;
     double min = eigensolver.eigenvalues()[0].real();
-    double max = eigensolver.eigenvalues()[0].real();
     for (int i = 1; i < 3; i++) {
         double eigenvalue = eigensolver.eigenvalues()[i].real();
         if (eigenvalue < min) {
             min = eigenvalue;
             pos_min = i;
         }
-        if (eigenvalue >= max) {
-            max = eigenvalue;
-            pos_max = i;
-        }
     }
-    int pos = 3 - (pos_min + pos_max);
-
-    // std::cout << "pos min : " << pos_min << std::endl;
-    // std::cout << "pos max : " << pos_max << std::endl;
-    // std::cout << "autre : " << pos << std::endl << std::endl;
-    // std::cout << "The eigenvalues : " << std::endl << eigensolver.eigenvalues() << std::endl;
 
     // extract the third eigen vector
-    Eigen::VectorXcd v1 = eigensolver.eigenvectors().col(pos_max);
-    Eigen::VectorXcd v2 = eigensolver.eigenvectors().col(pos);
 	Eigen::VectorXcd v3 = eigensolver.eigenvectors().col(pos_min);
-
-    // std::cout << "The first eigenvector of the 3x3 matrix of A is:"
-    //  << std::endl << v1 << std::endl;
-    // std::cout << "The second eigenvector of the 3x3 matrix of A is:"
-    //   << std::endl << v2 << std::endl;
-    // std::cout << "The third eigenvector of the 3x3 matrix of A is:"
-    //    << std::endl << v3 << std::endl;
-    // std::cout << std::endl << "Pseudo-decomposition : " << std::endl;
-    // Eigen::MatrixXd D = eigensolver.pseudoEigenvalueMatrix();
-    // Eigen::MatrixXd V = eigensolver.pseudoEigenvectors();
-    // Eigen::MatrixXd A_dec = V * D * V.inverse();
-    // std::cout << "The pseudo-eigenvalue matrix D is:" << std::endl << D << std::endl;
-    // std::cout << "The pseudo-eigenvector matrix V is:" << std::endl << V << std::endl;
-    // std::cout << "Finally, V * D * V^(-1) = " << std::endl << V * D * V.inverse() << std::endl;
 
     // normal vector
     Vector3d normal(v3(0).real(),v3(1).real(),v3(2).real());
-    Vector3d u(v1(0).real(),v1(1).real(),v1(2).real());
-    Vector3d v(v2(0).real(),v2(1).real(),v2(2).real());
 
-    // P.setCenter(o);
 	P.setNormal(normal);
-    P.setU(u);
-    P.setV(v);
 
     // std::cout << "----------------------" << std::endl;
 }

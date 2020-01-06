@@ -77,16 +77,11 @@ int main () {
 
     // normal vector
     Vector3d normal(v3(0).real(),v3(1).real(),v3(2).real());
-    Vector3d u(v1(0).real(),v1(1).real(),v1(2).real());
-    Vector3d v(v2(0).real(),v2(1).real(),v2(2).real());
 
     Vector3d c(0,0,0);
-    // Plane P(c, normal, u ,v);
     Plane P;
     P.setCenter(c);
     P.setNormal(normal);
-    P.setU(u);
-    P.setV(v);
 
     std::cout << "\nAffichage de mon plan tangent test : " << std::endl;
     P.display(std::cout);
