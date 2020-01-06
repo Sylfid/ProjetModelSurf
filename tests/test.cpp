@@ -23,6 +23,10 @@ int main () {
     cloud[0] = v1;
     cloud[1] = v2;
     cloud[2] = v3;
+    std::cout << "mon nuage de point : " << std::endl;
+    for (std::size_t i=0 ; i<cloud.size() ; i++) {
+        cloud[i].display(std::cout);
+    }
     std::cout << "un point v1 de mon nuage :" << std::endl;
     v1.display(std::cout);
 

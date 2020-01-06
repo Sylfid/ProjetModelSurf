@@ -69,17 +69,14 @@ add_test(valgrindTest_operateur_plus valgrind tests/Vector3d_tests/test_operateu
 add_test(Test_operateur_plusEq tests/Vector3d_tests/test_operateur_plusEq)
 add_test(valgrindTest_operateur_plusEq valgrind tests/Vector3d_tests/test_operateur_plusEq)
 
-add_test(Test_kNbhd tests/test_kNbhd)
-add_test(valgrindTest_kNbhdvalgrind tests/test_kNbhd)
-
 add_test(Test tests/test)
 add_test(valgrindTestvalgrind tests/test)
 
-add_test(Test_eigenlib tests/test_eigenlib)
-add_test(valgrindTest_eigenlibvalgrind tests/test_eigenlib)
-
 add_test(Test_load_off_file tests/test_load_off_file)
 add_test(valgrindTest_load_off_filevalgrind tests/test_load_off_file)
+
+add_test(Test_planes tests/test_planes)
+add_test(valgrindTest_planesvalgrind tests/test_planes)
 
 add_test(Test_basics tests/Cloud_tests/test_basics)
 add_test(valgrindTest_basicsvalgrind tests/Cloud_tests/test_basics)
