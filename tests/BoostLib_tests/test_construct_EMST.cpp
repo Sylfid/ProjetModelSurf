@@ -133,5 +133,5 @@ int main() {
 
     std::cout << "resultats dans : " << "emst.dot" << std::endl;
 
-    return EXIT_FAILURE;
+    return 0;
 }

@@ -53,5 +53,5 @@ int main() {
     }
     fout << "}\n";
 
-    return EXIT_FAILURE;
+    return 0;
 }

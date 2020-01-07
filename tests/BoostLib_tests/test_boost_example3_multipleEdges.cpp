@@ -83,5 +83,5 @@ int main() {
 
     std::cout << "resultats dans : " << "example3_multEdges.dot" << std::endl;
 
-    return EXIT_FAILURE;
+    return 0;
 }
