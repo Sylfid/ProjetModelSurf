@@ -16,7 +16,7 @@ int main (int argc, char** argv) {
         name = argv[2];
     } else if (argc == 2) {
         filename = argv[1];
-        name = "test.off";
+        name = "test_load_off.off";
     } else {
         filename = "../../models/buddha.off";
         if (!(boost::filesystem::exists(filename))) {
