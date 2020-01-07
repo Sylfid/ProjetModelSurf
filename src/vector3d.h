@@ -89,12 +89,12 @@ private:
       * \brief Renvoie le résultat du produit scalaire avec un autre vecteur
       * \param P le vecteur avec lequel faire le produit scalaire
     */
-    double getScalarProduct(const Vector3d &P);
+    double getScalarProduct(const Vector3d &P) const;
     /**
       * \brief Renvoie le résultat du produit vectoriel avec un autre vecteur
       * \param P le vecteur avec lequel faire le produit scalaire
     */
-    Vector3d crossProduct(const Vector3d &P);
+    Vector3d crossProduct(const Vector3d &P) const;
     /**
       * \brief Renvoie la norme 2 du vecteur
     */
@@ -230,5 +230,10 @@ Vector3d operator*(const double d, const Vector3d &P);
   * \return affiche le contenu du vecteur sur le flux
 */
 std::ostream& operator<<(std::ostream &str, const Vector3d &P);
+/**
+  * \brief Renvoie le résultat du produit scalaire entre deux vecteurs
+  * \param P le vecteur avec lequel faire le produit scalaire
+*/
+double dot(const Vector3d &P, const Vector3d &V);
 
 #endif // VECTOR3D_H

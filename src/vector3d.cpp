@@ -21,11 +21,11 @@ void Vector3d::display(std::ostream& str){
     str << x << "\t" << y << "\t" << z << "\n";
 }
 
-double Vector3d::getScalarProduct(const Vector3d &P) {
+double Vector3d::getScalarProduct(const Vector3d &P) const {
   return x*P.x + y*P.y + z*P.z;
 }
 
-Vector3d Vector3d::crossProduct(const Vector3d &P) {
+Vector3d Vector3d::crossProduct(const Vector3d &P) const {
   Vector3d CP;
   Vector3d V = *this;
   CP.x = V.y*P.z - V.z*P.y;
@@ -185,4 +185,8 @@ std::ostream& operator<<(std::ostream &str, const Vector3d &P) {
     str.precision(std::numeric_limits<double>::digits10+1);
     str << P.getX() << " " << P.getY() << " " << P.getZ() << std::endl;
     return str;
+}
+
+double dot(const Vector3d &P, const Vector3d &V) {
+    return P.getScalarProduct(V);
 }
