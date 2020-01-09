@@ -7,7 +7,7 @@
 #include <ctime>
 
 /**
-  * \test
+  * \test test_cloud.cpp
   * \brief Programme qui teste la classe cloud
 */
 int main () {
@@ -70,7 +70,24 @@ int main () {
     std::cout << "FIN !" << std::endl;
 
     // Test construct plans sur un plus gros fichier
-    std::cout << "------- TEST -------" << std::endl;
+    std::cout << "------- TEST2 -------" << std::endl;
+    std::string cube = "../../../models/cube.off";
+    if (!(boost::filesystem::exists(cube))) {
+        cube = "../models/cube.off";
+    }
+    Cloud cloud2(cube);
+    std::cout << "Test de displayCloud :" << std::endl;
+    cloud2.displayCloud(std::cout);
+    std::cout << "Test de displayPlanes :" << std::endl;
+    cloud2.displayPlanes(std::cout);
+    std::cout << std::endl;
+    std::cout << "Construction des plans tangents :" << std::endl;
+    int K2 = 4;
+    cloud2.construct_tangent_planes(K2);
+
+    // Test construct plans sur un plus gros fichier
+    std::cout << "------- TEST3 -------" << std::endl;
+    std::cout << "buddha.off" << std::endl << std::endl;
     int debut = clock();
     std::string f = "../../../models/buddha.off";
     if (!(boost::filesystem::exists(f))) {

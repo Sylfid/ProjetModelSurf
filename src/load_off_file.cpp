@@ -40,7 +40,7 @@ bool load_OFF_file(const std::string &filename, std::vector<Vector3d> &cloud) {
 bool save_cloud_OFF_file(const std::string &filename, std::vector<Vector3d> &cloud) {
     std::ofstream file(filename);
     assert(file.is_open());
-
+    // ATTENTION à la précision des double
     file.precision(std::numeric_limits<double>::digits10+1);
     for (std::vector<Vector3d>::iterator it = cloud.begin() ; it != cloud.end() ; ++it) {
         file << it->getX() << " " << it->getY() << " " << it->getZ() << std::endl;

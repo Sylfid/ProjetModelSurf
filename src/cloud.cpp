@@ -148,6 +148,7 @@ void compute_normal(std::vector<Vector3d> nbhd, Vector3d o, Plane &P) {
     Vector3d normal(v3(0).real(),v3(1).real(),v3(2).real());
 
 	P.setNormal(normal);
+}
 
-    // std::cout << "----------------------" << std::endl;
+double signed_distance_function(Cloud cloud, Vector3d vect) {
 }

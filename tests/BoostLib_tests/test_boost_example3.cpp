@@ -10,12 +10,12 @@ typedef boost::graph_traits <UndirectedGraph>::edge_descriptor Edge;
 
 /**
   * \test test_boost_example3.cpp
-  * \brief Programme qui teste la librairie Boost : création d'un graphe,
-            algorithme de Kruskal pour la recherche d'un arbre couvrant minimal
-            et sauvegarde du résultat dans un fichier .dot
+  * \brief Programme simple qui teste la librairie Boost : création d'un graphe,
+            ajouter des sommets et arrêtes dans le graphe, algorithme de Kruskal
+            pour la recherche d'un arbre couvrant minimal et sauvegarde du
+            résultat dans un fichier .dot pour la visualisation du graphe.
             Pour afficher le .dot, dans le shell taper les commandes suivantes :
             dot -Tjpg -oexample2.jpg example2.dot
-            (inspiré de : libs/graph/example/kruskal-example.cpp)
 */
 int main() {
     UndirectedGraph g;

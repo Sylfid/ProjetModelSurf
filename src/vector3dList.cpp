@@ -1,6 +1,4 @@
 #include <exception>
-#include <string>
-#include <iostream>
 #include "vector3dList.h"
 #include <cstdlib>
 #include <fstream>

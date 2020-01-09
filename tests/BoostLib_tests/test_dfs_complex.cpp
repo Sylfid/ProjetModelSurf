@@ -16,9 +16,9 @@ typedef boost::graph_traits<UndirectedGraph>::vertex_descriptor Vertex;
 /**
   * \test test_dfs.cpp
   * \brief Programme qui teste que les étapes jusque "consistent plane orientation"
-            fonctionne bien, en particulier teste la classe consistent_plane.
-            + librairie Boost : undirected DFS.
-            Lecture d'un fichier OFF, contruction des plans tangents, récupère
+            fonctionnent bien, en particulier teste les méthode de la classe
+            consistent_plane + librairie Boost.
+            Lecture d'un fichier OFF, contruction des plans tangents, construction de
             l'arbre couvrant de poid minimum issu de l'algo de kruskal.
             L'algo récupère l'arbre sont la forme d'une liste d'objet de type
             Edge.
@@ -71,13 +71,13 @@ void propagate_orientation(UndirectedGraph &g, std::vector<Edge> &spanning_tree,
     std::sort(discover_order.begin(), discover_order.end(),
         boost::indirect_cmp < time_pm_type, std::less < double > >(dtime_pm));
 
-    std::cout << "order of discovery: ";
+    std::cout << "order of discovery: " << std::endl;
     for (int i = 0; i < N; ++i) {
         int node = discover_order[i];
         std::cout << "neighbors of node " << node << ": " << std::endl;
         auto neighbors = boost::adjacent_vertices(node, mstree);
         for (auto vd: boost::make_iterator_range(neighbors)) {
-            std::cout << vd << " " << std::endl;
+            std::cout << vd << ", weight : ";
             std::cout << dot(plans_t[vd].getNormal(), plans_t[node].getNormal()) << std::endl;
             if (dot(plans_t[vd].getNormal(), plans_t[node].getNormal())<0) {
                 flip_normal(plans_t[vd]);
@@ -93,14 +93,14 @@ int main() {
 
     // Construction des plans tangents
     double debut_lecture = clock();
-    std::string filename = "../../../models/tetrahedron.off";
+    std::string filename = "../../../models/cube.off";
     if (!(boost::filesystem::exists(filename))) {
-        filename = "../models/tetrahedron.off";
+        filename = "../models/cube.off";
     }
     Cloud cloud(filename);
     double fin_lecture = clock();
 
-    int K = 10;
+    int K = 4;
     double debut_pt = clock();
     cloud.construct_tangent_planes(K);
     double fin_pt = clock();
@@ -153,6 +153,7 @@ int main() {
         kdtree.nearestKSearch(searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance);
 
         // construct the Riemannian Graph
+
         int nb_nbhd = pointIdxNKNSearch.size();
         for (int k=1; k<nb_nbhd ;k++) {
             int index = pointIdxNKNSearch[k];
@@ -170,10 +171,25 @@ int main() {
     boost::kruskal_minimum_spanning_tree(g, std::back_inserter(spanning_tree));
     double fin_mst = clock();
 
-    std::ofstream fout("dfs_complex.dot");
+    std::ofstream foutt("dfs_complex_rieman.dot");
+    foutt  << "graph A {\n"
+          << " rankdir=LR\n"
+          << " size=\"10\"\n"
+          << " ratio=\"filled\"\n"
+          << " edge[style=\"bold\"]\n" << " node[shape=\"circle\"]\n";
+    boost::graph_traits<UndirectedGraph>::edge_iterator eitert, eiter_endt;
+    for (boost::tie(eitert, eiter_endt) = edges(g); eitert != eiter_endt; ++eitert) {
+      foutt << source(*eitert, g) << " -- " << target(*eitert, g);
+        foutt << "[color=\"black\", label=\"" << EdgeWeightMap[*eitert]
+             << "\"];\n";
+    }
+    foutt << "}\n";
+    std::cout << "resultats RG dans : " << "dfs_complex_rieman.dot" << std::endl;
+
+    std::ofstream fout("dfs_complex_mst.dot");
     fout  << "graph A {\n"
           << " rankdir=LR\n"
-          << " size=\"3,3\"\n"
+          << " size=\"10\"\n"
           << " ratio=\"filled\"\n"
           << " edge[style=\"bold\"]\n" << " node[shape=\"circle\"]\n";
     boost::graph_traits<UndirectedGraph>::edge_iterator eiter, eiter_end;
@@ -188,10 +204,10 @@ int main() {
              << "\"];\n";
     }
     fout << "}\n";
-    std::cout << "resultats dans : " << "montest.dot" << std::endl;
+    std::cout << "resultats du MST dans : " << "dfs_complex.dot" << std::endl;
 
     std::cout << "max indice z = " << index_max_z
-        << "\tavec z = " << max_z << std::endl;
+        << " avec z = " << max_z << std::endl;
     plans_t[index_max_z].display(std::cout);
 
     std::cout << "flip normal" << std::endl;
@@ -209,7 +225,7 @@ int main() {
         plans_t[i].display(std::cout);
     }
 
-    std::cout << "TEMPS DEXECUTION :" << std::endl;
+    std::cout << "===== TEMPS DEXECUTION : =====" << std::endl;
     std::cout << "LECTURE DU .OFF : " << (fin_lecture-debut_lecture) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
     std::cout << "CONSTRUCTION DES PT : " << (fin_pt-debut_pt) / double(CLOCKS_PER_SEC)
@@ -220,8 +236,8 @@ int main() {
                 << "s" << std::endl;
     std::cout << "ALGO DFS : " << (fin_dfs-debut_dfs) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
-    std::cout << "TOTAL CONSISTENT PLAN ORIENTATION STEP : " << (fin_dfs-debut_lecture) / double(CLOCKS_PER_SEC)
-                << "s" << std::endl;
+    std::cout << "=====TOTAL CONSISTENT PLAN ORIENTATION STEP : " << (fin_dfs-debut_lecture) / double(CLOCKS_PER_SEC)
+                << "s =====" << std::endl;
 
     return 0;
 }

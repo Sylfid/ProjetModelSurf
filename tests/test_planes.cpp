@@ -3,7 +3,7 @@
 #include <assert.h>
 
 /**
-  * \test
+  * \test test_plane.cpp
   * \brief Programme qui teste la classe Plane
 */
 int main () {

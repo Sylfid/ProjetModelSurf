@@ -98,15 +98,16 @@ private:
     /**
       * \brief Renvoie la norme 2 du vecteur
     */
-    double getNorm();
+    double getNorm() const;
     /**
       * \details Ce Constructeur est appelé pour l'instanciation
       *             d'un objet Vector3d. Créé un vecteur de taille 1 de valeur 0.
       * \brief Renvoie la distance entre le vecteur et celui donné en argument
       * \param P levecteur par rapport auquel on calcule la distance
     */
-    double getDistanceTo(const Vector3d &P);
+    double getDistanceTo(const Vector3d &P) const;
 
+    //===================================================
     // OPERATEURS
     /**
           * \brief opérateur d'accès à un élément du vecteur à l'aide de []
@@ -188,6 +189,7 @@ private:
     Vector3d& operator=(const Vector3d &P);
 
 };
+
 /**
   * \brief opérateur unaire -
   * \details L'opérateur applique l'opérateur uniaire - à tous les éléments
@@ -198,8 +200,8 @@ Vector3d operator-(const Vector3d &P);
 /**
   * \brief opérateur de soustraction entre deux vecteurs
   * \details L'opérateur réaliser l'addition binaire entre deux vecteurs.
-  * \param V1 vecteur à gauche de l'opérande -
-    \param V2 le veteur à droite de l'opérande -
+  * \param P1 vecteur à gauche de l'opérande -
+    \param P2 le veteur à droite de l'opérande -
   * \return le résultat de l'opération P1 - P2
 */
 Vector3d operator-(const Vector3d &P1, const Vector3d &P2);
@@ -226,14 +228,22 @@ Vector3d operator*(const double d, const Vector3d &P);
   * \brief opérateur de flux qui affiche le contenu du vecteur donné
             en paramètre sur le flux donné en paramètre
   * \param str le flux
-  * \param V le vecteur dont il faut affiche le contenu
+  * \param P le vecteur dont il faut affiche le contenu
   * \return affiche le contenu du vecteur sur le flux
 */
 std::ostream& operator<<(std::ostream &str, const Vector3d &P);
 /**
   * \brief Renvoie le résultat du produit scalaire entre deux vecteurs
-  * \param P le vecteur avec lequel faire le produit scalaire
+  * \param P le vecteur
+  * \param V le vecteur
 */
 double dot(const Vector3d &P, const Vector3d &V);
+/**
+  * \brief Renvoie la distance euclidienne entre deux vecteurs
+  * \param P le premier vecteur
+  * \param V le deuxième vecteur
+*/
+double euclidian_distance(const Vector3d &P, const Vector3d &V);
+
 
 #endif // VECTOR3D_H

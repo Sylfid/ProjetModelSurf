@@ -5,7 +5,7 @@
 
 
 /**
-  * \test
+  * \test test.cpp
   * \brief on teste plein de choses : l'utilisation std::vector et l'affichage
             de la precision d'un double sur un flux (pour notre apprentissage).
 */
