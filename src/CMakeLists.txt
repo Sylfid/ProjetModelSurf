@@ -5,8 +5,12 @@ enable_testing()
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wextra -Wall -pg -std=c++11")
 
-find_package(PCL 1.2 REQUIRED)
-find_package(Boost REQUIRED)
+find_package(PCL REQUIRED) # used version 1.9
+find_package(Boost REQUIRED) # version 1.72
+
+include_directories(${PCL_INCLUDE_DIRS})
+link_directories(${PCL_LIBRARY_DIRS})
+add_definitions(${PCL_DEFINITIONS})
 
 include_directories(${PCL_INCLUDE_DIRS})
 link_directories(${PCL_LIBRARY_DIRS})

@@ -16,8 +16,8 @@ add_subdirectory(BoostLib_tests)
 include_directories(${PROJECT_SOURCE_DIR}/src/build)
 link_directories(${PROJECT_SOURCE_DIR}/src/build)
 
-find_package(PCL 1.2 REQUIRED)
-find_package(Boost REQUIRED)
+find_package(PCL REQUIRED) #  used version 1.9
+find_package(Boost REQUIRED) # version 1.72
 
 include_directories(${EIGEN_INCLUDE_DIRS})
 link_directories(${EIGEN_LIBRARY_DIRS})
@@ -33,8 +33,8 @@ target_link_libraries(test_kNbhd Vector3d ${PCL_LIBRARIES})
 add_executable(test_load_off_file test_load_off_file.cpp)
 target_link_libraries(test_load_off_file Vector3d Load_off_file ${BOOST_LIBRARIES})
 
-add_executable(test test.cpp)
-target_link_libraries(test Vector3d)
+add_executable(test_perso test_perso.cpp)
+target_link_libraries(test_perso Vector3d)
 
 add_executable(test_eigenlib test_eigenlib.cpp)
 target_link_libraries(test_eigenlib Vector3d Plane)

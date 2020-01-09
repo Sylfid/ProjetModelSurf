@@ -12,7 +12,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wextra -Wall -std=c++11")
 include_directories(${PROJECT_SOURCE_DIR}/src)
 link_directories(${PROJECT_SOURCE_DIR}/src)
 
-find_package(PCL 1.2 REQUIRED)
+find_package(PCL REQUIRED)
 
 add_executable(test_basics test_basics.cpp)
 target_link_libraries(test_basics Vector3d Plane Load_off_file Cloud ${PCL_LIBRARIES})
