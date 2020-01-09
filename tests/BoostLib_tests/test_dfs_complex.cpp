@@ -107,6 +107,13 @@ int main() {
 
     // Construction de l'EMST
     double debut_emst = clock();
+
+    //======================================
+    // CONSTRUCTION DU EMST
+    // --> during and after the contruction of the Riemannian Graph because of
+    // time and memory optimization
+    UndirectedGraph euclidean_graph;
+
     double size = cloud.getSize();
     std::vector<Plane> plans_t = cloud.getPlanes();
 
@@ -152,17 +159,57 @@ int main() {
 
         kdtree.nearestKSearch(searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance);
 
-        // construct the Riemannian Graph
-
+        // construct the Riemannian Graph et en même temps on construit le EMST
         int nb_nbhd = pointIdxNKNSearch.size();
+        // pour la construction de EMST (le nombre de voisins utilisés)
+        int nb_emst = 5;
+        if (nb_emst > nb_nbhd) {
+            nb_emst = nb_nbhd;
+        }
         for (int k=1; k<nb_nbhd ;k++) {
             int index = pointIdxNKNSearch[k];
             Vector3d nk = plans_t[index].getNormal();
             double cost = 1-fabs(ni.getScalarProduct(nk));
             boost::add_edge(i, index, cost, g);
+            if (k<nb_emst) {
+                double weight_rg = pointNKNSquaredDistance[k];
+                boost::add_edge(i, index, weight_rg, euclidean_graph);
+            }
         }
     }
+    // construction de l'EMST
+    std::vector<Edge> emst;
+    boost::property_map<UndirectedGraph, boost::edge_weight_t>::type
+        EdgeWeightMap0 = get(boost::edge_weight_t(), g);
+    boost::kruskal_minimum_spanning_tree(euclidean_graph, std::back_inserter(emst));
+    // on rajoute les arrêtes de l'EMST au Riemann Graph
+    for (std::vector<Edge>::iterator ei = emst.begin(); ei != emst.end(); ++ei) {
+        int ind_s = source(*ei, euclidean_graph);
+        int ind_t = target(*ei, euclidean_graph);
+        Vector3d ni = plans_t[ind_s].getNormal();
+        Vector3d nk = plans_t[ind_t].getNormal();
+        double w = 1-fabs(ni.getScalarProduct(nk));
+        boost::add_edge(source(*ei, euclidean_graph), target(*ei, euclidean_graph), w, g);
+    }
     double fin_emst = clock();
+
+    std::ofstream foutt("dfs_complex_riemanEMST.dot");
+    foutt  << "graph A {\n"
+          << " rankdir=LR\n"
+          << " size=\"10\"\n"
+          << " ratio=\"filled\"\n"
+          << " edge[style=\"bold\"]\n" << " node[shape=\"circle\"]\n";
+    boost::graph_traits<UndirectedGraph>::edge_iterator eitert, eiter_endt;
+    for (boost::tie(eitert, eiter_endt) = edges(euclidean_graph); eitert != eiter_endt; ++eitert) {
+      foutt << source(*eitert, euclidean_graph) << " -- " << target(*eitert, euclidean_graph);
+      if (std::find(emst.begin(), emst.end(), *eitert) != emst.end())
+        foutt << "[color=\"black\", label=\"" << EdgeWeightMap0[*eitert]
+             << "\"];\n";
+      else
+        foutt << "[color=\"gray\", label=\"" << EdgeWeightMap0[*eitert]
+             << "\"];\n";
+    }
+    foutt << "}\n";
 
     double debut_mst = clock();
     boost::property_map<UndirectedGraph, boost::edge_weight_t>::type
@@ -170,21 +217,6 @@ int main() {
     std::vector<Edge> spanning_tree;
     boost::kruskal_minimum_spanning_tree(g, std::back_inserter(spanning_tree));
     double fin_mst = clock();
-
-    std::ofstream foutt("dfs_complex_rieman.dot");
-    foutt  << "graph A {\n"
-          << " rankdir=LR\n"
-          << " size=\"10\"\n"
-          << " ratio=\"filled\"\n"
-          << " edge[style=\"bold\"]\n" << " node[shape=\"circle\"]\n";
-    boost::graph_traits<UndirectedGraph>::edge_iterator eitert, eiter_endt;
-    for (boost::tie(eitert, eiter_endt) = edges(g); eitert != eiter_endt; ++eitert) {
-      foutt << source(*eitert, g) << " -- " << target(*eitert, g);
-        foutt << "[color=\"black\", label=\"" << EdgeWeightMap[*eitert]
-             << "\"];\n";
-    }
-    foutt << "}\n";
-    std::cout << "resultats RG dans : " << "dfs_complex_rieman.dot" << std::endl;
 
     std::ofstream fout("dfs_complex_mst.dot");
     fout  << "graph A {\n"
@@ -204,7 +236,6 @@ int main() {
              << "\"];\n";
     }
     fout << "}\n";
-    std::cout << "resultats du MST dans : " << "dfs_complex.dot" << std::endl;
 
     std::cout << "max indice z = " << index_max_z
         << " avec z = " << max_z << std::endl;
@@ -224,6 +255,10 @@ int main() {
     for (size_t i=0 ; i<plans_t.size() ; i++) {
         plans_t[i].display(std::cout);
     }
+
+    std::cout << "resultats RG dans : " << "dfs_complex_riemanEMST.dot" << std::endl;
+    std::cout << "resultats du MST dans : " << "dfs_complex_mst.dot" << std::endl;
+    std::cout << std::endl;
 
     std::cout << "===== TEMPS DEXECUTION : =====" << std::endl;
     std::cout << "LECTURE DU .OFF : " << (fin_lecture-debut_lecture) / double(CLOCKS_PER_SEC)

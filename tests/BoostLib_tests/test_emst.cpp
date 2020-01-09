@@ -1,58 +1,63 @@
 #include <CGAL/Exact_predicates_inexact_constructions_kernel.h>
-#include <CGAL/Triangulation_3.h>
-#include <iostream>
+#include <CGAL/Delaunay_triangulation_2.h>
+#include <CGAL/boost/graph/graph_traits_Delaunay_triangulation_2.h>
+#include <boost/graph/kruskal_min_spanning_tree.hpp>
 #include <fstream>
-#include <cassert>
-#include <list>
-#include <vector>
+#include <iostream>
+#include <map>
 
 typedef CGAL::Exact_predicates_inexact_constructions_kernel K;
-typedef CGAL::Triangulation_3<K> Triangulation;
-typedef Triangulation::Cell_handle Cell_handle;
-typedef Triangulation::Vertex_handle Vertex_handle;
-typedef Triangulation::Locate_type Locate_type;
-typedef Triangulation::Point Point;
+typedef K::Point_2 Point;
+typedef CGAL::Delaunay_triangulation_2<K> Triangulation;
+typedef boost::graph_traits<Triangulation>::vertex_descriptor vertex_descriptor;
+typedef boost::graph_traits<Triangulation>::vertex_iterator vertex_iterator;
+typedef boost::graph_traits<Triangulation>::edge_descriptor edge_descriptor;
+// The BGL makes use of indices associated to the vertices
+// We use a std::map to store the index
+typedef std::map<vertex_descriptor,int> VertexIndexMap;
+// A std::map is not a property map, because it is not lightweight
+typedef boost::associative_property_map<VertexIndexMap> VertexIdPropertyMap;
 
-int main() {
-  // construction from a list of points :
-  std::list<Point> L;
-  L.push_front(Point(0,0,0));
-  L.push_front(Point(1,0,0));
-  L.push_front(Point(0,1,0));
-  Triangulation T(L.begin(), L.end());
-  Triangulation::size_type n = T.number_of_vertices();
-  // insertion from a vector :
-  std::vector<Point> V(3);
-  V[0] = Point(0,0,1);
-  V[1] = Point(1,1,1);
-  V[2] = Point(2,2,2);
-  n = n + T.insert(V.begin(), V.end());
-  assert( n == 6 );       // 6 points have been inserted
-  assert( T.is_valid() ); // checking validity of T
-  Locate_type lt;
-  int li, lj;
-  Point p(0,0,0);
-  Cell_handle c = T.locate(p, lt, li, lj);
-  // p is the vertex of c of index li :
-  assert( lt == Triangulation::VERTEX );
-  assert( c->vertex(li)->point() == p );
-  Vertex_handle v = c->vertex( (li+1)&3 );
-  // v is another vertex of c
-  Cell_handle nc = c->neighbor(li);
-  // nc = neighbor of c opposite to the vertex associated with p
-  // nc must have vertex v :
-  int nli;
-  assert( nc->has_vertex( v, nli ) );
-  // nli is the index of v in nc
-  std::ofstream oFileT("output",std::ios::out);
-  // writing file output;
-  oFileT << T;
-  Triangulation T1;
-  std::ifstream iFileT("output",std::ios::in);
-  // reading file output;
-  iFileT >> T1;
-  assert( T1.is_valid() );
-  assert( T1.number_of_vertices() == T.number_of_vertices() );
-  assert( T1.number_of_cells() == T.number_of_cells() );
-  return 0;
+int main(int argc,char* argv[]) {
+    const char* filename = (argc > 1) ? argv[1] : "data/points.xy";
+    std::ifstream input(filename);
+
+    std::vector<Point> points;
+    points.push_back(Point(0,0));
+    points.push_back(Point(1,0));
+    points.push_back(Point(0,1));
+    points.push_back(Point(2,2));
+    points.push_back(Point(-1,0));
+    points.push_back(Point(-1,-1));
+    points.push_back(Point(0,-1));
+
+    Triangulation tr;
+    Point p;
+
+    for (size_t i=0 ; i<points.size() ; i++) {
+        tr.insert(points[i]);
+    }
+
+    // Associate indices to the vertices
+    VertexIndexMap vertex_id_map;
+    VertexIdPropertyMap vertex_index_pmap(vertex_id_map);
+    int index = 0;
+    for(vertex_descriptor vd : vertices(tr))
+    vertex_id_map[vd] = index++;
+    // We use the default edge weight which is the squared length of the edge
+    // This property map is defined in graph_traits_Triangulation_2.h
+    // In the function call you can see a named parameter: vertex_index_map
+    std::list<edge_descriptor> mst;
+    boost::kruskal_minimum_spanning_tree(tr, std::back_inserter(mst),
+                                       vertex_index_map(vertex_index_pmap));
+    std::cout << "The edges of the Euclidean mimimum spanning tree:" << std::endl;
+    for(edge_descriptor ed : mst)
+    {
+    vertex_descriptor svd = source(ed, tr);
+    vertex_descriptor tvd = target(ed, tr);
+    Triangulation::Vertex_handle sv = svd;
+    Triangulation::Vertex_handle tv = tvd;
+    std::cout << "[ " << sv->point() << "  |  " << tv->point() << " ] " << std::endl;
+    }
+      return EXIT_SUCCESS;
 }
