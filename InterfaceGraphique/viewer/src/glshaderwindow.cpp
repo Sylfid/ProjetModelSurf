@@ -1202,7 +1202,8 @@ void glShaderWindow::render()
 
     m_vao.bind();
     //glDrawElements(GL_TRIANGLES, 3 * m_numFaces, GL_UNSIGNED_INT, 0);
-    glDrawElements(GL_LINES, 2*m_numFaces, GL_UNSIGNED_INT, 0);
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glDrawElements(GL_TRIANGLES, 3*m_numFaces, GL_UNSIGNED_INT, 0);
     m_vao.release();
     m_program->release();
 

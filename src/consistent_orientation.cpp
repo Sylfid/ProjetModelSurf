@@ -66,6 +66,7 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
             boost::add_edge(i, index, cost, g);
         }
     }
+    double fin_emst = clock();
 
     // construction de l'EMST
     std::vector<Edge> emst;
