@@ -6,7 +6,7 @@
 #include <Eigen/Dense>
 
 /**
-  * \test
+  * \test test_eigenlib.cpp
   * \brief On teste l'utilisation de la bibliothèque Eigen (pour notre
             apprentissage) : valeurs propres et vecteurs propres d'une matrice
             symétrique réelle (tirée de la doc de Eigen).

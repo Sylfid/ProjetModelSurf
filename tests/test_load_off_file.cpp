@@ -3,8 +3,8 @@
 #include <boost/filesystem.hpp>
 
 /**
-  * \test
-  * \brief Programme qui teste la lecture d'un fichier off et qui vérifie que
+  * \test test_load_off_file.cpp
+  * \brief Programme qui teste la lecture d'un fichier off et vérifie que
   *         la récupération des données à bien été faite.
 */
 int main (int argc, char** argv) {

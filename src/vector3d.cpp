@@ -34,11 +34,11 @@ Vector3d Vector3d::crossProduct(const Vector3d &P) const {
   return CP;
 }
 
-double Vector3d::getNorm(){
+double Vector3d::getNorm() const{
     return sqrt(x*x+y*y+z*z);
 }
 
-double Vector3d::getDistanceTo(const Vector3d &P){
+double Vector3d::getDistanceTo(const Vector3d &P) const {
     Vector3d soustraction;
     soustraction = *this - P;
     double distance(soustraction.getNorm());
@@ -146,7 +146,6 @@ Vector3d& Vector3d::operator=(const Vector3d &P) {
 }
 
 // -----------------------------------------------------------
-
 // OPERATEURS
 
 Vector3d operator-(const Vector3d &P) {
@@ -189,4 +188,8 @@ std::ostream& operator<<(std::ostream &str, const Vector3d &P) {
 
 double dot(const Vector3d &P, const Vector3d &V) {
     return P.getScalarProduct(V);
+}
+
+double euclidian_distance(const Vector3d &P, const Vector3d &V) {
+    return P.getDistanceTo(V);
 }

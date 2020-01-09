@@ -23,6 +23,7 @@ class Cloud {
         std::vector<Vector3d> cloud; /*!< liste des points du nuage */
         std::vector<Plane> planes; /*!< liste des plans tangents */
         int size; /*!< nombre de points à étudier (=le nombre de plans) */
+        int rho; /*!< paramètre rho */
 
     public:
         /**
@@ -51,12 +52,12 @@ class Cloud {
         void setPointCloud(const std::string &filename);
         /**
           * \brief Affiche la liste des points sur le flux donnée en paramètre.
-          * \param Le flux de sortie surlequel afficher la liste.
+          * \param str le flux de sortie surlequel afficher la liste.
         */
         void displayCloud(std::ostream& str) const;
         /**
           * \brief Affiche la liste des plans tangents sur le flux donnée en paramètre.
-          * \param Le flux de sortie surlequel afficher la liste.
+          * \param str le flux de sortie surlequel afficher la liste.
         */
         void displayPlanes(std::ostream& str) const;
         /**
@@ -64,11 +65,11 @@ class Cloud {
         */
         int getSize() const;
         /**
-        * \bref Renvoie l'attribut cloud (le nuage de points)
+        * \brief Renvoie l'attribut cloud (le nuage de points)
         */
         std::vector<Vector3d> &getCloud();
         /**
-        * \bref Renvoie l'attribut cloud (le nuage de points)
+        * \brief Renvoie l'attribut cloud (le nuage de points)
         */
         std::vector<Vector3d> getCloud() const;
         /**
@@ -100,8 +101,11 @@ Vector3d compute_3d_centroid(std::vector<Vector3d> nbhd);
   * \details La normal est le 3e vecteur propre de la matrice de covariance de
                 la PCA de l'ensemble de points.
   * \param nbhd l'ensemble de points dont il faut calculer le barycentre
+  * \param o le centroïde du plan P
+  * \param P le plan P dont il faut calculer la normale
 */
 void compute_normal(std::vector<Vector3d> nbhd, Vector3d o, Plane &P);
 
+double signed_distance_function(Cloud cloud, Vector3d vect);
 
 #endif // CLOUD_H

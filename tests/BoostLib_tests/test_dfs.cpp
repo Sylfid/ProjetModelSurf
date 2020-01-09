@@ -15,10 +15,12 @@ typedef boost::graph_traits<UndirectedGraph>::vertex_descriptor Vertex;
 
 /**
   * \test test_dfs.cpp
-  * \brief Programme qui teste la librairie Boost : undirected DFS
+  * \brief Programme qui teste la librairie Boost : undirected DFS.
             Récupère l'arbre couvrant de poid minimum issu de l'algo de kruskal.
             L'algo récupère l'arbre sont la forme d'une liste d'objet de type
-            Edge.
+            Edge. On récupère la sortie du DFS appliqué au MST grâce à une liste
+            des noeuds qui est rangé de telle sorte qu'elle converse l'ordre de
+            parcours (possible grace à la classe dfs_time_visitor).
 */
 
 void flip_normal(Plane &P) {
@@ -59,7 +61,7 @@ int main() {
     boost::kruskal_minimum_spanning_tree(g, std::back_inserter(spanning_tree));
 
     // save the graph on a .dot file
-    std::ofstream fout("emst_final.dot");
+    std::ofstream fout("mst_final.dot");
     fout  << "graph A {\n"
           << " rankdir=LR\n"
           << " size=\"3,3\"\n"
@@ -78,7 +80,7 @@ int main() {
     }
     fout << "}\n";
 
-    std::cout << "graphe stocké dans : " << "emst_final.dot" << std::endl;
+    std::cout << "graphe stocké dans : " << "mst_final.dot" << std::endl;
 
     //==============================================================
     // DEPTH FIRST SEARCH
@@ -123,7 +125,7 @@ int main() {
     std::sort(discover_order.begin(), discover_order.end(),
         boost::indirect_cmp < time_pm_type, std::less < double > >(dtime_pm));
     std::cout << "order of discovery: ";
-    
+
     int i;
     for (i = 0; i < 6; ++i)
       std::cout << discover_order[i] << " ";

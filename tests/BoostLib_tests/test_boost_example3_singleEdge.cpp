@@ -11,14 +11,13 @@ typedef boost::graph_traits <UndirectedGraph>::edge_descriptor Edge;
 /**
   * \test test_boost_example3_singleEdge.cpp
   * \brief Programme qui teste la librairie Boost : création d'un graphe avec
-            arrête simple seulement, algorithme de Kruskal pour la recherche
-            d'un arbre couvrant minimal et sauvegarde du résultat dans un
-            fichier .dot + opérations sur les edges et vertex pour ajouter ou
-            non un egde entre deux vertexes.
+            arrête simple seulement (arrêtes parallèles non autorisés),
+            algorithme de Kruskal pour la recherche d'un arbre couvrant minimal
+            et sauvegarde du résultat dans un fichier .dot + opérations sur les
+            edges et vertex pour ajouter ou non un egde entre deux vertexes.
             operation : boost::adjacency_list<boost::setS, boost::vecS, ... >
             Pour afficher le .dot, dans le shell taper les commandes suivantes :
             dot -Tjpg -oexample2.jpg example2.dot
-            (inspiré de : libs/graph/example/kruskal-example.cpp)
 */
 int main() {
     UndirectedGraph g;
@@ -42,6 +41,7 @@ int main() {
     boost::add_edge(1, 3, 4, g);
     boost::add_edge(2, 4, 2, g);
     boost::add_edge(3, 5, 1, g);
+    boost::add_edge(5, 3, 0.0003, g);
     // pour ajouter une arrête entre deux sommets qui sont présents dans le graphe
     // ici : ajoute l'arrête
     if (boost::vertex(3, g) == g.null_vertex()) {

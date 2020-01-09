@@ -5,9 +5,9 @@
 #include <assert.h>
 
 /**
-  * \test
-  * \brief Programme qui teste la classe cloud : constructeurs, getters, setters
-            et autres méthodes classiques.
+  * \test test_basics.cpp
+  * \brief Programme qui teste les fonctions basiques de la classe cloud :
+            constructeurs, getters, setters et autres méthodes classiques.
 */
 int main () {
 
@@ -20,7 +20,7 @@ int main () {
     }
 
     cloud0.setPointCloud(filename0);
-    bool save_ok = save_cloud_OFF_file("test_cloud0_tetrahedron.off", cloud0.getCloud());
+    bool save_ok = save_cloud_OFF_file("test_basics_tetrahedron.off", cloud0.getCloud());
     if (!(save_ok)) {
         return false;
     }
@@ -44,7 +44,7 @@ int main () {
         filename = "../models/buddha.off";
     }
     Cloud cloud(filename);
-    bool save_ok1 = save_cloud_OFF_file("test_cloud00_buddha.off", cloud.getCloud());
+    bool save_ok1 = save_cloud_OFF_file("test_basics_buddha.off", cloud.getCloud());
     if (!(save_ok1)) {
         return false;
     }

@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
         if (!(boost::filesystem::exists(filename))) {
             filename = "../models/tetrahedron.off";
         }
-        name = "test_consistent_orientation_tetrahedron.off";
+        name = "test_cpo_tetrahedron.off";
     }
 
     double debut_lecture = clock();
@@ -55,13 +55,18 @@ int main(int argc, char** argv) {
 
     std::cout << std::endl;
     std::cout << "===== TEMPS DEXECUTION : =====" << std::endl;
-    std::cout << "LECTURE DU .OFF : " << (fin_lecture-debut_lecture) / double(CLOCKS_PER_SEC)
+    std::cout << "o LECTURE DU .OFF : "
+                << (fin_lecture-debut_lecture) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
-    std::cout << "CONSTRUCTION DES PT : " << (fin_pt-debut_pt) / double(CLOCKS_PER_SEC)
+    std::cout << "o CONSTRUCTION DES PT : "
+                << (fin_pt-debut_pt) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
-    std::cout << "CONSISTENT ORIENTATION PLAN : " <<
-    std::cout << "TOTAL : " << (fin_pt-debut_lecture) / double(CLOCKS_PER_SEC)
-                << "s" << std::endl;
+    std::cout << "o CONSISTENT ORIENTATION PLAN : "
+                << (fin_cpo-debut_cpo) / double(CLOCKS_PER_SEC)
+                << std::endl;
+    std::cout << "===== TOTAL : "
+                << (fin_pt-debut_lecture) / double(CLOCKS_PER_SEC)
+                << "s =====" << std::endl;
 
     return EXIT_SUCCESS;
 

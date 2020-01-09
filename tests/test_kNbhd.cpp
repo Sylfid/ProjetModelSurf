@@ -6,7 +6,7 @@
 #include <ctime>
 
 /**
-  * \test
+  * \test test_kNbhd.cpp
   * \brief Programme issue de la documentation de PCL sur le kdtree
   *
   * \details teste que ce programme fonctionne pour la rechercher des k voisins

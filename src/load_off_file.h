@@ -4,8 +4,6 @@
 #include "vector3d.h"
 #include <vector>
 
-typedef std::numeric_limits< double > dbl;
-
 /**
   * \brief Récupère les points 3d depuis le fichier OFF donnée en entrée
   * \details
