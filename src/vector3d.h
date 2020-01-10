@@ -30,6 +30,7 @@ private:
       * \param z côte
     */
     Vector3d(double x, double y, double z);
+    Vector3d(glm::vec3 p);
     /**
       * \brief Constructeur par recopie de la classe.
       * \param P le vecteur à recopier.
