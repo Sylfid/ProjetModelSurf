@@ -13,6 +13,8 @@ int main () {
     MyImplicitFunction function("../../models/buddha.off");
     std::ivec3 res(100.,100.,100.);
     createIsoSurface(&solution, function, 0, bbox[0], bbox[1], res);
+    std::cout << displayMesh() ;
+    
 
     return 0;
 }

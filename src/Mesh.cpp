@@ -544,6 +544,21 @@ void Mesh::write_obj(const char* filename) const
     }
 }
 
+std::string Mesh::displayMesh() const{
+
+    for(unsigned int i = 0; i < vertices.size(); i++)
+    {
+        vec3 p = vertices[i];
+        fprintf(file,"v %f %f %f\n", p[0], p[1], p[2]);
+    }
+
+    for(unsigned int i = 0; i < faces.size(); i+=3)
+    {
+        fprintf(file,"f %i %i %i\n", faces[i]+1, faces[i+1]+1, faces[i+2]+1);
+    }
+
+}
+
 
 void Mesh::ComputeNormals()
 {
