@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 #include <limits>
-#include <glm/glm.hpp>
 
 /**
   * \brief Classe représentant un vecteur 3D de coordonées (x,y,z)
@@ -31,7 +30,6 @@ private:
       * \param z côte
     */
     Vector3d(double x, double y, double z);
-    Vector3d(glm::vec3 p);
     /**
       * \brief Constructeur par recopie de la classe.
       * \param P le vecteur à recopier.
