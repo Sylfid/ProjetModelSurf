@@ -22,7 +22,7 @@ ImplicitFunction::~ImplicitFunction()
 MyImplicitFunction::MyImplicitFunction(const std::string &filename)
 {
     Cloud newCloud(&filename);
-    newCloudconstruct_tangent_planes(5);
+    newCloud.construct_tangent_planes(5);
     cloud = newCloud;
 }
 

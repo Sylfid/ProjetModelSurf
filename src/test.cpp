@@ -11,7 +11,8 @@ int main () {
     Mesh solution();
     vector<vec3> bbox(file.computeBB());
     MyImplicitFunction function("buddha.off");
-    createIsoSurface(&solution, function, 0, bbox[0], bbox[1]);
+    std::ivec3 res(100.,100.,100.);
+    createIsoSurface(&solution, function, 0, bbox[0], bbox[1], res);
 
     return 0;
 }
