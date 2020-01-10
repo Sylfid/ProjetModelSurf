@@ -2,7 +2,6 @@
 #include <fstream>
 #include <boost/graph/adjacency_list.hpp>
 #include <boost/graph/kruskal_min_spanning_tree.hpp>
-#include <boost/graph/undirected_dfs.hpp>
 #include <boost/graph/depth_first_search.hpp>
 #include <boost/filesystem.hpp>
 #include "../../src/cloud.h"

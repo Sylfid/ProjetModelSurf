@@ -51,23 +51,25 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
 
         kdtree.nearestKSearch(searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance);
 
-        // pour la construction de EMST, le 2e élément de la liste étant le
-        // centroide le plus proche du centroide courant
-        Vector3d n1 = plans_t[1].getNormal();
-        double emst_cost = pointNKNSquaredDistance[1];
-        boost::add_edge(i, pointIdxNKNSearch[1], emst_cost, euclidean_graph);
-
-        // construct the Riemannian Graph
+        // construct the Riemannian Graph et en même temps on construit le EMST
         int nb_nbhd = pointIdxNKNSearch.size();
+        // pour la construction de EMST (le nombre de voisins utilisés)
+        int nb_emst = 5;
+        if (nb_emst > nb_nbhd) {
+            nb_emst = nb_nbhd;
+        }
         for (int k=1; k<nb_nbhd ;k++) {
             int index = pointIdxNKNSearch[k];
             Vector3d nk = plans_t[index].getNormal();
             double cost = 1-fabs(ni.getScalarProduct(nk));
             boost::add_edge(i, index, cost, g);
+            if (k<nb_emst) {
+                double weight_rg = pointNKNSquaredDistance[k];
+                boost::add_edge(i, index, weight_rg, euclidean_graph);
+            }
         }
     }
-    double fin_emst = clock();
-
+    
     // construction de l'EMST
     std::vector<Edge> emst;
     boost::kruskal_minimum_spanning_tree(euclidean_graph, std::back_inserter(emst));
@@ -78,9 +80,9 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
         Vector3d ni = plans_t[ind_s].getNormal();
         Vector3d nk = plans_t[ind_t].getNormal();
         double w = 1-fabs(ni.getScalarProduct(nk));
-        boost::add_edge(source(*ei, euclidean_graph),
-            target(*ei, euclidean_graph), w, g);
+        boost::add_edge(source(*ei, euclidean_graph), target(*ei, euclidean_graph), w, g);
     }
+    double fin_emst = clock();
     double fin_rg = clock();
 
     //==============================================================

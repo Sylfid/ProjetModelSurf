@@ -5,6 +5,7 @@
 #include <glm/gtc/type_precision.hpp> //i32vec3
 #include <vector>
 #include <string>
+#include "cloud.h"
 
 
 /*
@@ -30,6 +31,8 @@ class MyImplicitFunction : public  ImplicitFunction
 public:
 
     MyImplicitFunction(/* data initialization value */);
+
+    MyImplicitFunction(const std::string &filename);
     ~MyImplicitFunction();
 
     Cloud cloud;

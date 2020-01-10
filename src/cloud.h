@@ -72,7 +72,7 @@ class Cloud {
         * \brief Renvoie l'attribut cloud (le nuage de points)
         */
         std::vector<Vector3d> getCloud() const;
-        Vector3d getPlanePrecise(int i) const ;
+        Plane getPlanePrecise(int i) const ;
         /**
           * \brief Renvoie l'attribut planes (la liste des plans tangents)
         */

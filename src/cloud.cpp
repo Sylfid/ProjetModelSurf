@@ -47,7 +47,7 @@ std::vector<Vector3d> Cloud::getCloud() const {
     return cloud;
 }
 
-Vector3d Cloud::getPlanePrecise(int i) const {
+Plane Cloud::getPlanePrecise(int i) const {
     if(i<0 || i>size-1){
         std::cout << "L'indice obtenue n'est pas valable\n";
         exit(1);
@@ -159,4 +159,3 @@ void compute_normal(std::vector<Vector3d> nbhd, Vector3d o, Plane &P) {
 
 	P.setNormal(normal);
 }
-
