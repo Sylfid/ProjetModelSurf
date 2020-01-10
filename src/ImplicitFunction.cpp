@@ -1,5 +1,5 @@
 #include "ImplicitFunction.h"
-#include "../../../src/could.h"
+#include "could.h"
 
 #include <iostream>
 #include <math.h>
