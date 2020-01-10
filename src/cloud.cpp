@@ -48,7 +48,7 @@ std::vector<Vector3d> Cloud::getCloud() const {
 }
 
 Vector3d Cloud::getPlanePrecise(int i) const {
-    if(i<0 || i>self.size-1){
+    if(i<0 || i>size-1){
         std::cout << "L'indice obtenue n'est pas valable\n";
         exit(1);
     }
