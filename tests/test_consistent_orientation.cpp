@@ -28,8 +28,8 @@ int main(int argc, char** argv) {
         name = "test_cpo_tetrahedron.off";
     }
 
-    double debut_lecture = clock();
     std::cout << "lecture du fichier" << filename << std::endl;
+    double debut_lecture = clock();
     // structure qui va stocker les points
     Cloud cloud(filename);
     double fin_lecture = clock();

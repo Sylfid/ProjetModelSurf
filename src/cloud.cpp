@@ -1,9 +1,9 @@
 #include "cloud.h"
 #include "load_off_file.h"
 
-Cloud::Cloud():size(0) {}
+Cloud::Cloud():size(0), rho(0), delta(0) {}
 
-Cloud::Cloud(const std::string &filename) {
+Cloud::Cloud(const std::string &filename, const double d):rho(0), delta(d) {
     bool load_ok = load_OFF_file(filename, cloud);
     if (load_ok) {
         size = cloud.size();
@@ -39,6 +39,14 @@ int Cloud::getSize() const {
     return size;
 }
 
+double Cloud::getRho() const {
+    return rho;
+}
+
+double Cloud::getDelta(const double d) const {
+    delta = d;
+}
+
 std::vector<Vector3d> &Cloud::getCloud() {
     return cloud;
 }
@@ -47,14 +55,14 @@ std::vector<Vector3d> Cloud::getCloud() const {
     return cloud;
 }
 
-Plane Cloud::getPlanePrecise(int i) const {
-    if(i<0 || i>size-1){
-        std::cout << "L'indice obtenue n'est pas valable\n";
-        exit(1);
-    }
-    else{
-        return planes[i];
-    }
+Vector3d &Cloud::getCloudPrecise(const int i) {
+    assert(i<size && i>=0);
+    return cloud[i];
+}
+
+Vector3d Cloud::getCloudPrecise(const int i) const {
+    assert(i<size && i>=0);
+    return cloud[i]
 }
 
 std::vector<Plane> &Cloud::getPlanes() {
@@ -63,6 +71,16 @@ std::vector<Plane> &Cloud::getPlanes() {
 
 std::vector<Plane> Cloud::getPlanes() const {
     return planes;
+}
+
+Plane Cloud::getPlanePrecise(const int i) const {
+    assert(i<size && i>=0);
+    return planes[i];
+}
+
+Plane &Cloud::getPlanePrecise(const int i) {
+    assert(i<size && i>=0);
+    return planes[i];
 }
 
 void Cloud::construct_tangent_planes(const int K) {
@@ -90,16 +108,21 @@ void Cloud::construct_tangent_planes(const int K) {
         std::vector<float> pointNKNSquaredDistance(K);
 
         kdtree.nearestKSearch(searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance);
+
+        // attention : on part de 1 et non de 0 car l'index 0 correspond au point lui mm
+        double pp = pointNKNSquaredDistance[1];
+        if (pp < rho) rho = pp;
+
         // on recupere la liste des voisins à partir de la liste des indices
         // attention : cette liste contient le point searchPoint!
         // Comme les listes sont  ordonnée par distance croissante, l'indice de
         // searchPoint est 0 (ie : premier élément des listes)
-        int nb_nbhd = pointIdxNKNSearch.size()-1;
+        int nb_nbhd = pointIdxNKNSearch.size();
         std::vector<Vector3d> nbhd(nb_nbhd);
-        for (int k=0 ; k<nb_nbhd ; k++) {
-            nbhd[k].set(cloud[pointIdxNKNSearch[k+1]].getX(),
-                        cloud[pointIdxNKNSearch[k+1]].getY(),
-                        cloud[pointIdxNKNSearch[k+1]].getZ());
+        for (int k=1 ; k<nb_nbhd ; k++) {
+            nbhd[k].set(cloud[pointIdxNKNSearch[k]].getX(),
+                        cloud[pointIdxNKNSearch[k]].getY(),
+                        cloud[pointIdxNKNSearch[k]].getZ());
         }
 
         // plans tangents

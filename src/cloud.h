@@ -23,7 +23,9 @@ class Cloud {
         std::vector<Vector3d> cloud; /*!< liste des points du nuage */
         std::vector<Plane> planes; /*!< liste des plans tangents */
         int size; /*!< nombre de points à étudier (=le nombre de plans) */
-        int rho; /*!< paramètre rho */
+        double rho; /*!< paramètre rho qu'on initialise au moment de la construction des plans tangents
+                        (sa valeur est nulle à l'appel du constructeur)*/
+        double delta; /*!< paramètre de bruit delta de l'article */
 
     public:
         /**
@@ -38,8 +40,9 @@ class Cloud {
                         en paramètre.
           * \param filename le nom (+le chemin) du fichier OFF dont il faut
                         recupérer le nuage de points.
+          * \param d la valeur du paramètre delta
         */
-        Cloud(const std::string &filename);
+        Cloud(const std::string &filename, const double d=0.0);
         /**
           * \brief Destructeur de la classe
         */
@@ -65,6 +68,20 @@ class Cloud {
         */
         int getSize() const;
         /**
+          * \brief Renvoie la valeur de rho (le plus petit rayon r tel que la
+                    sphére de rayon r et de rayon un point du nuage contient au
+                    moins un autre point du nuage);
+        */
+        double getRho() const;
+        /**
+          * \brief Renvoie la valeur de delta
+        */
+        double getDelta() const;
+        /**
+          * \brief Met à jour la valeur de delta
+        */
+        void setDelta(cont double d);
+        /**
         * \brief Renvoie l'attribut cloud (le nuage de points)
         */
         std::vector<Vector3d> &getCloud();
@@ -72,7 +89,14 @@ class Cloud {
         * \brief Renvoie l'attribut cloud (le nuage de points)
         */
         std::vector<Vector3d> getCloud() const;
-        Plane getPlanePrecise(int i) const ;
+        /**
+        * \brief Renvoie le point d'indice i du nuage de points
+        */
+        Vector3d getCloudPrecise(const int i) const;
+        /**
+        * \brief Renvoie le point d'indice i du nuage de points
+        */
+        Vector3d &getCloudPrecise(const int i);
         /**
           * \brief Renvoie l'attribut planes (la liste des plans tangents)
         */
@@ -82,12 +106,18 @@ class Cloud {
         */
         std::vector<Plane> getPlanes() const;
         /**
+          * \brief Renvoie le plan d'indice i de la liste Plane
+        */
+        Plane getPlanePrecise(const int i) const;
+        /**
+          * \brief Renvoie le plan d'indice i de la liste Plane
+        */
+        Plane &getPlanePrecise(const int i);
+        /**
           * \brief Calcule tous les plans tangents.
           * \param K le nombre de voisins pour le calcul des kNNbhd
         */
         void construct_tangent_planes(const int K);
-
-        double signedDistanceFunction(Vector3d point);
 };
 
 /**
@@ -108,7 +138,5 @@ Vector3d compute_3d_centroid(std::vector<Vector3d> nbhd);
   * \param P le plan P dont il faut calculer la normale
 */
 void compute_normal(std::vector<Vector3d> nbhd, Vector3d o, Plane &P);
-
-double signed_distance_function(Cloud cloud, Vector3d vect);
 
 #endif // CLOUD_H

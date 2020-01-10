@@ -11,7 +11,7 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
 
     //======================================
     // CONSTRUCTION DU RIEMANNIAN GRAPH
-    int debut_rg = clock();
+    int debut_emst = clock();
     // contruction du EMST
     UndirectedGraph g;
 
@@ -54,7 +54,7 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
         // construct the Riemannian Graph et en même temps on construit le EMST
         int nb_nbhd = pointIdxNKNSearch.size();
         // pour la construction de EMST (le nombre de voisins utilisés)
-        int nb_emst = 5;
+        int nb_emst = 8;
         if (nb_emst > nb_nbhd) {
             nb_emst = nb_nbhd;
         }
@@ -77,13 +77,12 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
     for (std::vector<Edge>::iterator ei = emst.begin(); ei != emst.end(); ++ei) {
         int ind_s = source(*ei, euclidean_graph);
         int ind_t = target(*ei, euclidean_graph);
-        Vector3d ni = plans_t[ind_s].getNormal();
+        Vector3d ns = plans_t[ind_s].getNormal();
         Vector3d nk = plans_t[ind_t].getNormal();
-        double w = 1-fabs(ni.getScalarProduct(nk));
+        double w = 1-fabs(ns.getScalarProduct(nk));
         boost::add_edge(source(*ei, euclidean_graph), target(*ei, euclidean_graph), w, g);
     }
     double fin_emst = clock();
-    double fin_rg = clock();
 
     //==============================================================
     // CONSTRUCTION DU MST
@@ -99,13 +98,13 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
     double fin_dfs = clock();
 
     std::cout << "----- TEMPS DEXECUTION (CONSISTENT PLANE ORIENTATION) -----" << std::endl;
-    std::cout << "Construction du EMST et du Riemannian Graph : " << (fin_rg-debut_rg) / double(CLOCKS_PER_SEC)
+    std::cout << "Construction du EMST et du Riemannian Graph : " << (fin_emst-debut_emst) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
     std::cout << "Construction du MST : " << (fin_mst-debut_mst) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
     std::cout << "Algo DFS : " << (fin_dfs-debut_dfs) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
-    std::cout << "-----TOTAL : " << (fin_dfs-debut_rg) / double(CLOCKS_PER_SEC)
+    std::cout << "-----TOTAL : " << (fin_dfs-debut_emst) / double(CLOCKS_PER_SEC)
                 << "s -----" << std::endl << std::endl;
 }
 
