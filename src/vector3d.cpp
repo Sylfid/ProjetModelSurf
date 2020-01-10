@@ -3,6 +3,7 @@
 #include <fstream>
 #include <assert.h>
 #include <math.h>
+#include <glm/glm.hpp>
 
 Vector3d::Vector3d(){
     x = 0.;
@@ -13,6 +14,8 @@ Vector3d::Vector3d(){
 Vector3d::Vector3d(double x, double y, double z):x(x), y(y), z(z){}
 
 Vector3d::Vector3d(const Vector3d &P):x(P.x), y(P.y), z(P.z) {}
+
+Vector3d::Vector3d(glm::vec3 p):x(p.x),y(p.y),z(p.z){}
 
 Vector3d::~Vector3d() {}
 
