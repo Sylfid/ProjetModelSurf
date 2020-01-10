@@ -1,5 +1,5 @@
-#include "../../../src/load_off_file.h"
-#include "../../../src/vector3d.h"
+#include "load_off_file.h"
+#include "vector3d.h"
 #include <assert.h>
 #include <sstream>
 #include "Mesh.h"
