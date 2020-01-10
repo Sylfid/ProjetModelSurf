@@ -1,5 +1,4 @@
 #include "ImplicitFunction.h"
-#include "could.h"
 
 #include <iostream>
 #include <math.h>
@@ -21,8 +20,8 @@ ImplicitFunction::~ImplicitFunction()
 
 MyImplicitFunction::MyImplicitFunction(const std::string &filename)
 {
-    Cloud newCloud(&filename);
-    newCloudconstruct_tangent_planes(5);
+    Cloud newCloud(filename);
+    newCloud.construct_tangent_planes(5);
     cloud = newCloud;
 }
 
@@ -39,7 +38,7 @@ float MyImplicitFunction::Eval(glm::vec3 p) const
     double actual(0.);
     Vector3d pointAGarder(point - cloud.getPlanePrecise(0).getCenter());
     Vector3d normalAGarder(cloud.getPlanePrecise(0).getNormal());
-    for(int i(0); i<cloud.size; i++){
+    for(int i(0); i<cloud.getSize(); i++){
         actual = (cloud.getPlanePrecise(i).getCenter()-point).getNorm();
         if(nearestCenter < actual){
             nearestCenter = actual;
@@ -57,12 +56,12 @@ glm::vec3 MyImplicitFunction::EvalDev(glm::vec3 p) const
     double nearestCenter((cloud.getPlanePrecise(0).getCenter()-point).getNorm());
     double actual(0.);
     Vector3d normalAGarder(cloud.getPlanePrecise(0).getNormal());
-    for(int i(0); i<cloud.size; i++){
+    for(int i(0); i<cloud.getSize(); i++){
         actual = (cloud.getPlanePrecise(i).getCenter()-point).getNorm();
         if(nearestCenter < actual){
             nearestCenter = actual;
             normalAGarder = cloud.getPlanePrecise(i).getNormal();
         }
     }
-    return vec3(normalAGarder.getX(), normalAGarder.getY(); normalAGarder.getZ());
+    return vec3(normalAGarder.getX(), normalAGarder.getY(), normalAGarder.getZ());
 }

@@ -3,8 +3,8 @@
 #include <math.h>
 #include <omp.h>
 
-#include <Mesh.h>
-#include <ImplicitFunction.h>
+#include "Mesh.h"
+#include "ImplicitFunction.h"
 
 using namespace glm;
 using namespace std;
@@ -23,7 +23,7 @@ vec3 Mesh::get_normal(unsigned int i) const {
 }
 
 
-Mesh::Mesh(const char* filename) 
+Mesh::Mesh(const char* filename)
 {
 	int j = 0;
 	unsigned int tmp;
@@ -35,7 +35,7 @@ Mesh::Mesh(const char* filename)
 	int   error;
 	float r;
 
-	if((file=fopen(filename,"r"))==NULL) 
+	if((file=fopen(filename,"r"))==NULL)
 	{
 		std::cout << "Unable to read : " << filename << std::endl;
 	}
@@ -46,7 +46,7 @@ Mesh::Mesh(const char* filename)
 	faces    = vector<unsigned int>();
 
 	error = fscanf(file,"OFF\n%d %d %d\n",&(nb_vertices),&(nb_faces),&tmp);
-	if(error==EOF) 
+	if(error==EOF)
 	{
 		std::cout << "Unable to read : " << filename << std::endl;
 	}
@@ -56,10 +56,10 @@ Mesh::Mesh(const char* filename)
 	faces.resize(nb_faces*3);
 
 	// reading vertices
-	for(int i=0;i<nb_vertices;++i) 
+	for(int i=0;i<nb_vertices;++i)
 	{
 		error = fscanf(file,"%f %f %f\n",&(vertices[i][0]),&(vertices[i][1]),&(vertices[i][2]));
-		if(error==EOF) 
+		if(error==EOF)
 		{
 			std::cout << "Unable to read vertices of : " << filename << std::endl;
 			exit(EXIT_FAILURE);
@@ -68,20 +68,20 @@ Mesh::Mesh(const char* filename)
 
 	// reading faces
 	j = 0;
-	for(int i=0;i<nb_faces;++i) 
+	for(int i=0;i<nb_faces;++i)
 	{
 		error = fscanf(file,"%d %d %d %d\n",&tmp,&(faces[j]),&(faces[j+1]),&(faces[j+2]));
 //		  faces[j]   --;
 //        faces[j+1] --;
 //        faces[j+2] --;
 
-		if(error==EOF) 
+		if(error==EOF)
 		{
 			std::cout << "Unable to read faces of : " << filename << std::endl;
 			exit(EXIT_FAILURE);
 		}
 
-		if(tmp!=3) 
+		if(tmp!=3)
 		{
 			printf("Error : face %d is not a triangle (%d polygonal face!)\n",i/3,tmp);
 			exit(EXIT_FAILURE);
@@ -97,21 +97,21 @@ Mesh::Mesh(const char* filename)
 Mesh::~Mesh() {}
 
 
-vector< vec3 > Mesh::computeBB() const 
+vector< vec3 > Mesh::computeBB() const
 {
     vector< vec3 > output;
-    
+
     output.push_back(vertices[0]);
     output.push_back(vertices[0]);
-    
-	for(int i=1; i<vertices.size(); ++i) 
+
+	for(int i=1; i<vertices.size(); ++i)
 	{
 	    vec3 v = vertices[i];
 
         output[0] = glm::min(output[0], v);
         output[1] = glm::max(output[1], v);
 	}
-	
+
 	return output;
 }
 
@@ -119,8 +119,8 @@ vector< vec3 > Mesh::computeBB() const
 void Mesh::normalize()
 {
     vector<vec3> bb = Mesh::computeBB();
-    
-	for(int i=0; i<vertices.size(); ++i) 
+
+	for(int i=0; i<vertices.size(); ++i)
 	{
 	    for(int j = 0; j < 3; j++)
 	    {
@@ -656,5 +656,3 @@ void Mesh::RemoveDouble(float epsilon)
     vertices = new_vertices;
 
 }
-
-

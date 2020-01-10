@@ -7,12 +7,11 @@
 
 
 int main () {
-    Mesh file("buddha.off");
+    Mesh file();
     Mesh solution();
-    vector<vec3> bbox(file.computeBB());
-    MyImplicitFunction function("buddha.off");
-    createIsoSurface(&solution, function, 0, bbox[0], bbox[1]);
+    std::vector<glm::vec3> bbox(file.computeBB());
+    MyImplicitFunction function("../../models/buddha.off");
+    // createIsoSurface(&solution, function, 0, bbox[0], bbox[1]);
 
     return 0;
 }
-
