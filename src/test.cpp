@@ -9,9 +9,12 @@
 int main () {
     Mesh file();
     Mesh solution();
-    std::vector<glm::vec3> bbox(file.computeBB());
+    vector<vec3> bbox(file.computeBB());
     MyImplicitFunction function("../../models/buddha.off");
-    // createIsoSurface(&solution, function, 0, bbox[0], bbox[1]);
+    std::ivec3 res(100.,100.,100.);
+    createIsoSurface(&solution, function, 0, bbox[0], bbox[1], res);
+    std::cout << displayMesh() ;
+    
 
     return 0;
 }
