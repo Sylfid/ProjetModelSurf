@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <limits>
+#include <glm/glm.hpp>
 
 /**
   * \brief Classe représentant un vecteur 3D de coordonées (x,y,z)

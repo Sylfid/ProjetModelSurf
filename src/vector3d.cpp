@@ -3,7 +3,6 @@
 #include <fstream>
 #include <assert.h>
 #include <math.h>
-#include <glm/glm.hpp>
 
 Vector3d::Vector3d(){
     x = 0.;
