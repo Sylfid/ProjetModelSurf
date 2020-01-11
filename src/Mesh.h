@@ -36,6 +36,8 @@ class Mesh
   void ComputeNormals();                            // Computes a new normal for each vertex based on its incident faces
   void RemoveDouble(float epsilon = 1e-5);          // Removes each vertex which is closer than epsilon to an other vertex
 
+  std::string displayMesh() const{
+
   // primitives
   static void CreateCube(Mesh& mesh);
   static void CreateSphere(Mesh& mesh, unsigned int Nu = 100, unsigned int Nv = 50);

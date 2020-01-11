@@ -9,10 +9,10 @@
 int main () {
     Mesh file();
     Mesh solution();
-    vector<vec3> bbox(file.computeBB());
-    MyImplicitFunction function("../../models/buddha.off");
+    std::vector<glm::vec3> bbox(file.computeBB());
+    SignedDistanceFunction function2("../../models/buddha.off",5,0.1);
     std::ivec3 res(100.,100.,100.);
-    createIsoSurface(&solution, function, 0, bbox[0], bbox[1], res);
+    createIsoSurface(&solution, function2, 0, bbox[0], bbox[1], res);
     std::cout << displayMesh() ;
     
 

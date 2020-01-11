@@ -9,16 +9,17 @@
 using namespace glm;
 using namespace std;
 
-i32vec3 Mesh::get_face(unsigned int i) const {
+
+glm::i32vec3 Mesh::get_face(unsigned int i) const {
 	glm::i32vec3 face( faces[3*i], faces[3*i+1], faces[3*i+2] );
 	return face;
 }
 
-vec3 Mesh::get_vertex(unsigned int i) const {
+glm::vec3 Mesh::get_vertex(unsigned int i) const {
 	return vertices[i];
 }
 
-vec3 Mesh::get_normal(unsigned int i) const {
+glm::vec3 Mesh::get_normal(unsigned int i) const {
 	return normals[i];
 }
 
@@ -27,9 +28,9 @@ Mesh::Mesh(const char* filename)
 {
 	int j = 0;
 	unsigned int tmp;
-	vector<vec3> normalPerFace;
+    std::vector<glm::vec3> normalPerFace;
 	float norm;
-	vector<float> nv;
+    std::vector<float> nv;
 	float *n;
 	FILE *file;
 	int   error;
@@ -41,9 +42,9 @@ Mesh::Mesh(const char* filename)
 	}
 
 	// create mesh
-	vertices = vector<vec3>();
-    normals  = vector<vec3>();
-	faces    = vector<unsigned int>();
+	vertices = std::vector<glm::vec3>();
+    normals  = std::vector<glm::vec3>();
+	faces    = std::vector<unsigned int>();
 
 	error = fscanf(file,"OFF\n%d %d %d\n",&(nb_vertices),&(nb_faces),&tmp);
 	if(error==EOF)
@@ -97,16 +98,16 @@ Mesh::Mesh(const char* filename)
 Mesh::~Mesh() {}
 
 
-vector< vec3 > Mesh::computeBB() const
+std::vector< glm::vec3 > Mesh::computeBB() const
 {
-    vector< vec3 > output;
+    std::vector< glm::vec3 > output;
 
     output.push_back(vertices[0]);
     output.push_back(vertices[0]);
 
 	for(int i=1; i<vertices.size(); ++i)
 	{
-	    vec3 v = vertices[i];
+        glm::vec3 v = vertices[i];
 
         output[0] = glm::min(output[0], v);
         output[1] = glm::max(output[1], v);
@@ -118,7 +119,7 @@ vector< vec3 > Mesh::computeBB() const
 
 void Mesh::normalize()
 {
-    vector<vec3> bb = Mesh::computeBB();
+    std::vector<glm::vec3> bb = Mesh::computeBB();
 
 	for(int i=0; i<vertices.size(); ++i)
 	{
@@ -132,65 +133,65 @@ void Mesh::normalize()
 
 void Mesh::CreateCube(Mesh& mesh)
 {
-    mesh.vertices.push_back(vec3(-1, -1, -1));
-    mesh.vertices.push_back(vec3( 1, -1, -1));
-    mesh.vertices.push_back(vec3( 1,  1, -1));
-    mesh.vertices.push_back(vec3(-1,  1, -1));
+    mesh.vertices.push_back(glm::vec3(-1, -1, -1));
+    mesh.vertices.push_back(glm::vec3( 1, -1, -1));
+    mesh.vertices.push_back(glm::vec3( 1,  1, -1));
+    mesh.vertices.push_back(glm::vec3(-1,  1, -1));
 
-    mesh.vertices.push_back(vec3(-1, -1, -1));
-    mesh.vertices.push_back(vec3(-1,  1, -1));
-    mesh.vertices.push_back(vec3(-1,  1,  1));
-    mesh.vertices.push_back(vec3(-1, -1,  1));
+    mesh.vertices.push_back(glm::vec3(-1, -1, -1));
+    mesh.vertices.push_back(glm::vec3(-1,  1, -1));
+    mesh.vertices.push_back(glm::vec3(-1,  1,  1));
+    mesh.vertices.push_back(glm::vec3(-1, -1,  1));
 
-    mesh.vertices.push_back(vec3(-1, -1, -1));
-    mesh.vertices.push_back(vec3(-1, -1,  1));
-    mesh.vertices.push_back(vec3( 1, -1,  1));
-    mesh.vertices.push_back(vec3( 1, -1, -1));
+    mesh.vertices.push_back(glm::vec3(-1, -1, -1));
+    mesh.vertices.push_back(glm::vec3(-1, -1,  1));
+    mesh.vertices.push_back(glm::vec3( 1, -1,  1));
+    mesh.vertices.push_back(glm::vec3( 1, -1, -1));
 
-    mesh.vertices.push_back(vec3( 1,  1,  1));
-    mesh.vertices.push_back(vec3(-1,  1,  1));
-    mesh.vertices.push_back(vec3(-1, -1,  1));
-    mesh.vertices.push_back(vec3( 1, -1,  1));
+    mesh.vertices.push_back(glm::vec3( 1,  1,  1));
+    mesh.vertices.push_back(glm::vec3(-1,  1,  1));
+    mesh.vertices.push_back(glm::vec3(-1, -1,  1));
+    mesh.vertices.push_back(glm::vec3( 1, -1,  1));
 
-    mesh.vertices.push_back(vec3( 1,  1,  1));
-    mesh.vertices.push_back(vec3( 1, -1,  1));
-    mesh.vertices.push_back(vec3( 1, -1, -1));
-    mesh.vertices.push_back(vec3( 1,  1, -1));
+    mesh.vertices.push_back(glm::vec3( 1,  1,  1));
+    mesh.vertices.push_back(glm::vec3( 1, -1,  1));
+    mesh.vertices.push_back(glm::vec3( 1, -1, -1));
+    mesh.vertices.push_back(glm::vec3( 1,  1, -1));
 
-    mesh.vertices.push_back(vec3( 1,  1,  1));
-    mesh.vertices.push_back(vec3( 1,  1, -1));
-    mesh.vertices.push_back(vec3(-1,  1, -1));
-    mesh.vertices.push_back(vec3(-1,  1,  1));
+    mesh.vertices.push_back(glm::vec3( 1,  1,  1));
+    mesh.vertices.push_back(glm::vec3( 1,  1, -1));
+    mesh.vertices.push_back(glm::vec3(-1,  1, -1));
+    mesh.vertices.push_back(glm::vec3(-1,  1,  1));
 
-    mesh.normals.push_back(vec3(0, 0, -1));
-    mesh.normals.push_back(vec3(0, 0, -1));
-    mesh.normals.push_back(vec3(0, 0, -1));
-    mesh.normals.push_back(vec3(0, 0, -1));
+    mesh.normals.push_back(glm::vec3(0, 0, -1));
+    mesh.normals.push_back(glm::vec3(0, 0, -1));
+    mesh.normals.push_back(glm::vec3(0, 0, -1));
+    mesh.normals.push_back(glm::vec3(0, 0, -1));
 
-    mesh.normals.push_back(vec3(-1, 0, 0));
-    mesh.normals.push_back(vec3(-1, 0, 0));
-    mesh.normals.push_back(vec3(-1, 0, 0));
-    mesh.normals.push_back(vec3(-1, 0, 0));
+    mesh.normals.push_back(glm::vec3(-1, 0, 0));
+    mesh.normals.push_back(glm::vec3(-1, 0, 0));
+    mesh.normals.push_back(glm::vec3(-1, 0, 0));
+    mesh.normals.push_back(glm::vec3(-1, 0, 0));
 
-    mesh.normals.push_back(vec3(0, -1, 0));
-    mesh.normals.push_back(vec3(0, -1, 0));
-    mesh.normals.push_back(vec3(0, -1, 0));
-    mesh.normals.push_back(vec3(0, -1, 0));
+    mesh.normals.push_back(glm::vec3(0, -1, 0));
+    mesh.normals.push_back(glm::vec3(0, -1, 0));
+    mesh.normals.push_back(glm::vec3(0, -1, 0));
+    mesh.normals.push_back(glm::vec3(0, -1, 0));
 
-    mesh.normals.push_back(vec3(0, 0,  1));
-    mesh.normals.push_back(vec3(0, 0,  1));
-    mesh.normals.push_back(vec3(0, 0,  1));
-    mesh.normals.push_back(vec3(0, 0,  1));
+    mesh.normals.push_back(glm::vec3(0, 0,  1));
+    mesh.normals.push_back(glm::vec3(0, 0,  1));
+    mesh.normals.push_back(glm::vec3(0, 0,  1));
+    mesh.normals.push_back(glm::vec3(0, 0,  1));
 
-    mesh.normals.push_back(vec3( 1, 0, 0));
-    mesh.normals.push_back(vec3( 1, 0, 0));
-    mesh.normals.push_back(vec3( 1, 0, 0));
-    mesh.normals.push_back(vec3( 1, 0, 0));
+    mesh.normals.push_back(glm::vec3( 1, 0, 0));
+    mesh.normals.push_back(glm::vec3( 1, 0, 0));
+    mesh.normals.push_back(glm::vec3( 1, 0, 0));
+    mesh.normals.push_back(glm::vec3( 1, 0, 0));
 
-    mesh.normals.push_back(vec3(0,  1, 0));
-    mesh.normals.push_back(vec3(0,  1, 0));
-    mesh.normals.push_back(vec3(0,  1, 0));
-    mesh.normals.push_back(vec3(0,  1, 0));
+    mesh.normals.push_back(glm::vec3(0,  1, 0));
+    mesh.normals.push_back(glm::vec3(0,  1, 0));
+    mesh.normals.push_back(glm::vec3(0,  1, 0));
+    mesh.normals.push_back(glm::vec3(0,  1, 0));
 
 
     mesh.faces.push_back(0);
@@ -265,7 +266,7 @@ void Mesh::CreateSphere(Mesh& mesh, unsigned int Nu, unsigned int Nv)
             float v = float(j) / (Nv-1);
             float psi = v * M_PI;
 
-            vec3 p(cos(phi)*sin(psi), sin(phi)*sin(psi), cos(psi));
+            glm::vec3 p(cos(phi)*sin(psi), sin(phi)*sin(psi), cos(psi));
             mesh.vertices.push_back(p);
 
             mesh.normals.push_back(p);
@@ -321,22 +322,22 @@ void Mesh::CreateIsoSurface(  Mesh& mesh
 
 
                 // Cell vertices
-                vec3 p000 = vec3(x0, y0, z0);
-                vec3 p001 = vec3(x1, y0, z0);
-                vec3 p010 = vec3(x0, y1, z0);
-                vec3 p011 = vec3(x1, y1, z0);
-                vec3 p100 = vec3(x0, y0, z1);
-                vec3 p101 = vec3(x1, y0, z1);
-                vec3 p110 = vec3(x0, y1, z1);
-                vec3 p111 = vec3(x1, y1, z1);
+                glm::vec3 p000 = vec3(x0, y0, z0);
+                glm::vec3 p001 = glm::vec3(x1, y0, z0);
+                glm::vec3 p010 = glm::vec3(x0, y1, z0);
+                glm::vec3 p011 = glm::vec3(x1, y1, z0);
+                glm::vec3 p100 = glm::vec3(x0, y0, z1);
+                glm::vec3 p101 = glm::vec3(x1, y0, z1);
+                glm::vec3 p110 = glm::vec3(x0, y1, z1);
+                glm::vec3 p111 = glm::vec3(x1, y1, z1);
 
                 // Tetrahedra
-                vec3 p0[4] =  {p000, p001, p011, p111};
-                vec3 p1[4] =  {p000, p011, p010, p111};
-                vec3 p2[4] =  {p000, p010, p110, p111};
-                vec3 p3[4] =  {p000, p110, p100, p111};
-                vec3 p4[4] =  {p000, p100, p101, p111};
-                vec3 p5[4] =  {p000, p101, p001, p111};
+                glm::vec3 p0[4] =  {p000, p001, p011, p111};
+                glm::vec3 p1[4] =  {p000, p011, p010, p111};
+                glm::vec3 p2[4] =  {p000, p010, p110, p111};
+                glm::vec3 p3[4] =  {p000, p110, p100, p111};
+                glm::vec3 p4[4] =  {p000, p100, p101, p111};
+                glm::vec3 p5[4] =  {p000, p101, p001, p111};
 
                 // Faces generation
                 ProcessTetrahedron(mesh, function, isoValue,  p0);
@@ -353,17 +354,17 @@ void Mesh::CreateIsoSurface(  Mesh& mesh
     mesh.nb_faces = mesh.faces.size();
 }
 
-vec3 findRoot(const ImplicitFunction& function, const float isoValue, const vec3& p0, const vec3& p1, unsigned nb_iter = 10)
+glm::vec3 findRoot(const ImplicitFunction& function, const float isoValue, const glm::vec3& p0, const glm::vec3& p1, unsigned nb_iter = 10)
 {
 //    nb_iter = 0;      // Un-comenting this line disable the root finding
-    vec3 p00 = p0;
-    vec3 p10 = p1;
+    glm::vec3 p00 = p0;
+    glm::vec3 p10 = p1;
     if(function.Eval(p0) > function.Eval(p1))
     {
         swap(p00, p10);
     }
 
-    vec3 p = 0.5f*(p00+p10);
+    glm::vec3 p = 0.5f*(p00+p10);
     for(unsigned int iter = 0; iter < nb_iter; iter++)
     {
         if(function.Eval(p) > isoValue)
@@ -381,7 +382,7 @@ vec3 findRoot(const ImplicitFunction& function, const float isoValue, const vec3
     return p;
 }
 
-void Mesh::ProcessTetrahedron(Mesh& mesh, const ImplicitFunction& function, const float isoValue, const vec3 p[])
+void Mesh::ProcessTetrahedron(Mesh& mesh, const ImplicitFunction& function, const float isoValue, const glm::vec3 p[])
 {
     bool b[4] = {function.Eval(p[0]) > isoValue, function.Eval(p[1]) > isoValue, function.Eval(p[2]) > isoValue, function.Eval(p[3]) > isoValue};
 
@@ -400,14 +401,14 @@ void Mesh::ProcessTetrahedron(Mesh& mesh, const ImplicitFunction& function, cons
         if(b[i] && !b[(i+1)%4] && !b[(i+2)%4] && !b[(i+3)%4] || !b[i] && b[(i+1)%4] && b[(i+2)%4] && b[(i+3)%4])
         {
 
-            vec3 p0 = findRoot(function, isoValue, p[i], p[(i+1)%4]);
-            vec3 p1 = findRoot(function, isoValue, p[i], p[(i+2)%4]);
-            vec3 p2 = findRoot(function, isoValue, p[i], p[(i+3)%4]);
+            glm::vec3 p0 = findRoot(function, isoValue, p[i], p[(i+1)%4]);
+            glm::vec3 p1 = findRoot(function, isoValue, p[i], p[(i+2)%4]);
+            glm::vec3 p2 = findRoot(function, isoValue, p[i], p[(i+3)%4]);
 
 
-            vec3 n0 = glm::normalize(-function.EvalDev(p0));
-            vec3 n1 = glm::normalize(-function.EvalDev(p1));
-            vec3 n2 = glm::normalize(-function.EvalDev(p2));
+            glm::vec3 n0 = glm::normalize(-function.EvalDev(p0));
+            glm::vec3 n1 = glm::normalize(-function.EvalDev(p1));
+            glm::vec3 n2 = glm::normalize(-function.EvalDev(p2));
 
 
             mesh.vertices.push_back(p0);
@@ -462,20 +463,20 @@ void Mesh::ProcessTetrahedron(Mesh& mesh, const ImplicitFunction& function, cons
             }
 
             if(i == k || j == k || i == l || j == l || k == l)
-                cerr << "indices are wrong ! " << endl;
+                std::cerr << "indices are wrong ! " << std::endl;
 
 
             if(b[i] && b[j] && !b[k] && !b[l] || !b[i] && !b[j] && b[k] && b[l])
             {
-                vec3 p0 = findRoot(function, isoValue, p[i], p[k]);
-                vec3 p1 = findRoot(function, isoValue, p[i], p[l]);
-                vec3 p2 = findRoot(function, isoValue, p[j], p[k]);
-                vec3 p3 = findRoot(function, isoValue, p[j], p[l]);
+                glm::vec3 p0 = findRoot(function, isoValue, p[i], p[k]);
+                glm::vec3 p1 = findRoot(function, isoValue, p[i], p[l]);
+                glm::vec3 p2 = findRoot(function, isoValue, p[j], p[k]);
+                glm::vec3 p3 = findRoot(function, isoValue, p[j], p[l]);
 
-                vec3 n0 = glm::normalize(-function.EvalDev(p0));
-                vec3 n1 = glm::normalize(-function.EvalDev(p1));
-                vec3 n2 = glm::normalize(-function.EvalDev(p2));
-                vec3 n3 = glm::normalize(-function.EvalDev(p3));
+                glm::vec3 n0 = glm::normalize(-function.EvalDev(p0));
+                glm::vec3 n1 = glm::normalize(-function.EvalDev(p1));
+                glm::vec3 n2 = glm::normalize(-function.EvalDev(p2));
+                glm::vec3 n3 = glm::normalize(-function.EvalDev(p3));
 
 
                 mesh.vertices.push_back(p0);
@@ -519,7 +520,7 @@ void Mesh::ProcessTetrahedron(Mesh& mesh, const ImplicitFunction& function, cons
         }
     }
 
-    cerr << "no solution found in marching tetrahedron !!" << endl;
+    std::cerr << "no solution found in marching tetrahedron !!" << std::endl;
 }
 
 
@@ -534,7 +535,7 @@ void Mesh::write_obj(const char* filename) const
 
     for(unsigned int i = 0; i < vertices.size(); i++)
     {
-        vec3 p = vertices[i];
+        glm::vec3 p = vertices[i];
         fprintf(file,"v %f %f %f\n", p[0], p[1], p[2]);
     }
 
@@ -548,7 +549,7 @@ std::string Mesh::displayMesh() const{
 
     for(unsigned int i = 0; i < vertices.size(); i++)
     {
-        vec3 p = vertices[i];
+        glm::vec3 p = vertices[i];
         fprintf(file,"v %f %f %f\n", p[0], p[1], p[2]);
     }
 
@@ -566,7 +567,7 @@ void Mesh::ComputeNormals()
 
     for(unsigned int i=0; i<normals.size(); i++)
     {
-        normals[i] = vec3(0.0);
+        normals[i] = glm::vec3(0.0);
     }
 
     for(unsigned int i=0; i<faces.size(); i+=3)
@@ -575,15 +576,15 @@ void Mesh::ComputeNormals()
         unsigned int i1 = faces[i+1];
         unsigned int i2 = faces[i+2];
 
-        vec3 p0 = vertices[i0];
-        vec3 p1 = vertices[i1];
-        vec3 p2 = vertices[i2];
+        glm::vec3 p0 = vertices[i0];
+        glm::vec3 p1 = vertices[i1];
+        glm::vec3 p2 = vertices[i2];
 
-        vec3 d01 = glm::normalize(p1 - p0);
-        vec3 d12 = glm::normalize(p2 - p1);
-        vec3 d20 = glm::normalize(p0 - p2);
+        glm::vec3 d01 = glm::normalize(p1 - p0);
+        glm::vec3 d12 = glm::normalize(p2 - p1);
+        glm::vec3 d20 = glm::normalize(p0 - p2);
 
-        vec3 faceNormal = glm::normalize(glm::cross(d01, -d20));
+        glm::vec3 faceNormal = glm::normalize(glm::cross(d01, -d20));
 
         float alpha0 = asin(length(glm::cross(d01, -d20)));
         float alpha1 = asin(length(glm::cross(d12, -d01)));
@@ -600,7 +601,7 @@ void Mesh::ComputeNormals()
 
         if(l < 1e-5)
         {
-            cerr << "Error : normal of length 0." << endl;
+            std::cerr << "Error : normal of length 0." << std::endl;
             continue;
         }
 
@@ -610,7 +611,7 @@ void Mesh::ComputeNormals()
 
 void Mesh::RemoveDouble(float epsilon)
 {
-    vector<unsigned int> dbl;
+    std::vector<unsigned int> dbl;
     for(unsigned int i=0; i<vertices.size(); i++)
         dbl.push_back(i);
 
@@ -637,8 +638,8 @@ void Mesh::RemoveDouble(float epsilon)
         }
     }
 
-    vector<vec3> new_vertices;
-    vector<int> corresp;
+    std::vector<glm::vec3> new_vertices;
+    std::vector<int> corresp;
 
     for(unsigned int i=0; i<vertices.size(); i++)
     {
@@ -671,3 +672,4 @@ void Mesh::RemoveDouble(float epsilon)
     vertices = new_vertices;
 
 }
+

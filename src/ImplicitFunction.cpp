@@ -1,4 +1,5 @@
 #include "ImplicitFunction.h"
+#include "consistent_orientation.h"
 
 #include <iostream>
 #include <math.h>
@@ -25,6 +26,7 @@ ImplicitFunction::~ImplicitFunction()
 float ImplicitFunction::Eval(glm::vec3 /*p*/) const
 {
     cout << "ImplicitFunction::Eval : TODO : implementation" << endl;
+    return 0.;
 }
 
 vec3 ImplicitFunction::EvalDev(glm::vec3 p) const
@@ -51,7 +53,7 @@ vec3 ImplicitFunction::EvalDevFiniteDiff(glm::vec3 p) const
 // ====================== SignedDistanceFunction ===============================
 
 SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
-    cont int K, const double delta): pointcloud(filename, delta) {
+    const int K, const double delta): pointcloud(filename, delta) {
 
     std::cout << "Construction des plans tangents ..." << std::endl;
     double debut_pt = clock();
@@ -72,9 +74,9 @@ SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
                 << std::endl;
 }
 
-SignedDistanceFunction::~SignedDistanceFunction() {
+//SignedDistanceFunction::~SignedDistanceFunction() {
 
-}
+//}
 
 float SignedDistanceFunction::Eval(glm::vec3 p) const {
     /* le plan tangent le plus proche du point p est le plan dont le centre oi
@@ -82,7 +84,7 @@ float SignedDistanceFunction::Eval(glm::vec3 p) const {
     Vector3d point(p.x, p.y, p.z);
     int size = pointcloud.getSize();
 
-    Vector3d min_plane = pointcloud.getPlanePrecise(0);
+    Plane min_plane = pointcloud.getPlanePrecise(0);
     double min_distance = (min_plane.getCenter()-point).getNorm();
     double distance;
 
@@ -98,7 +100,7 @@ float SignedDistanceFunction::Eval(glm::vec3 p) const {
     où d(z, X) la distance euclidienne entre z et le point de X={x1, ..., xn}
     le plus proche de z, et z calculer comme la projection de p sur le plan tangent
     */
-    Vector3d z = point - (point-min_plane.getCenter())*min_plane.getNormal();
+    Vector3d z = point - (point-min_plane.getCenter()).getScalarProduct(min_plane.getNormal())*min_plane.getNormal();
     Vector3d min_point = pointcloud.getCloudPrecise(0);
     double min_distance2 = (min_point-z).getNorm();
     double distance2;
@@ -112,7 +114,7 @@ float SignedDistanceFunction::Eval(glm::vec3 p) const {
     }
 
     if(min_distance2 < pointcloud.getRho() + pointcloud.getDelta()) {
-        return (float) (point-min_plane.getCenter()).getScalarProduct(ni);
+        return (float) (point-min_plane.getCenter()).getScalarProduct(min_plane.getNormal());
     }
 
     return INFINITY;

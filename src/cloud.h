@@ -80,7 +80,7 @@ class Cloud {
         /**
           * \brief Met à jour la valeur de delta
         */
-        void setDelta(cont double d);
+        void setDelta(const double d);
         /**
         * \brief Renvoie l'attribut cloud (le nuage de points)
         */
