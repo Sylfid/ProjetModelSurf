@@ -6,6 +6,7 @@
 #include <vector>
 #include <string>
 #include "cloud.h"
+#include "consistent_orientation.h"
 
 class ImplicitFunction
 {
@@ -40,6 +41,10 @@ public:
                 laser)
     */
     SignedDistanceFunction(const std::string &filename, const int K, const double delta);
+    /**
+      * \brief Destructeur
+    */
+    ~SignedDistanceFunction();
 
     /**
       * \brief Evalue la fonction distance signée au point p.
@@ -47,6 +52,11 @@ public:
     */
     virtual float Eval(glm::vec3 p) const;
     virtual glm::vec3 EvalDev(glm::vec3 p) const;
+
+    int getSize() const;
+
+    Cloud getPointCloud() const;
+    Cloud &getPointCloud();
 
 };
 

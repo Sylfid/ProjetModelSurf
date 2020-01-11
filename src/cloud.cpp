@@ -43,7 +43,11 @@ double Cloud::getRho() const {
     return rho;
 }
 
-double Cloud::getDelta(const double d) const {
+double Cloud::getDelta() const {
+    return delta;
+}
+
+void Cloud::setDelta(const double d) {
     delta = d;
 }
 
@@ -62,7 +66,7 @@ Vector3d &Cloud::getCloudPrecise(const int i) {
 
 Vector3d Cloud::getCloudPrecise(const int i) const {
     assert(i<size && i>=0);
-    return cloud[i]
+    return cloud[i];
 }
 
 std::vector<Plane> &Cloud::getPlanes() {

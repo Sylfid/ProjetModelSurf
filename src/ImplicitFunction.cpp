@@ -80,9 +80,10 @@ float SignedDistanceFunction::Eval(glm::vec3 p) const {
     /* le plan tangent le plus proche du point p est le plan dont le centre oi
     est le plus proche de p (on utilise l'algo linéaire) */
     Vector3d point(p.x, p.y, p.z);
+    Vector3d point(p[0], p[1], p[2]);
     int size = pointcloud.getSize();
 
-    Vector3d min_plane = pointcloud.getPlanePrecise(0);
+    Plane min_plane = pointcloud.getPlanePrecise(0);
     double min_distance = (min_plane.getCenter()-point).getNorm();
     double distance;
 
@@ -98,7 +99,7 @@ float SignedDistanceFunction::Eval(glm::vec3 p) const {
     où d(z, X) la distance euclidienne entre z et le point de X={x1, ..., xn}
     le plus proche de z, et z calculer comme la projection de p sur le plan tangent
     */
-    Vector3d z = point - (point-min_plane.getCenter())*min_plane.getNormal();
+    Vector3d z = point - (point-min_plane.getCenter()).getScalarProduct(min_plane.getNormal())*min_plane.getNormal();
     Vector3d min_point = pointcloud.getCloudPrecise(0);
     double min_distance2 = (min_point-z).getNorm();
     double distance2;
@@ -112,10 +113,26 @@ float SignedDistanceFunction::Eval(glm::vec3 p) const {
     }
 
     if(min_distance2 < pointcloud.getRho() + pointcloud.getDelta()) {
-        return (float) (point-min_plane.getCenter()).getScalarProduct(ni);
+        return (float) (point-min_plane.getCenter()).getScalarProduct(min_plane.getNormal());
     }
 
     return INFINITY;
+}
+
+glm::vec3 SignedDistanceFunction::EvalDev(glm::vec3 p) const {
+    return EvalDevFiniteDiff(p);
+}
+
+int SignedDistanceFunction::getSize() const {
+    return pointcloud.getSize();
+}
+
+Cloud SignedDistanceFunction::getPointCloud() const {
+    return pointcloud;
+}
+
+Cloud &SignedDistanceFunction::getPointCloud() {
+    return pointcloud;
 }
 
 // =============================================================================

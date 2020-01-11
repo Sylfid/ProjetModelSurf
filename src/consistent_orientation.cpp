@@ -69,7 +69,7 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
             }
         }
     }
-    
+
     // construction de l'EMST
     std::vector<Edge> emst;
     boost::kruskal_minimum_spanning_tree(euclidean_graph, std::back_inserter(emst));
@@ -102,9 +102,9 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
                 << "s" << std::endl;
     std::cout << "Construction du MST : " << (fin_mst-debut_mst) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
-    std::cout << "Algo DFS : " << (fin_dfs-debut_dfs) / double(CLOCKS_PER_SEC)
+    std::cout << "Propagation de l'orientation des normales : " << (fin_dfs-debut_dfs) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
-    std::cout << "-----TOTAL : " << (fin_dfs-debut_emst) / double(CLOCKS_PER_SEC)
+    std::cout << "----- TOTAL : " << (fin_dfs-debut_emst) / double(CLOCKS_PER_SEC)
                 << "s -----" << std::endl << std::endl;
 }
 
