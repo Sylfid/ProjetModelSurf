@@ -66,6 +66,7 @@ SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
     double debut_cpo = clock();
     orientation_algorithm(pointcloud.getPlanes(), pointcloud.getSize(), K+1);
     double fin_cpo = clock();
+    pointcloud.displayCloud(std::cout);
 
     std::cout << "========== TEMPS DEXECUTION : ==========" << std::endl << std::endl;
     std::cout << "o CONSTRUCTION DES PT : "
@@ -77,7 +78,13 @@ SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
 }
 
 SignedDistanceFunction::~SignedDistanceFunction() {
+}
 
+void SignedDistanceFunction::displaySignedDistanceFunction(std::ostream& str){
+    str << "\nCloud :\n";
+    getPointCloud().displayCloud(str);
+    str << "\nPlanes :\n";
+    getPointCloud().displayPlanes(str);
 }
 
 float SignedDistanceFunction::Eval(glm::vec3 p) const {

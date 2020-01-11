@@ -52,6 +52,7 @@ public:
     */
     virtual float Eval(glm::vec3 p) const;
     virtual glm::vec3 EvalDev(glm::vec3 p) const;
+    void displaySignedDistanceFunction(std::ostream& str);
 
     int getSize() const;
 
