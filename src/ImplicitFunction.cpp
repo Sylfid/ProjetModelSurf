@@ -1,4 +1,5 @@
 #include "ImplicitFunction.h"
+#include "consistent_orientation.h"
 
 #include <iostream>
 #include <math.h>
@@ -25,6 +26,7 @@ ImplicitFunction::~ImplicitFunction()
 float ImplicitFunction::Eval(glm::vec3 /*p*/) const
 {
     cout << "ImplicitFunction::Eval : TODO : implementation" << endl;
+    return 0.;
 }
 
 vec3 ImplicitFunction::EvalDev(glm::vec3 p) const
@@ -51,7 +53,7 @@ vec3 ImplicitFunction::EvalDevFiniteDiff(glm::vec3 p) const
 // ====================== SignedDistanceFunction ===============================
 
 SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
-    cont int K, const double delta): pointcloud(filename, delta) {
+    const int K, const double delta): pointcloud(filename, delta) {
 
     std::cout << "Construction des plans tangents ..." << std::endl;
     double debut_pt = clock();
@@ -72,9 +74,9 @@ SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
                 << std::endl;
 }
 
-SignedDistanceFunction::~SignedDistanceFunction() {
+//SignedDistanceFunction::~SignedDistanceFunction() {
 
-}
+//}
 
 float SignedDistanceFunction::Eval(glm::vec3 p) const {
     /* le plan tangent le plus proche du point p est le plan dont le centre oi

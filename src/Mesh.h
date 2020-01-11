@@ -25,6 +25,7 @@ public:
     // utils
     void RemoveDouble(float epsilon = 1e-5);        /// Remove duplicated points
 
+  std::string displayMesh() const{
 
     // primitives generation
     static void CreateCube(Mesh& mesh);             /// Creates a cube (vertices duplicated)
