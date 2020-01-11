@@ -10,7 +10,8 @@ using namespace glm;
 using namespace std;
 
 /* Construction d'un maillage et utilisation du marching tetrahedra sur une région
-délimitée et pour une résolution donnée, afin d'extraire l'isosurface souhaitée  */
+délimitée et pour une résolution (utilisée pour calculer le côté d'un cube)
+donnée, afin d'extraire l'isosurface souhaitée  */
 void Mesh::CreateIsoSurface(  const ImplicitFunction& function
                             , const float isoValue
                             , const float minX
@@ -26,6 +27,7 @@ void Mesh::CreateIsoSurface(  const ImplicitFunction& function
 	/* algorithme du marching cube version tétraèdres : découpage de l'espace
 	en cube,les cubes en tétraèdres puis construction de l'isosurface sur chaque
 	tétraèdre */
+    std::cout << "CreateIsosurface !" << std::endl;
     for(unsigned int i=0; i < resX; i++) {
         float x0 = float(i  )/resX * (maxX - minX) + minX;
         float x1 = float(i+1)/resX * (maxX - minX) + minX;
@@ -138,7 +140,7 @@ void Mesh::ProcessTetrahedron(const ImplicitFunction& function,
             m_normals.push_back(n1);
             m_normals.push_back(n2);
 
-
+            // ordre
             if(dot(cross(p1-p0, p2-p0), n0+n1+n2)>0) {
                 m_indices.push_back(N);
                 m_indices.push_back(N+1);

@@ -47,4 +47,8 @@ target_link_libraries(test_consistent_orientation Consistent_orientation Vector3
 
 add_executable(test_ImplicitFunction test_ImplicitFunction.cpp)
 target_link_libraries(test_ImplicitFunction Consistent_orientation Vector3d Plane Cloud ImplicitFunction Load_off_file ${PCL_LIBRARIES})
+
+add_executable(test_Mesh test_Mesh.cpp)
+target_link_libraries(test_Mesh AbstractMesh Mesh Consistent_orientation Vector3d Plane Cloud ImplicitFunction Load_off_file ${PCL_LIBRARIES})
+
 #######

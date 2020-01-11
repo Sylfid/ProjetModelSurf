@@ -54,6 +54,8 @@ SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
 
     // ATTENTION : on travaille avec K+1 car l'algo qui réalise la recherche des
     // K plus proches voisins renvoie parmis les voisins le point lui mm ...
+    std::cout << "nombre de points : " << pointcloud.getSize()
+                << std::endl << std::endl;
 
     std::cout << "1. Construction des plans tangents ..." << std::endl << std::endl;
     double debut_pt = clock();
@@ -113,9 +115,12 @@ float SignedDistanceFunction::Eval(glm::vec3 p) const {
         }
     }
 
+    // std::cout << "ok" << std::endl;
     if(min_distance2 < pointcloud.getRho() + pointcloud.getDelta()) {
         return (float) (point-min_plane.getCenter()).getScalarProduct(min_plane.getNormal());
     }
+
+    // std::cout << "non" << std::endl;
 
     return INFINITY;
 }

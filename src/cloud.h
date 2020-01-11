@@ -19,13 +19,13 @@
 class Cloud {
 
     private:
-        //pcl::PointCloud<pcl::PointXYZ>::Ptr cloud;  /*!< liste des points du nuage */
         std::vector<Vector3d> cloud; /*!< liste des points du nuage */
         std::vector<Plane> planes; /*!< liste des plans tangents */
         int size; /*!< nombre de points à étudier (=le nombre de plans) */
         double rho; /*!< paramètre rho qu'on initialise au moment de la construction des plans tangents
                         (sa valeur est nulle à l'appel du constructeur)*/
         double delta; /*!< paramètre de bruit delta de l'article */
+        double minX, minY, minZ, maxX, maxY, maxZ; /*!< coordonnées min/max dans chaque direction */
 
     public:
         /**
@@ -77,6 +77,13 @@ class Cloud {
           * \brief Renvoie la valeur de delta
         */
         double getDelta() const;
+
+        double getMinX() const;
+        double getMinY() const;
+        double getMinZ() const;
+        double getMaxX() const;
+        double getMaxY() const;
+        double getMaxZ() const;
         /**
           * \brief Met à jour la valeur de delta
         */
@@ -114,7 +121,8 @@ class Cloud {
         */
         Plane &getPlanePrecise(const int i);
         /**
-          * \brief Calcule tous les plans tangents.
+          * \brief Calcule tous les plans tangents et initialise les coordonées
+                    min/max dans les trois directions.
           * \param K le nombre de voisins pour le calcul des kNNbhd
         */
         void construct_tangent_planes(const int K);

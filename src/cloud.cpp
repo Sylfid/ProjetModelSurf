@@ -1,9 +1,9 @@
 #include "cloud.h"
 #include "load_off_file.h"
 
-Cloud::Cloud():size(0), rho(0), delta(0) {}
+Cloud::Cloud():size(0), rho(-1), delta(0) {}
 
-Cloud::Cloud(const std::string &filename, const double d):rho(0), delta(d) {
+Cloud::Cloud(const std::string &filename, const double d):rho(-1), delta(d) {
     bool load_ok = load_OFF_file(filename, cloud);
     if (load_ok) {
         size = cloud.size();
@@ -45,6 +45,30 @@ double Cloud::getRho() const {
 
 double Cloud::getDelta() const {
     return delta;
+}
+
+double Cloud::getMinX() const {
+    return minX;
+}
+
+double Cloud::getMinY() const {
+    return minY;
+}
+
+double Cloud::getMinZ() const {
+    return minZ;
+}
+
+double Cloud::getMaxX() const {
+    return maxX;
+}
+
+double Cloud::getMaxY() const {
+    return maxY;
+}
+
+double Cloud::getMaxZ() const {
+    return maxZ;
 }
 
 void Cloud::setDelta(const double d) {
@@ -100,6 +124,15 @@ void Cloud::construct_tangent_planes(const int K) {
         cloud_float->points[i].x = cloud[i].getX();
         cloud_float->points[i].y = cloud[i].getY();
         cloud_float->points[i].z = cloud[i].getZ();
+
+        // à la recherche des coordonées min/max
+        if (cloud[i].getX()<minX) {minX = cloud[i].getX() ;}
+        if (cloud[i].getY()<minY) {minY = cloud[i].getY() ;}
+        if (cloud[i].getZ()<minZ) {minZ = cloud[i].getZ() ;}
+
+        if (cloud[i].getX()>maxX) {maxX = cloud[i].getX() ;}
+        if (cloud[i].getY()>maxY) {maxY = cloud[i].getY() ;}
+        if (cloud[i].getZ()>maxZ) {maxZ = cloud[i].getZ() ;}
     }
 
     pcl::KdTreeFLANN<pcl::PointXYZ> kdtree;
@@ -115,7 +148,9 @@ void Cloud::construct_tangent_planes(const int K) {
 
         // attention : on part de 1 et non de 0 car l'index 0 correspond au point lui mm
         double pp = pointNKNSquaredDistance[1];
-        if (pp < rho) rho = pp;
+        if (rho < pp) {
+            rho = pp;
+        }
 
         // on recupere la liste des voisins à partir de la liste des indices
         // attention : cette liste contient le point searchPoint!

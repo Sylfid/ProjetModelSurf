@@ -55,6 +55,16 @@ public:
 
     int getSize() const;
 
+    double getMinX() const {return pointcloud.getMinX();};
+    double getMinY() const {return pointcloud.getMinY();};
+    double getMinZ() const {return pointcloud.getMinZ();};
+    double getMaxX() const {return pointcloud.getMaxX();};
+    double getMaxY() const {return pointcloud.getMaxY();};
+    double getMaxZ() const {return pointcloud.getMaxZ();};
+
+    double getRho() const {return pointcloud.getRho();};
+    double getDelta() const {return pointcloud.getDelta();};
+
     Cloud getPointCloud() const;
     Cloud &getPointCloud();
 

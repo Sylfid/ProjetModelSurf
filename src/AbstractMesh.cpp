@@ -83,6 +83,7 @@ void AbstractMesh::write_off(const std::string &filename) const {
     file << "OFF" << std::endl;
     file << m_positions.size() << " " << m_indices.size() << " "
             << 0 << std::endl;
+    
     // ATTENTION à la précision des double
     file.precision(std::numeric_limits<double>::digits10+1);
     for(unsigned int i = 0; i < m_positions.size(); i++) {

@@ -86,5 +86,13 @@ int main () {
     printf("\ntest affichage de la precision d'un double:\n");
     std::cout << m << std::endl;
 
+    std::cout << "Test cat double into int : " << std::endl;
+    unsigned int i = 10;
+    double d = 3.141516171819;
+    std::cout << "i = " << i << std::endl;
+    std::cout << "d = " << d << std::endl;
+    i = d;
+    std::cout << "apres le cast i = d : i = " << i << std::endl;
+
     return 0;
 }
