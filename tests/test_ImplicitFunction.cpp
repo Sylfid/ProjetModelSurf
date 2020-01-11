@@ -29,12 +29,13 @@ int main(int argc, char** argv) {
         name = "test_implfunct.off";
     }
 
-    std::cout << "===== TEMPS DEXECUTION : =====" << std::endl << std::endl;
+    std::cout << "********** ETAPE DE LA RECONSTRUCTION : **********"
+                << std::endl << std::endl;
     double debut = clock();
     SignedDistanceFunction SignedDistanceFunction(filename, K, delta);
     double fin = clock();
-    std::cout << "===== TOTAL : " << (fin-debut) / double(CLOCKS_PER_SEC)
-                << "s =====" << std::endl;
+    std::cout << "========== TOTAL : " << (fin-debut) / double(CLOCKS_PER_SEC)
+                << "s ==========" << std::endl << std::endl;
 
     std::cout << "sauvegarde dans le fichier : " << name << std::endl;
     std::cout << "nombre de points : " << SignedDistanceFunction.getPointCloud().getCloud().size() << std::endl;

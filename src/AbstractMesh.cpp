@@ -2,6 +2,7 @@
 #include "Mesh.h"
 
 #include <iostream>
+#include <limits>
 
 using namespace glm;
 using namespace std;
@@ -73,7 +74,29 @@ void AbstractMesh::write_obj(const char* filename) const
     }
 }
 
+void AbstractMesh::write_off(const std::string &filename) const {
 
+    std::ofstream file(filename);
+    assert(file.is_open());
+
+    // entête OFF
+    file << "OFF" << std::endl;
+    file << m_positions.size() << " " << m_indices.size() << " "
+            << 0 << std::endl;
+    // ATTENTION à la précision des double
+    file.precision(std::numeric_limits<double>::digits10+1);
+    for(unsigned int i = 0; i < m_positions.size(); i++) {
+        vec3 p = m_positions[i];
+        file << p[0] << " " << p[1] << " " << p[2] << std::endl;
+    }
+
+    for(unsigned int i = 0; i < m_indices.size(); i+=3) {
+        file << 3 << " " << m_indices[i]+1 << " " << m_indices[i+1]+1
+                << " " << m_indices[i+2]+1 << std::endl;
+        // fprintf(file,"f %i %i %i\n", m_indices[i]+1, m_indices[i+1]+1, m_indices[i+2]+1);
+    }
+    file.close();
+}
 
 //***************
 // OpenGL utilities

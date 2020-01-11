@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <math.h>
-#include <math.h>
 #ifdef INFINITY
 /* INFINITY is supported */
 #endif
@@ -56,16 +55,17 @@ SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
     // ATTENTION : on travaille avec K+1 car l'algo qui réalise la recherche des
     // K plus proches voisins renvoie parmis les voisins le point lui mm ...
 
-    std::cout << "o Construction des plans tangents ..." << std::endl << std::endl;
+    std::cout << "1. Construction des plans tangents ..." << std::endl << std::endl;
     double debut_pt = clock();
     pointcloud.construct_tangent_planes(K+1);
     double fin_pt = clock();
 
-    std::cout << "o Consistent Plane Orientation ... " << std::endl << std::endl;
+    std::cout << "2. Consistent Plane Orientation ... " << std::endl << std::endl;
     double debut_cpo = clock();
     orientation_algorithm(pointcloud.getPlanes(), pointcloud.getSize(), K+1);
     double fin_cpo = clock();
 
+    std::cout << "========== TEMPS DEXECUTION : ==========" << std::endl << std::endl;
     std::cout << "o CONSTRUCTION DES PT : "
                 << (fin_pt-debut_pt) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl << std::endl;

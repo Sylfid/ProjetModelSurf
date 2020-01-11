@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <map>
-//#include <algorithm>
+#include <algorithm>
 
 using namespace glm;
 using namespace std;

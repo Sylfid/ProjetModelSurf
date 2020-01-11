@@ -50,8 +50,8 @@ public:
       * \brief Evalue la fonction distance signée au point p.
       * \param p le point en lequel la fonction distance est évaluée.
     */
-    float Eval(glm::vec3 p) const;
-    glm::vec3 EvalDev(glm::vec3 p) const;
+    virtual float Eval(glm::vec3 p) const;
+    virtual glm::vec3 EvalDev(glm::vec3 p) const;
 
     int getSize() const;
 
