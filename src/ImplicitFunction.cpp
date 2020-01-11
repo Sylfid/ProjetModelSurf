@@ -1,5 +1,4 @@
 #include "ImplicitFunction.h"
-#include "consistent_orientation.h"
 
 #include <iostream>
 #include <math.h>
@@ -26,7 +25,6 @@ ImplicitFunction::~ImplicitFunction()
 float ImplicitFunction::Eval(glm::vec3 /*p*/) const
 {
     cout << "ImplicitFunction::Eval : TODO : implementation" << endl;
-    return 0.;
 }
 
 vec3 ImplicitFunction::EvalDev(glm::vec3 p) const
@@ -55,33 +53,34 @@ vec3 ImplicitFunction::EvalDevFiniteDiff(glm::vec3 p) const
 SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
     const int K, const double delta): pointcloud(filename, delta) {
 
-    std::cout << "Construction des plans tangents ..." << std::endl;
+    // ATTENTION : on travaille avec K+1 car l'algo qui réalise la recherche des
+    // K plus proches voisins renvoie parmis les voisins le point lui mm ...
+
+    std::cout << "o Construction des plans tangents ..." << std::endl << std::endl;
     double debut_pt = clock();
-    pointcloud.construct_tangent_planes(K);
+    pointcloud.construct_tangent_planes(K+1);
     double fin_pt = clock();
 
-    std::cout << "Consistent Plane Orientation ... " << std::endl;
+    std::cout << "o Consistent Plane Orientation ... " << std::endl << std::endl;
     double debut_cpo = clock();
-    orientation_algorithm(pointcloud.getPlanes(), pointcloud.getSize(), K);
+    orientation_algorithm(pointcloud.getPlanes(), pointcloud.getSize(), K+1);
     double fin_cpo = clock();
 
-    std::cout << "" << std::endl;
     std::cout << "o CONSTRUCTION DES PT : "
                 << (fin_pt-debut_pt) / double(CLOCKS_PER_SEC)
-                << "s" << std::endl;
+                << "s" << std::endl << std::endl;
     std::cout << "o CONSISTENT ORIENTATION PLAN : "
                 << (fin_cpo-debut_cpo) / double(CLOCKS_PER_SEC)
-                << std::endl;
+                << std::endl << std::endl;
 }
 
-//SignedDistanceFunction::~SignedDistanceFunction() {
+SignedDistanceFunction::~SignedDistanceFunction() {
 
-//}
+}
 
 float SignedDistanceFunction::Eval(glm::vec3 p) const {
     /* le plan tangent le plus proche du point p est le plan dont le centre oi
     est le plus proche de p (on utilise l'algo linéaire) */
-    Vector3d point(p.x, p.y, p.z);
     Vector3d point(p[0], p[1], p[2]);
     int size = pointcloud.getSize();
 
