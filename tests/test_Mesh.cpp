@@ -38,12 +38,7 @@ int main(int argc, char** argv) {
 
     std::cout << "========== DEBUT : ==========" << std::endl << std::endl;
     double debut_sdf = clock();
-<<<<<<< HEAD
     SignedDistanceFunction function(filename, K, INFINITY);
-=======
-    SignedDistanceFunction function(filename, K, delta);
-    function.displaySignedDistanceFunction(std::cout);
->>>>>>> 8323ae03fdb23d7521a776e72a093ace6743371c
     double fin_sdf = clock();
 
     std::cout << "Valeur de rho + delta : " << function.getRhoPlusDelta()

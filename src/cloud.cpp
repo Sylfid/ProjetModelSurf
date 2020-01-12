@@ -148,15 +148,10 @@ void Cloud::construct_tangent_planes(const int K) {
         // searchPoint est 0 (ie : premier élément des listes)
         int nb_nbhd = pointIdxNKNSearch.size();
         std::vector<Vector3d> nbhd(nb_nbhd);
-<<<<<<< HEAD
-=======
-        //printf("%f %f %f searchpoint\n",searchPoint.x,searchPoint.y,searchPoint.z);
->>>>>>> 8323ae03fdb23d7521a776e72a093ace6743371c
         for (int k=0 ; k<nb_nbhd ; k++) {
             nbhd[k].set(cloud[pointIdxNKNSearch[k]].getX(),
                         cloud[pointIdxNKNSearch[k]].getY(),
                         cloud[pointIdxNKNSearch[k]].getZ());
-            //printf("%f %f %f \n",cloud[pointIdxNKNSearch[k]].getX(),cloud[pointIdxNKNSearch[k]].getY(),cloud[pointIdxNKNSearch[k]].getZ());
         }
 
         // plans tangents
@@ -171,14 +166,10 @@ void Cloud::construct_tangent_planes(const int K) {
 Vector3d compute_3d_centroid(std::vector<Vector3d> nbhd) {
     int n = nbhd.size();
     Vector3d centroid;
-    /*for (std::vector<Vector3d>::iterator it = nbhd.begin() ; it != nbhd.end() ; ++it) {
+    for (std::vector<Vector3d>::iterator it = nbhd.begin() ; it != nbhd.end() ; ++it) {
         centroid += *it;
-    }*/
-    for(int i(0); i<n; i++){
-        centroid += nbhd[i];
     }
     centroid /= n;
-    //printf("centroid %f %f %f %d\n", centroid.getX(), centroid.getY(), centroid.getZ(), n);
     return centroid;
 }
 
