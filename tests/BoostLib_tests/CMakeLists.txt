@@ -14,7 +14,7 @@ link_directories(${PROJECT_SOURCE_DIR}/src)
 
 find_package(Boost REQUIRED) # used version 1.72
 find_package(PCL REQUIRED) # version 1.9
-find_package(CGAL REQUIRED) # version 5.0
+#find_package(CGAL REQUIRED) # version 5.0
 
 include_directories(${BOOST_INCLUDE_DIRS})
 link_directories(${BOOST_LIBRARY_DIRS})
@@ -31,8 +31,8 @@ add_executable(test_boost_example3 test_boost_example3.cpp)
 add_executable(test_construct_mst test_construct_mst.cpp)
 target_link_libraries(test_construct_mst Load_off_file Vector3d Plane Cloud ${PCL_LIBRARIES})
 
-add_executable(test_emst test_emst.cpp)
-target_link_libraries(test_emst ${GMP_LIBRARIES})
+#add_executable(test_emst test_emst.cpp)
+#target_link_libraries(test_emst ${GMP_LIBRARIES})
 
 add_executable(test_boost_example3_multipleEdges test_boost_example3_multipleEdges.cpp)
 add_executable(test_boost_example3_singleEdge test_boost_example3_singleEdge.cpp)

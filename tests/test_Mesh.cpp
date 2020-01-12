@@ -26,9 +26,9 @@ int main(int argc, char** argv) {
         name = "test_implfunct.off";
         name2 = "test_implfunct.obj";
     } else {
-        filename = "../../models/bunny.off";
+        filename = "../../models/cube.off";
         if (!(boost::filesystem::exists(filename))) {
-            filename = "../models/bunny.off";
+            filename = "../models/cube.off";
         }
         name = "test_implfunct.off";
         name2 = "test_implfunct.obj";
@@ -38,7 +38,12 @@ int main(int argc, char** argv) {
 
     std::cout << "========== DEBUT : ==========" << std::endl << std::endl;
     double debut_sdf = clock();
+<<<<<<< HEAD
     SignedDistanceFunction function(filename, K, INFINITY);
+=======
+    SignedDistanceFunction function(filename, K, delta);
+    function.displaySignedDistanceFunction(std::cout);
+>>>>>>> 8323ae03fdb23d7521a776e72a093ace6743371c
     double fin_sdf = clock();
 
     std::cout << "Valeur de rho + delta : " << function.getRhoPlusDelta()
