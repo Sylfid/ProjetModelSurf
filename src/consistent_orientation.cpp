@@ -97,6 +97,7 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
     propagate_orientation_dfs(g, spanning_tree, index_max_z, plans_t);
     double fin_dfs = clock();
 
+    /*
     std::cout << "----- TEMPS DEXECUTION (CONSISTENT PLANE ORIENTATION) -----" << std::endl;
     std::cout << "Construction du EMST et du Riemannian Graph : " << (fin_emst-debut_emst) / double(CLOCKS_PER_SEC)
                 << "s" << std::endl;
@@ -106,6 +107,7 @@ void orientation_algorithm(std::vector<Plane> &plans_t, const int size, const in
                 << "s" << std::endl;
     std::cout << "----- TOTAL : " << (fin_dfs-debut_emst) / double(CLOCKS_PER_SEC)
                 << "s -----" << std::endl << std::endl;
+    */
 }
 
 void flip_normal(Plane &P) {

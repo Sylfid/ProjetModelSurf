@@ -82,8 +82,9 @@ int main () {
     cloud2.displayPlanes(std::cout);
     std::cout << std::endl;
     std::cout << "Construction des plans tangents :" << std::endl;
-    int K2 = 4;
+    int K2 = 3;
     cloud2.construct_tangent_planes(K2);
+    cloud2.displayPlanes(std::cout);
 
     // Test construct plans sur un plus gros fichier
     std::cout << "------- TEST3 -------" << std::endl;
