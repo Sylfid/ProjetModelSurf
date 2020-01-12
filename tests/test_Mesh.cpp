@@ -24,9 +24,9 @@ int main(int argc, char** argv) {
         filename = argv[1];
         name = "test_implfunct.off";
     } else {
-        filename = "../../models/cube.off";
+        filename = "../../models/cube_closed.off";
         if (!(boost::filesystem::exists(filename))) {
-            filename = "../models/cube.off";
+            filename = "../models/cube_closed.off";
         }
         name = "test_implfunct.off";
     }
