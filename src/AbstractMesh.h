@@ -53,7 +53,7 @@ class AbstractMesh
     virtual void display() const {}                 /// Displays some info about this mesh in the console
     void write_obj(const char* filename) const;
 
-    void write_off(const std::string &filename) const;
+    void write_off(const char* filename) const;
 
 
     // Geometric utilities

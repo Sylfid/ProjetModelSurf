@@ -7,6 +7,10 @@
 #include <string>
 #include "cloud.h"
 #include "consistent_orientation.h"
+#include <math.h>
+#ifdef INFINITY
+/* INFINITY is supported */
+#endif
 
 class ImplicitFunction
 {
@@ -20,6 +24,8 @@ public:
 
     virtual glm::vec3 EvalDevFiniteDiff(glm::vec3 p) const;
 };
+
+// ======================== DEBUT SignedDistanceFunction========================
 
 /**
   * \brief La function distance signée décrit dans l'article de Hoppe 92 est une
@@ -52,7 +58,6 @@ public:
     */
     virtual float Eval(glm::vec3 p) const;
     virtual glm::vec3 EvalDev(glm::vec3 p) const;
-    void displaySignedDistanceFunction(std::ostream& str);
 
     int getSize() const;
 
@@ -63,13 +68,15 @@ public:
     double getMaxY() const {return pointcloud.getMaxY();};
     double getMaxZ() const {return pointcloud.getMaxZ();};
 
-    double getRho() const {return pointcloud.getRho();};
-    double getDelta() const {return pointcloud.getDelta();};
+    double getRhoPlusDelta() const {return pointcloud.getRhoPlusDelta();};
 
     Cloud getPointCloud() const;
     Cloud &getPointCloud();
 
 };
+
+// ======================== FIN SignedDistanceFunction==========================
+
 
 class SphereFunction : public  ImplicitFunction
 {

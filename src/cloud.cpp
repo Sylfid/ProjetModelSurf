@@ -1,9 +1,9 @@
 #include "cloud.h"
 #include "load_off_file.h"
 
-Cloud::Cloud():size(0), rho(-1), delta(0) {}
+Cloud::Cloud():size(0), rho_plus_delta(INFINITY) {}
 
-Cloud::Cloud(const std::string &filename, const double d):rho(-1), delta(d) {
+Cloud::Cloud(const std::string &filename, const double d): rho_plus_delta(d) {
     bool load_ok = load_OFF_file(filename, cloud);
     if (load_ok) {
         size = cloud.size();
@@ -39,12 +39,8 @@ int Cloud::getSize() const {
     return size;
 }
 
-double Cloud::getRho() const {
-    return rho;
-}
-
-double Cloud::getDelta() const {
-    return delta;
+double Cloud::getRhoPlusDelta() const {
+    return rho_plus_delta;
 }
 
 double Cloud::getMinX() const {
@@ -71,8 +67,8 @@ double Cloud::getMaxZ() const {
     return maxZ;
 }
 
-void Cloud::setDelta(const double d) {
-    delta = d;
+void Cloud::setRhoPlusDelta(const double d) {
+    rho_plus_delta = d;
 }
 
 std::vector<Vector3d> &Cloud::getCloud() {
@@ -146,19 +142,16 @@ void Cloud::construct_tangent_planes(const int K) {
 
         kdtree.nearestKSearch(searchPoint, K, pointIdxNKNSearch, pointNKNSquaredDistance);
 
-        // attention : on part de 1 et non de 0 car l'index 0 correspond au point lui mm
-        double pp = pointNKNSquaredDistance[1];
-        if (rho < pp) {
-            rho = pp;
-        }
-
         // on recupere la liste des voisins à partir de la liste des indices
         // attention : cette liste contient le point searchPoint!
         // Comme les listes sont  ordonnée par distance croissante, l'indice de
         // searchPoint est 0 (ie : premier élément des listes)
         int nb_nbhd = pointIdxNKNSearch.size();
         std::vector<Vector3d> nbhd(nb_nbhd);
+<<<<<<< HEAD
+=======
         //printf("%f %f %f searchpoint\n",searchPoint.x,searchPoint.y,searchPoint.z);
+>>>>>>> 8323ae03fdb23d7521a776e72a093ace6743371c
         for (int k=0 ; k<nb_nbhd ; k++) {
             nbhd[k].set(cloud[pointIdxNKNSearch[k]].getX(),
                         cloud[pointIdxNKNSearch[k]].getY(),

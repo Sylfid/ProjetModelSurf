@@ -27,7 +27,6 @@ void Mesh::CreateIsoSurface(  const ImplicitFunction& function
 	/* algorithme du marching cube version tétraèdres : découpage de l'espace
 	en cube,les cubes en tétraèdres puis construction de l'isosurface sur chaque
 	tétraèdre */
-    std::cout << "CreateIsosurface !" << std::endl;
     for(unsigned int i=0; i < resX; i++) {
         float x0 = float(i  )/resX * (maxX - minX) + minX;
         float x1 = float(i+1)/resX * (maxX - minX) + minX;
@@ -225,6 +224,56 @@ void Mesh::ProcessTetrahedron(const ImplicitFunction& function,
     }
 
     cerr << "no solution found in marching tetrahedron !!" << endl;
+}
+
+void Mesh::RemoveDouble(float epsilon)
+{
+    vector<unsigned int> dbl;
+    for(unsigned int i=0; i<m_positions.size(); i++)
+        dbl.push_back(i);
+
+    for(unsigned int i=0; i<m_positions.size()-1; i++){
+        if(dbl[i] != i)
+            continue;
+
+        for(unsigned int j=i+1; j<m_positions.size(); j++){
+            if(length(m_positions[i] - m_positions[j]) < epsilon){
+                dbl[j] = i;
+            }
+        }
+    }
+
+
+    for(unsigned int i=0; i<m_positions.size(); i++){
+        while(dbl[dbl[i]] != dbl[i]){
+            dbl[i] = dbl[dbl[i]];
+        }
+    }
+
+    vector<vec3> new_vertices;
+    vector<int> corresp;
+
+    for(unsigned int i=0; i<m_positions.size(); i++) {
+        if(dbl[i] == i) {
+            corresp.push_back(new_vertices.size());
+            new_vertices.push_back(m_positions[i]);
+            continue;
+        }
+        corresp.push_back(-1);
+    }
+
+    for(unsigned int i=0; i<m_positions.size(); i++) {
+        while(corresp[i] == -1) {
+            corresp[i] = corresp[dbl[i]];
+        }
+    }
+
+    for(unsigned int i=0; i<m_indices.size(); i++) {
+        m_indices[i] = corresp[m_indices[i]];
+    }
+
+    m_positions = new_vertices;
+
 }
 
 /* =============================================================================

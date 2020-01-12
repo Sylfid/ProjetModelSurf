@@ -8,6 +8,17 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 add_subdirectory(${PROJECT_SOURCE_DIR}/tests)
 add_subdirectory(${PROJECT_SOURCE_DIR}/doc)
 
+# On inclut la bibliothèque dans le processus de CMake
+include_directories(${PROJECT_SOURCE_DIR}/src)
+link_directories(${PROJECT_SOURCE_DIR}/src)
+
+find_package(PCL REQUIRED)
+
+add_executable(main main.cpp)
+target_link_libraries(main Vector3d Plane Cloud Load_off_file
+                Consistent_orientation ImplicitFunction
+                AbstractMesh Mesh MeshHE ${PCL_LIBRARIES})
+
 ##
 # Programme de test
 ##

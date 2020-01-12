@@ -2,7 +2,10 @@
 #include "../src/vector3d.h"
 #include <assert.h>
 #include <sstream>
-
+#include <math.h>
+#ifdef INFINITY
+/* INFINITY is supported */
+#endif
 
 /**
   * \test test.cpp
@@ -88,11 +91,30 @@ int main () {
 
     std::cout << "Test cat double into int : " << std::endl;
     unsigned int i = 10;
-    double d = 3.141516171819;
+    double d = 35698730.141516171819;
     std::cout << "i = " << i << std::endl;
     std::cout << "d = " << d << std::endl;
     i = d;
     std::cout << "apres le cast i = d : i = " << i << std::endl;
+
+
+    std::cout << "Test INFINITY : " << std::endl;
+    if (i<INFINITY) {
+        std::cout << "i < INF" << std::endl;
+    } else {
+        std::cout << "Problem with INFINITY" << std::endl;
+    }
+
+    if (d<INFINITY) {
+        std::cout << "d < INF" << std::endl;
+    } else {
+        std::cout << "Problem with INFINITY" << std::endl;
+    }
+
+    double inf1 = INFINITY;
+    float inf2 = INFINITY;
+    std::cout << "inf1 = INFINITY : " << inf1 << std::endl;
+    std::cout << "inf1 = INFINITY : " << inf2 << std::endl;
 
     return 0;
 }

@@ -10,6 +10,10 @@
 #include <Eigen/Eigen>
 #include <Eigen/Dense>
 
+#ifdef INFINITY
+/* INFINITY is supported */
+#endif
+
 /**
   * \brief Représente un nuage de points 3d
   * \details Le plan d'indice i de l'attribut planes est le plan tangent
@@ -22,9 +26,7 @@ class Cloud {
         std::vector<Vector3d> cloud; /*!< liste des points du nuage */
         std::vector<Plane> planes; /*!< liste des plans tangents */
         int size; /*!< nombre de points à étudier (=le nombre de plans) */
-        double rho; /*!< paramètre rho qu'on initialise au moment de la construction des plans tangents
-                        (sa valeur est nulle à l'appel du constructeur)*/
-        double delta; /*!< paramètre de bruit delta de l'article */
+        double rho_plus_delta; /*!< paramètre rho+delta (paramètre de bruit)*/
         double minX, minY, minZ, maxX, maxY, maxZ; /*!< coordonnées min/max dans chaque direction */
 
     public:
@@ -42,7 +44,7 @@ class Cloud {
                         recupérer le nuage de points.
           * \param d la valeur du paramètre delta
         */
-        Cloud(const std::string &filename, const double d=0.0);
+        Cloud(const std::string &filename, const double d=INFINITY);
         /**
           * \brief Destructeur de la classe
         */
@@ -68,15 +70,9 @@ class Cloud {
         */
         int getSize() const;
         /**
-          * \brief Renvoie la valeur de rho (le plus petit rayon r tel que la
-                    sphére de rayon r et de rayon un point du nuage contient au
-                    moins un autre point du nuage);
+          * \brief Renvoie la valeur de rho+delta (paramètre de bruit)
         */
-        double getRho() const;
-        /**
-          * \brief Renvoie la valeur de delta
-        */
-        double getDelta() const;
+        double getRhoPlusDelta() const;
 
         double getMinX() const;
         double getMinY() const;
@@ -87,7 +83,7 @@ class Cloud {
         /**
           * \brief Met à jour la valeur de delta
         */
-        void setDelta(const double d);
+        void setRhoPlusDelta(const double d);
         /**
         * \brief Renvoie l'attribut cloud (le nuage de points)
         */

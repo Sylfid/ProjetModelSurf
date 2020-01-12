@@ -66,7 +66,6 @@ SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
     double debut_cpo = clock();
     orientation_algorithm(pointcloud.getPlanes(), pointcloud.getSize(), K+1);
     double fin_cpo = clock();
-    pointcloud.displayCloud(std::cout);
 
     std::cout << "========== TEMPS DEXECUTION : ==========" << std::endl << std::endl;
     std::cout << "o CONSTRUCTION DES PT : "
@@ -78,19 +77,14 @@ SignedDistanceFunction::SignedDistanceFunction(const std::string &filename,
 }
 
 SignedDistanceFunction::~SignedDistanceFunction() {
-}
 
-void SignedDistanceFunction::displaySignedDistanceFunction(std::ostream& str){
-    str << "\nCloud :\n";
-    getPointCloud().displayCloud(str);
-    str << "\nPlanes :\n";
-    getPointCloud().displayPlanes(str);
 }
 
 float SignedDistanceFunction::Eval(glm::vec3 p) const {
     /* le plan tangent le plus proche du point p est le plan dont le centre oi
     est le plus proche de p (on utilise l'algo linéaire) */
     Vector3d point(p[0], p[1], p[2]);
+    // std::cout << "le point du cube : " << point;
     int size = pointcloud.getSize();
 
     Plane min_plane = pointcloud.getPlanePrecise(0);
@@ -123,7 +117,9 @@ float SignedDistanceFunction::Eval(glm::vec3 p) const {
     }
 
     // std::cout << "ok" << std::endl;
-    if(min_distance2 < pointcloud.getRho() + pointcloud.getDelta()) {
+    if(min_distance2 < pointcloud.getRhoPlusDelta()) {
+        // std::cout << "valeur par f : " << (point-min_plane.getCenter()).getScalarProduct(min_plane.getNormal())
+        //             << std::endl;
         return (float) (point-min_plane.getCenter()).getScalarProduct(min_plane.getNormal());
     }
 
