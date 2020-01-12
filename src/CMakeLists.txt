@@ -21,6 +21,7 @@ add_definitions(
 	-D_CRT_SECURE_NO_WARNINGS
 
 )
+
 add_library(Vector3d SHARED vector3d.cpp)
 add_library(Cloud SHARED cloud.cpp)
 add_library(Plane SHARED plane.cpp)
