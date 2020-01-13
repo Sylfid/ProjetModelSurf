@@ -34,3 +34,5 @@ add_library(MeshHE SHARED MeshHE.cpp)
 
 #add_executable(main main.cpp)
 #target_link_libraries(main Vector3d Plane Cloud Load_off_file Planes_orientation)
+target_link_libraries(ImplicitFunction AbstractMesh Mesh MeshHE Consistent_orientation Vector3d Plane Cloud Load_off_file)
+target_link_libraries(Cloud Plane Load_off_file)

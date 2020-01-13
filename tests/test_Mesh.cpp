@@ -11,26 +11,23 @@
 int main(int argc, char** argv) {
 
     /* PARSING DES ARGUMENTS */
-    int K = 10;
+    int K = 3;
 
     std::string filename;
     char* name;
     char* name2;
 
-    if (argc == 4) {
+    if (argc == 3) {
         filename = argv[1];
         name = argv[2];
-        name2 = argv[3];
     } else if (argc == 2) {
         filename = argv[1];
-        name = "test_implfunct.off";
         name2 = "test_implfunct.obj";
     } else {
-        filename = "../../models/cube_closed.off";
+        filename = "../../models/bunny.off";
         if (!(boost::filesystem::exists(filename))) {
-            filename = "../models/cube_closed.off";
+            filename = "../models/bunny.off";
         }
-        name = "test_implfunct.off";
         name2 = "test_implfunct.obj";
     }
 
@@ -79,7 +76,6 @@ int main(int argc, char** argv) {
     // mesh.ComputeNormals();
 
     mesh.write_obj(name2);
-    mesh.write_off(name);
     double fin_mesh = clock();
 
     printf("-> Mesh créé avec %i points et %i faces\n", mesh.NbVertices(), mesh.NbFaces());
@@ -88,7 +84,6 @@ int main(int argc, char** argv) {
     std::cout << "========== TOTAL : " << (fin_mesh-debut_sdf) / double(CLOCKS_PER_SEC)
                 << "s ==========" << std::endl << std::endl;
 
-    std::cout << "sauvegarde dans le fichier off : " << name << std::endl;
     std::cout << "sauvegarde dans le fichier obj : " << name2 << std::endl;
 
     return EXIT_SUCCESS;
